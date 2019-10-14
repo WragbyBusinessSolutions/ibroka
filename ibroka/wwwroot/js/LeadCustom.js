@@ -264,8 +264,12 @@ function calculateNetPerimumLeadEndorsememnt() {
         net_val = parseFloat(gp_val);
     }
 
-    if (!isNaN(comm_val) && comm_val !== '') {
-        net_val = parseFloat(net_val) + parseFloat(comm_val);
+  if (!isNaN(comm_val) && comm_val !== '') {
+
+    var com_amount = parseFloat(gp_val) * parseFloat(comm_val) / 100;
+    var vat = com_amount * 5 / 100;
+
+    net_val = parseFloat(net_val) - com_amount - vat;
     }
     net_val = parseFloat(net_val);
 

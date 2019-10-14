@@ -7,6 +7,7 @@ using Microsoft.EntityFrameworkCore;
 using ibroka.Models;
 using ibroka.Models.HumanResource;
 using ibroka.Models.LeadManagement;
+using ibroka.Models.AccountBroker;
 
 namespace ibroka.Data
 {
@@ -94,5 +95,10 @@ namespace ibroka.Data
         public DbSet<LeadEndorsementPaymentDetail> LeadEndorsementPaymentDetails { get; set; }
         public DbSet<LeadDocument> LeadDocuments { get; set; }
         public DbSet<EndorsementCreditNote> EndorsementCreditNotes { get; set; }
+
+
+
+    public DbSet<Imprest> Imprests { get; set; }
+
     }
 }

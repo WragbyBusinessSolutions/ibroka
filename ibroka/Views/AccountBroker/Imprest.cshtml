@@ -1,7 +1,10 @@
-﻿
+﻿@model IEnumerable<ibroka.Models.AccountBroker.Imprest>
+
+
+
 @{
     ViewData["Title"] = "Imprest";
-     Layout = "~/Views/Shared/_LayoutAccountBrokers.cshtml";
+    Layout = "~/Views/Shared/_LayoutAccountBrokers.cshtml";
 }
 <style>
     .body-card {
@@ -19,6 +22,74 @@
 <div class="content">
     <div class="row">
         <div class="col-md-12">
+            <div class="card card-stats card-raised">
+                <div class="card-body">
+                    <div class="row">
+                        <div class="col-md-4">
+                            <div class="statistics">
+                                <div class="info">
+                                    <div class="icon icon-primary">
+                                        <i class="now-ui-icons users_single-02"></i>
+
+                                    </div>
+                                    <h3 class="info-title"> ₦40</h3>
+                                    <h6 class="stats-title">DAILY</h6>
+
+                                </div>
+                            </div>
+                        </div>
+                        @*<div class="col-md-3">
+                                <div class="statistics">
+                                    <div class="info">
+                                        <div class="icon icon-success">
+                                            <i class="now-ui-icons business_money-coins"></i>
+                                        </div>
+                                        <h3 class="info-title">
+                                            45
+                                        </h3>
+                                        <h6 class="stats-title">Today Revenue</h6>
+                                    </div>
+                                </div>
+                            </div>*@
+                        <div class="col-md-4">
+                            <div class="statistics">
+                                <div class="info">
+                                    <div class="icon icon-info">
+                                        <i class="now-ui-icons objects_support-17"></i>
+                                    </div>
+                                    <h3 class="info-title"> ₦500</h3>
+                                    <h6 class="stats-title">WEEKLY</h6>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="statistics">
+                                <div class="info">
+                                    <div class="icon icon-danger">
+                                        <i class="now-ui-icons ui-2_chat-round"></i>
+
+                                    </div>
+                                    <h3 class="info-title"> ₦4,000</h3>
+                                    <h6 class="stats-title">MONTHLY</h6>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+
+
+
+
+
+
+
+    <div class="row">
+        <div class="col-md-12">
             <div class="card">
                 <div class="card-header body-card">
                     <div class="row">
@@ -27,33 +98,91 @@
                                 <h4 class="card-title">Income</h4>
                             </div>
 
-                           
-                            <div class="btn-group col-md-4 pull-right">
-                                <a asp-action="AddVendor" class="btn btn-info btn-md pull-right btn-responsive">
+                            <button class="btn btn-info pull-right" data-toggle="modal" data-target="#noticeModal">
+                                Add New
+                            </button>
 
-                                    <span class="btn-label">
-                                        <i class="now-ui-icons travel_info"></i>
-                                    </span>
+                            @*<div class="btn-group col-md-4 pull-right">
+                                    <a class="btn btn-info btn-md pull-right btn-responsive" data-toggle="modal" data-target="#noticeModal">
 
-                                    Add New Vendor
+                                        <span class="btn-label">
+                                            <i class="now-ui-icons travel_info"></i>
+                                        </span>
 
-                                </a>
+                                        Add New
 
-                                <button type="button" class="btn btn-success dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                    Export Data
+                                    </a>
+
+                                    <button type="button" class="btn btn-success dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                        Export Data
+                                    </button>
+                                    <div class="dropdown-menu">
+                                        <a class="dropdown-item" href="#">Copy</a>
+                                        <a class="dropdown-item" href="#">CSV</a>
+                                        <a class="dropdown-item" href="#">Excel</a>
+                                        <a class="dropdown-item" href="#">PDF</a>
+                                        <a class="dropdown-item" href="#">Print</a>
+
+                                    </div>
+                                </div>*@
+                        </div>
+                    </div>
+                </div>
+
+
+                <!-- notice modal -->
+                <div class="modal fade" id="noticeModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+                    <div class="modal-dialog modal-notice">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">
+                                    <i class="now-ui-icons ui-1_simple-remove"></i>
                                 </button>
-                                <div class="dropdown-menu">
-                                    <a class="dropdown-item" href="#">Copy</a>
-                                    <a class="dropdown-item" href="#">CSV</a>
-                                    <a class="dropdown-item" href="#">Excel</a>
-                                    <a class="dropdown-item" href="#">PDF</a>
-                                    <a class="dropdown-item" href="#">Print</a>
+                                <h5 class="modal-title" id="myModalLabel">Create Imprest</h5>
+                            </div>
+                            <div class="modal-body">
+                                <div class="instruction">
+                                    <form>
+                                        <div class="row">
+                                            <div class="col-md-12">
+                                                <div class="form-group">
+                                                    <label>Date</label>
+                                                    <input type="date" class="form-control" placeholder="" id="Date" required>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-md-12">
+                                                <div class="form-group">
+                                                    <label>Particulars</label>
+                                                    <input type="text" class="form-control" placeholder="Enter Particulars" id="Particular" required>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-md-12">
+                                                <div class="form-group">
+                                                    <label>Amount</label>
+                                                    <input type="number" class="form-control" placeholder="" id="Amount" required>
+                                                </div>
+                                            </div>
+                                        </div>
 
+
+                                        <br />
+                                        <div class="card-footer">
+                                            <button type="button" class="btn btn-fill btn-primary btn-round" id="SubmitNewImprest">Create</button>
+                                            <button type="button" class="btn btn-info btn-round" data-dismiss="modal">Close</button>
+                                        </div>
+                                    </form>
                                 </div>
+                                @*<p>If you have more questions, don't hesitate to contact us or send us a tweet  creativetim. We're here to help!</p>*@
                             </div>
                         </div>
                     </div>
                 </div>
+                <!-- end notice modal -->
+
 
                 <div class="card-body body-card">
                     <div class="col-md-12">
@@ -61,42 +190,108 @@
                             <table id="datatable" class="table table-hover">
                                 <thead>
                                     <tr>
-                                        <th><strong>Vendor Name</strong></th>
-                                        <th scope="col"><strong>Email</strong></th>
-                                        <th scope="col"><strong>Phone</strong></th>
-                                        <th scope="col"><strong>Country</strong></th>
-                                        <th scope="col"><strong>State</strong></th>
-                                        <th scope="col"><strong>City</strong></th>
-                                        <th scope="col"><strong>Address</strong></th>
-                                        <th scope="col"><strong>Zip Code</strong></th>
-                                        <th scope="col" class="disabled-sorting"><strong>Actions</strong></th>
+                                        <th><strong>#</strong></th>
+                                        <th scope="col"><strong>Date</strong></th>
+                                        <th scope="col"><strong>Particulars</strong></th>
+                                        <th scope="col"><strong>Amount</strong></th>
+
                                     </tr>
                                 </thead>
+
                                 <tbody class="fontweight">
+                                    @{
+                                        int i = 1;
 
-                                    <tr>
-                                        <td>1</td>
-                                        <td>Olivia Liang</td>
-                                        <td>Support Engineer</td>
-                                        <td>Support Engineer</td>
-                                        <td>Support Engineer</td>
-                                        <td>Support Engineer</td>
-                                        <td>Support Engineer</td>
-                                        <td>64</td>
-                                        <td class="">
-                                            <a href="#" class="btn btn-warning btn-icon btn-sm edit"><i class="fas fa-edit"></i></a>
-                                            <a href="#" class="btn btn-danger btn-icon btn-sm remove"><i class="fas fa-times"></i></a>
-                                        </td>
-                                    </tr>
-                                </tbody>
-                            </table>
+                                        @if (Model.Count() < 1)
+                                        {
+                                        <td></td>
+                                        <td>No Data to Display</td>
+                                        <td></td>
+                                        <td></td>
+                                    }
+
+                                        @foreach (var item in Model)
+                                        {
+                                            <tr>
+                                                <td>@i</td>
+                                                <td>@item.DateCreated.ToString("yyyy-MM-dd")</td>
+                                                <td>@item.Particular</td>
+                                                <td>@item.Amount</td>
+                                            </tr>
+
+                                            { i = i + 1; }
+                                        }
+                                    }
+                                    </tbody>
+                                </table>
+                            </div>
                         </div>
-                    </div>
-                    
-                </div>
-            </div>
 
+                    </div>
+                </div>
+
+            </div>
         </div>
     </div>
-</div>
 
+    @section Scripts {
+
+        <script type="text/javascript">
+
+            $(document).ready(function () {
+                $("#SubmitNewImprest").click(function (event) {
+
+                    event.preventDefault();
+
+                    var Imprest = {
+                        Date: $("#Date").val(),
+                        Particular: $("#Particular").val(),
+                        Amount: $("#Amount").val(),
+                    };
+
+
+                    // console.log(Items);
+                    console.log(Imprest);
+
+                    $.ajax({
+                        type: "POST",
+                        url: "/AccountBroker/postNewImprest",
+                        data: JSON.stringify(Imprest),
+                        dataType: "json",
+                        contentType: 'application/json; charset=utf-8',
+                        headers: {
+                            RequestVerificationToken:
+                                $('input:hidden[name="__RequestVerificationToken"]').val()
+                        },
+                        success: function (r) {
+
+                            if (r.msg == "Success") {
+
+                                demo.showSwal('success-message');
+
+                            } else if (r.msg == "Fail") {
+
+                                alert(r.msg);
+
+                            } else if (r.msg == "No Data") {
+                                alert(r.msg);
+
+                            } else {
+                                alert(r.msg);
+                            }
+                            //alert(r.msg);
+                            // window.location.reload();
+
+                        },
+                        error: function () {
+                            alert(r.msg);
+                        }
+                    });
+                });
+            });
+
+            </script>
+
+
+
+        }

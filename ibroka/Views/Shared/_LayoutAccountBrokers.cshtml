@@ -88,6 +88,12 @@
                                     </a>
                                 </li>
                                 <li>
+                                    <a asp-action="Imprest" asp-controller="AccountBroker">
+                                        <i class="now-ui-icons design_image"></i>
+                                        <p>Imprest(PettyCash)</p>
+                                    </a>
+                                </li>
+                                <li>
                                     <a asp-action="Expenses" asp-controller="AccountBroker">
                                         <i class="now-ui-icons education_paper"></i>
                                         <p>Expenses</p>
@@ -119,133 +125,133 @@
                                     </div>
                                 </li>
                                 @*<li>
-                                    <a data-toggle="collapse" href="#componentsExamples">
-                                        <i class="now-ui-icons education_atom"></i>
-                                        <p>
-                                            Inventory
-                                            <b class="caret"></b>
-                                        </p>
-                                    </a>
-                                    <div class="collapse " id="componentsExamples">
-                                        <ul class="nav">
-                                            <li>
-                                                <a asp-action="Index" asp-controller="Product">
-                                                    <span class="sidebar-mini-icon">P</span>
-                                                    <span class="sidebar-normal"> Products/Service </span>
-                                                </a>
-                                            </li>
-                                            <li>
-                                                <a asp-action="Index" asp-controller="NewStock">
-                                                    <span class="sidebar-mini-icon">NS</span>
-                                                    <span class="sidebar-normal"> New Stock </span>
-                                                </a>
-                                            </li>
-                                        </ul>
-                                    </div>
-                                </li>
-                                <li>
-                                    <a data-toggle="collapse" href="#formsExamples">
-                                        <i class="now-ui-icons education_paper"></i>
-                                        <p>
-                                            Expenses
-                                            <b class="caret"></b>
-                                        </p>
-                                    </a>
-                                    <div class="collapse " id="formsExamples">
-                                        <ul class="nav">
-                                            <li>
-                                                <a asp-action="Index" asp-controller="VendorPurchase">
-                                                    <span class="sidebar-mini-icon">VP</span>
-                                                    <span class="sidebar-normal">Vendor Purchase </span>
-                                                </a>
-                                            </li>
+            <a data-toggle="collapse" href="#componentsExamples">
+                <i class="now-ui-icons education_atom"></i>
+                <p>
+                    Inventory
+                    <b class="caret"></b>
+                </p>
+            </a>
+            <div class="collapse " id="componentsExamples">
+                <ul class="nav">
+                    <li>
+                        <a asp-action="Index" asp-controller="Product">
+                            <span class="sidebar-mini-icon">P</span>
+                            <span class="sidebar-normal"> Products/Service </span>
+                        </a>
+                    </li>
+                    <li>
+                        <a asp-action="Index" asp-controller="NewStock">
+                            <span class="sidebar-mini-icon">NS</span>
+                            <span class="sidebar-normal"> New Stock </span>
+                        </a>
+                    </li>
+                </ul>
+            </div>
+        </li>
+        <li>
+            <a data-toggle="collapse" href="#formsExamples">
+                <i class="now-ui-icons education_paper"></i>
+                <p>
+                    Expenses
+                    <b class="caret"></b>
+                </p>
+            </a>
+            <div class="collapse " id="formsExamples">
+                <ul class="nav">
+                    <li>
+                        <a asp-action="Index" asp-controller="VendorPurchase">
+                            <span class="sidebar-mini-icon">VP</span>
+                            <span class="sidebar-normal">Vendor Purchase </span>
+                        </a>
+                    </li>
 
-                                            <li>
-                                                <a asp-action="Index" asp-controller="Otherexpense">
-                                                    <span class="sidebar-mini-icon">OE</span>
-                                                    <span class="sidebar-normal">Operating Expenses </span>
-                                                </a>
-                                            </li>
+                    <li>
+                        <a asp-action="Index" asp-controller="Otherexpense">
+                            <span class="sidebar-mini-icon">OE</span>
+                            <span class="sidebar-normal">Operating Expenses </span>
+                        </a>
+                    </li>
 
-                                        </ul>
-                                    </div>
-                                </li>
-                                <li>
-                                    <a data-toggle="collapse" href="#mapsExamples">
-                                        <i class="now-ui-icons users_single-02"></i>
-                                        <p>
-                                            Customers
-                                            <b class="caret"></b>
-                                        </p>
-                                    </a>
-                                    <div class="collapse " id="mapsExamples">
-                                        <ul class="nav">
-                                            <li>
-                                                <a asp-action="Index" asp-controller="Customers">
-                                                    <span class="sidebar-mini-icon">C</span>
-                                                    <span class="sidebar-normal">Customers</span>
-                                                </a>
-                                            </li>
-                                            <li>
-                                                <a asp-action="Index" asp-controller="CustomerStatement">
-                                                    <span class="sidebar-mini-icon">CS</span>
-                                                    <span class="sidebar-normal">Customer Statement </span>
-                                                </a>
-                                            </li>
-                                        </ul>
-                                    </div>
-                                </li>
-                                <li>
-                                    <a data-toggle="collapse" href="#mapExample">
-                                        <i class="now-ui-icons users_circle-08"></i>
-                                        <p>
-                                            Vendors
-                                            <b class="caret"></b>
-                                        </p>
-                                    </a>
-                                    <div class="collapse " id="mapExample">
-                                        <ul class="nav">
-                                            <li>
-                                                <a asp-action="Index" asp-controller="Vendors">
-                                                    <span class="sidebar-mini-icon">V</span>
-                                                    <span class="sidebar-normal">Vendors</span>
-                                                </a>
-                                            </li>
-                                            <li>
-                                                <a asp-action="Index" asp-controller="VendorStatement">
-                                                    <span class="sidebar-mini-icon">VS</span>
-                                                    <span class="sidebar-normal">Vendor Statement </span>
-                                                </a>
-                                            </li>
-                                        </ul>
-                                    </div>
-                                </li>
-                                <li>
-                                    <a data-toggle="collapse" href="#apExample">
-                                        <i class="now-ui-icons loader_gear"></i>
-                                        <p>
-                                            Configuration
-                                            <b class="caret"></b>
-                                        </p>
-                                    </a>
-                                    <div class="collapse " id="apExample">
-                                        <ul class="nav">
-                                            <li>
-                                                <a asp-action="Index" asp-controller="Banks">
-                                                    <span class="sidebar-mini-icon">B</span>
-                                                    <span class="sidebar-normal">Bank</span>
-                                                </a>
-                                            </li>
+                </ul>
+            </div>
+        </li>
+        <li>
+            <a data-toggle="collapse" href="#mapsExamples">
+                <i class="now-ui-icons users_single-02"></i>
+                <p>
+                    Customers
+                    <b class="caret"></b>
+                </p>
+            </a>
+            <div class="collapse " id="mapsExamples">
+                <ul class="nav">
+                    <li>
+                        <a asp-action="Index" asp-controller="Customers">
+                            <span class="sidebar-mini-icon">C</span>
+                            <span class="sidebar-normal">Customers</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a asp-action="Index" asp-controller="CustomerStatement">
+                            <span class="sidebar-mini-icon">CS</span>
+                            <span class="sidebar-normal">Customer Statement </span>
+                        </a>
+                    </li>
+                </ul>
+            </div>
+        </li>
+        <li>
+            <a data-toggle="collapse" href="#mapExample">
+                <i class="now-ui-icons users_circle-08"></i>
+                <p>
+                    Vendors
+                    <b class="caret"></b>
+                </p>
+            </a>
+            <div class="collapse " id="mapExample">
+                <ul class="nav">
+                    <li>
+                        <a asp-action="Index" asp-controller="Vendors">
+                            <span class="sidebar-mini-icon">V</span>
+                            <span class="sidebar-normal">Vendors</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a asp-action="Index" asp-controller="VendorStatement">
+                            <span class="sidebar-mini-icon">VS</span>
+                            <span class="sidebar-normal">Vendor Statement </span>
+                        </a>
+                    </li>
+                </ul>
+            </div>
+        </li>
+        <li>
+            <a data-toggle="collapse" href="#apExample">
+                <i class="now-ui-icons loader_gear"></i>
+                <p>
+                    Configuration
+                    <b class="caret"></b>
+                </p>
+            </a>
+            <div class="collapse " id="apExample">
+                <ul class="nav">
+                    <li>
+                        <a asp-action="Index" asp-controller="Banks">
+                            <span class="sidebar-mini-icon">B</span>
+                            <span class="sidebar-normal">Bank</span>
+                        </a>
+                    </li>
 
-                                        </ul>
-                                    </div>
-                                </li>
-                                <li>
-                                    <a asp-action="Index" asp-controller="Report">
-                                        <i class="now-ui-icons files_single-copy-04"></i>
-                                        <p>Reports</p>
-                                    </a>
-                                </li>*@
+                </ul>
+            </div>
+        </li>
+        <li>
+            <a asp-action="Index" asp-controller="Report">
+                <i class="now-ui-icons files_single-copy-04"></i>
+                <p>Reports</p>
+            </a>
+        </li>*@
 
                             </ul>
                         </div>

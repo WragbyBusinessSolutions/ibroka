@@ -98,7 +98,7 @@
 
 
                                     </div>
-                                    <div class="row">
+                                    @*<div class="row">
                                         <div class="col-md-4" style="padding-left:31px;">
                                             <div class="form-group">
                                                 <label class="control-label">Value Insured</label>
@@ -112,7 +112,7 @@
                                         <div class="col-md-4">
 
                                         </div>
-                                    </div>
+                                    </div>*@
 
                                 </div>
                                 <div id="dvlifePolicy" class="row" style="display:none">
@@ -264,7 +264,7 @@
                                     <div class="col-md-4">
                                         <div class="form-group">
                                             <label class="control-label">Commission</label>
-                                            <input asp-for="policy.Commission" id="txtCommission" onchange="leadEndorsementCommOnChange(this);" onkeypress="return validateFloatKeyPress(this,event);" class="form-control" step='0.01' placeholder='0.00' />
+                                            <input readonly asp-for="policy.Commission" id="txtCommission" onchange="leadEndorsementCommOnChange(this);" onkeypress="return validateFloatKeyPress(this,event);" class="form-control" step='0.01' placeholder='0.00' />
 
                                         </div>
                                     </div>
@@ -479,12 +479,65 @@
 
         var selectedText = $("#ddlPC option:selected").text();
         var pc = $('#ddlPC').val();
-        setPolicyViewVisibility(pc);
+      setPolicyViewVisibility(pc);
+
+      $.ajax({
+
+                    type: "POST",
+                    url: "/Client/GetCommission",
+                    data: JSON.stringify(pc),
+                    dataType: "json",
+                    contentType: 'application/json; charset=utf-8',
+                    headers: {
+                        RequestVerificationToken:
+                            $('input:hidden[name="__RequestVerificationToken"]').val()
+                    },
+                    success: function (r) {
+
+                        if (r.msg == "Success") {
+
+                          document.getElementById("txtCommission").value = r.commission;
+
+                          
+
+                        } 
+                    },
+                    error: function () {
+                        //alert(r.msg);
+                    }
+                });
+
         //$('#spnPolicy').text(selectedValue);
         $('#ddlPC').change(function () {
 
             pc = $('#ddlPC').val();
             selectedText = $("#ddlPC option:selected").text();
+
+                $.ajax({
+
+                    type: "POST",
+                    url: "/Client/GetCommission",
+                    data: JSON.stringify(pc),
+                    dataType: "json",
+                    contentType: 'application/json; charset=utf-8',
+                    headers: {
+                        RequestVerificationToken:
+                            $('input:hidden[name="__RequestVerificationToken"]').val()
+                    },
+                    success: function (r) {
+
+                        if (r.msg == "Success") {
+
+                          document.getElementById("txtCommission").value = r.commission;
+
+                          
+
+                        } 
+                    },
+                    error: function () {
+                        //alert(r.msg);
+                    }
+                });
 
             //$('#spnPolicy').text(selectedText);
             setPolicyViewVisibility(pc);

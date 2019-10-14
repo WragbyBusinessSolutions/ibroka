@@ -2373,5 +2373,47 @@ namespace ibroka.Controllers.LeadManagement
             return Json(endorsements);
         }
 
+    [HttpPost]
+    public async Task<IActionResult> GetCommission([FromBody]string selected)
+    {
+      if (selected == null)
+      {
+        return Json(new
+        {
+          msg = "No Data"
+        }
+       );
+      }
+
+      var orgId = getOrg();
+
+      Guid policySelected = Guid.Parse(selected);
+
+
+
+      try
+      {
+        var policyRecord = _context.PolicyClassMaster.FirstOrDefault(x => x.Id == policySelected);
+
+        return Json(new
+        {
+          msg = "Success", 
+          commission = policyRecord.CommisionPercent
+        }
+     );
+      }
+      catch (Exception ee)
+      {
+
+      }
+
+      return Json(
+      new
+      {
+        msg = "Fail"
+      });
     }
+
+
+  }
 }

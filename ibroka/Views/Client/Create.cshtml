@@ -1,0 +1,2190 @@
+﻿@model E4S.Models.LeadManagement.Lead
+
+@{
+    ViewData["Title"] = "Business Operations";
+
+    Layout = "~/Views/Shared/_LayoutLeadManagement.cshtml";
+}
+
+<script src="~/assets/js/core/jquery.min.js"></script>
+<script src="~/js/LeadCustom.js"></script>
+<script src="~/assets/js/lead.js"></script>
+<link href="~/css/custom.css" rel="stylesheet" />
+<style>
+    .form-control[disabled], .form-control[readonly], fieldset[disabled] .form-control {
+        width: 60% !important;
+    }
+
+    #profileDetails select, input {
+        width: 80% !important;
+    }
+
+    #profileDetails input[type="submit"] {
+        width: 20% !important;
+    }
+
+
+
+    label {
+        display: inline-block;
+        margin-top: 6px;
+        margin-bottom: 0px;
+    }
+
+
+    .form-group .form-control, .input-group .form-control {
+        padding: 6px 18px 6px 18px;
+        width: 80% !important;
+    }
+
+    select.form-control:not([size]):not([multiple]) {
+        height: calc(1.88rem + 2px);
+    }
+
+    .input-group, .form-group {
+        margin-bottom: 0px;
+        position: relative;
+    }
+</style>
+
+
+<div class="content">
+
+    <div class="col-md-12 mr-auto ml-auto">
+        <div class="content">
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="card ">
+                        @Html.Partial("~/Views/Manage/_LeadStatusMessage.cshtml", ViewData["StatusMessage"])
+
+                        @*<form enctype="multipart/form-data" method="post" asp-action="CreateClient">
+                            *@
+                            <div class="card-body ">
+                                <div class="row">
+                                    <div class="col-md-12">
+                                        <ul style="display:inline-block; margin-top:0px;margin-bottom:10px" class="nav nav-pills nav-pills-primary flex-column" role="tablist">
+                                            <li style="display:inline-block; margin-bottom:10px" class="nav-item">
+                                                <a style="padding:10px 10px; width:170px;margin-left:30px" class="nav-link active" data-toggle="tab" href="#profileDetails" role="tablist">
+                                                    Profile Details
+                                                </a>
+                                            </li>
+                                            <li style="display:inline-block;" class="nav-item">
+                                                @if (ViewBag.LeadClientId != null && ViewBag.LeadClientId != Guid.Empty)
+                                                {
+                                                <input type="hidden" id="hdnLeadClientId" value="@ViewBag.LeadClientId" />
+                                                <a style="padding:10px 10px; width:170px;margin-left:10px" class="nav-link" data-toggle="tab" href="#policyDetails" role="tablist">
+                                                    Lead
+                                                </a>
+                                                }
+                                                else
+                                                {
+                                                <input type="hidden" id="hdnLeadClientId" />
+                                                <a style="padding:10px 10px; width:170px;margin-left:10px" class="nav-link">
+                                                    Lead
+                                                </a>
+                                                }
+
+                                            </li>
+
+
+                                        </ul>
+                                    </div>
+                                    <div class="col-md-12">
+                                        <div class="tab-content">
+
+                                            <div class="tab-pane active" id="profileDetails">
+                                                <form enctype="multipart/form-data" method="post">
+                                                    <input type="hidden" id="hdnEdit" value="@ViewBag.clientEdit" />
+                                                    <div class="row" id="divType">
+                                                        <div class="col-md-4" id="divProfilePhoto">
+
+                                                            <div style="padding:0px 0px 0px 50px" class="fileinput fileinput-new text-center" data-provides="fileinput">
+                                                                <div class="fileinput-new thumbnail">
+                                                                    @if (Model.Individual != null && !string.IsNullOrEmpty(Model.Individual.ClientPhotoPath))
+                                                                    {
+
+                                                                    <img src="@Model.Individual.ClientPhotoPath" style="height:150px;width:150px" id="imageUploadForm" name="image" multiple="multiple" alt="...">
+                                                                    }
+                                                                    else
+                                                                    {
+                                                                    <img src="../../assets/img/image_placeholder.jpg" style="height:150px;width:150px" id="imageUploadForm" name="image" multiple="multiple" alt="...">
+                                                                    }
+                                                                </div>
+                                                                <div class="fileinput-preview fileinput-exists thumbnail"></div>
+                                                                <div>
+                                                                    <span class="btn btn-rose btn-round btn-file">
+                                                                        <span class="fileinput-new">Select image</span>
+                                                                        <span class="fileinput-exists">Change</span>
+                                                                        @Html.TextBoxFor(m => m.Individual.ClientPhoto, new { type = "file" })
+                                                                        @*<input type="file" name="file" id="file" asp-for="ClientPhoto" />*@
+                                                                    </span>
+
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-md-8">
+                                                            <div class="row">
+                                                                <div class="col-sm-6">
+                                                                    <div class="form-group">
+                                                                        <label>Customer Type</label>
+                                                                        <select class="form-control" asp-for="Individual.Type" disabled id="ddlClientType">
+                                                                            <options>
+                                                                                @if ((Model.Individual == null && Model.Corporate == null) || (Model.Individual != null && Model.Individual.Type == "Individual"))
+                                                                                {
+                                                                                <option value="Individual" selected>Individual</option>
+                                                                                <option value="Corporate">Corporate</option>
+
+                                                                                }
+                                                                                else
+                                                                                {
+                                                                                <option value="Individual">Individual</option>
+                                                                                <option value="Corporate" selected>Corporate</option>
+                                                                                }
+                                                                            </options>
+                                                                        </select>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                            <div class="row" id="divIndividual1">
+                                                                <div class="col-6">
+                                                                    <div class="form-group">
+                                                                        <label>Title</label>
+                                                                        <select class="form-control" asp-for="Individual.Title">
+                                                                            <options>
+                                                                                <option>Mr.</option>
+                                                                                <option>Mrs.</option>
+                                                                                <option>Ms.</option>
+                                                                            </options>
+                                                                        </select>
+                                                                    </div>
+                                                                </div>
+                                                                <div class="col-6">
+                                                                    <div class="form-group">
+                                                                        <label>Name</label>
+                                                                        <input asp-for="Individual.Name" class="form-control" />
+                                                                    </div>
+                                                                </div>
+
+                                                            </div>
+                                                            <div class="row" id="divIndividual2">
+                                                                <div class="col-6">
+                                                                    <div class="form-group">
+                                                                        <label>Surname</label>
+                                                                        <input asp-for="Individual.Surname" class="form-control" />
+                                                                    </div>
+
+                                                                </div>
+                                                                <div class="col-6">
+                                                                    <div class="form-group">
+                                                                        <div class="form-group" id="IndividualId2">
+                                                                            <label>Other Names</label>
+                                                                            <input asp-for="Individual.OtherNames" class="form-control" />
+                                                                        </div>
+                                                                    </div>
+
+                                                                </div>
+                                                            </div>
+
+
+
+                                                        </div>
+                                                    </div>
+                                                    <div id="divIndividual" class="row">
+                                                        <div class="col-md-12">
+                                                            <div class="row">
+                                                                <div class="col-md-4">
+                                                                    <label>Gender</label>
+                                                                    <select class="form-control" placeholder="Serial Number" asp-for="Individual.Gender" id="ddlGender">
+                                                                        <options>
+                                                                            <option value=""> --- Select --- </option>
+                                                                            <option value="Male">Male</option>
+                                                                            <option value="Male">Female</option>
+                                                                        </options>
+                                                                    </select>
+                                                                </div>
+                                                                <div class="col-md-4">
+                                                                    <div class="form-group">
+                                                                        <label>Nationality</label>
+                                                                        <input type="hidden" id="hdnIndividualNationality" asp-for="Individual.Nationality" />
+                                                                        <Select asp-for="Individual.Nationality" class="form-control" id="ddlIndividualNationality" onchange="setddlState('ddlIndividualNationality','hdnIndividualNationality')">
+                                                                            <Options>
+                                                                                <option value="">--Nationality--</option>
+                                                                            </Options>
+                                                                        </Select>
+                                                                    </div>
+
+                                                                </div>
+                                                                <div class="col-md-4">
+                                                                    <div class="form-group">
+                                                                        <label>Date of birth</label>
+                                                                        <input type="date" asp-for="Individual.DateOfBirth" class="form-control" />
+                                                                    </div>
+
+                                                                </div>
+                                                            </div>
+                                                            <div class="row">
+                                                                <div class="col-md-8">
+                                                                    <div class="form-group">
+                                                                        <label>Address</label>
+                                                                        <input asp-for="Individual.Address" style="width:590px !important" class="form-control" />
+                                                                    </div>
+                                                                </div>
+                                                                <div class="col-md-4">
+                                                                    <div class="form-group">
+                                                                        <label>Phone No</label>
+                                                                        <input asp-for="Individual.PhoneNo" class="form-control" />
+                                                                    </div>
+                                                                </div>
+
+                                                            </div>
+                                                            <div class="row">
+
+                                                                <div class="col-md-4">
+                                                                    <div class="form-group">
+                                                                        <label>Email</label>
+                                                                        <input asp-for="Individual.Email" class="form-control" />
+                                                                    </div>
+
+                                                                </div>
+                                                                <div class="col-md-4">
+
+                                                                    <div class="form-group">
+                                                                        <label>Occupation</label>
+                                                                        <input asp-for="Individual.Occupation" class="form-control" />
+                                                                    </div>
+                                                                </div>
+                                                                <div class="col-md-4">
+                                                                    <div class="form-group">
+                                                                        <label>Tax No</label>
+                                                                        <input asp-for="Individual.TaxNo" class="form-control" />
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+
+                                                            <div class="row">
+
+                                                                <div class="col-md-4">
+                                                                    <div class="form-group">
+                                                                        <label>Identification Type</label>
+                                                                        <input asp-for="Individual.IdentificationType" class="form-control" />
+                                                                    </div>
+                                                                </div>
+                                                                <div class="col-md-4">
+                                                                    <div class="form-group">
+                                                                        <label>Identification No</label>
+                                                                        <input asp-for="Individual.IdentificationNo" class="form-control" />
+                                                                    </div>
+                                                                </div>
+                                                                <div class="col-md-4">
+                                                                    <div class="form-group">
+                                                                        <label>ID issue date</label>
+                                                                        <input asp-for="Individual.IDIssueDate" type="date" class="form-control" />
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+
+                                                            <div class="row">
+                                                                <div class="col-md-4">
+                                                                    <div class="form-group">
+                                                                        <label>ID expiry date</label>
+                                                                        <input asp-for="Individual.IDExpiryDate" type="date" class="form-control" />
+                                                                    </div>
+                                                                </div>
+                                                                <div class="col-md-4">
+                                                                    <div class="form-group">
+                                                                        <label>ID issuing country</label>
+                                                                        <input type="hidden" id="hdnIDIssuingCountry" asp-for="Individual.IDIssuingCountry" />
+                                                                        <select asp-for="Individual.IDIssuingCountry" id="ddlIDIssuingCountry" class="form-control" onchange="setddlState('ddlIDIssuingCountry','hdnIDIssuingCountry')">
+                                                                            <Options>
+                                                                                <option value="">--Country--</option>
+                                                                            </Options>
+                                                                        </select>
+                                                                    </div>
+                                                                </div>
+                                                                <div class="col-md-4">
+                                                                    <div class="form-group">
+                                                                        <label>Source of income</label>
+                                                                        <input asp-for="Individual.SourceOfIncome" class="form-control" />
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+
+
+                                                            <div class="row">
+                                                                <div class="col-md-4">
+                                                                    <div class="form-group">
+                                                                        <label>Bank</label>
+                                                                        <input asp-for="Individual.Bank" class="form-control" />
+                                                                    </div>
+                                                                </div>
+                                                                <div class="col-md-4">
+                                                                    <div class="form-group">
+                                                                        <label>Account No</label>
+                                                                        <input asp-for="Individual.AccountNo" class="form-control" />
+                                                                    </div>
+                                                                </div>
+                                                                <div class="col-md-4">
+                                                                    <div class="form-group">
+                                                                        <label>BVN</label>
+                                                                        <input asp-for="Individual.BVN" class="form-control" />
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+
+
+
+
+                                                            <div class="row" style="margin:20px">
+                                                                <div class="col-md-12">
+                                                                    <div class="form-group">
+                                                                        @if (ViewBag.LeadClientId != null && ViewBag.LeadClientId != Guid.Empty)
+                                                                        {
+                                                                        <div class="row">
+                                                                            <div class="col-md-2"><input onclick="redirectClientDetailPage()" id="btnindividualSubmit" class="btn btn-fill btn-primary" value="Edit" readonly="readonly" /></div>
+                                                                            <div class="col-md-1"></div>
+                                                                            <div class="col-md-2"><input onclick="RedirectIndex()" class="btn btn-default" id="btnindividualSubmitCancel" value="Cancel" readonly="readonly" /></div>
+                                                                        </div>
+
+
+                                                                        }
+                                                                        else
+                                                                        {
+                                                                        <div class="row">
+                                                                            <div class="col-md-2"><input id="btnindividualSubmit" type="submit" style="width:110px !important" class="btn btn-fill btn-primary" value="Save" formaction="CreateClient" /></div>
+                                                                            <div class="col-md-1"></div>
+                                                                            <div class="col-md-2"><input onclick="RedirectIndex()" class="btn btn-default" value="Cancel" readonly="readonly" /></div>
+                                                                        </div>
+
+
+
+
+                                                                        }
+
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+
+                                                    <div id="divCorporate" class="row" style="display:none;">
+                                                        <div class="col-md-12">
+                                                            <div class="row">
+                                                                <div class="col-md-4">
+                                                                    <div class="form-group">
+                                                                        <label>Company name</label>
+                                                                        <input asp-for="Corporate.Name" class="form-control" />
+
+                                                                    </div>
+                                                                </div>
+                                                                <div class="col-md-4">
+                                                                    <div class="form-group">
+                                                                        <div class="form-group">
+                                                                            <label>Company address</label>
+                                                                            <input asp-for="Corporate.Address" class="form-control" />
+                                                                        </div>
+                                                                    </div>
+
+                                                                </div>
+                                                                <div class="col-md-4">
+
+                                                                    <div class="form-group">
+                                                                        <label>Email</label>
+                                                                        <input asp-for="Corporate.Email" class="form-control" />
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+
+
+                                                            <div class="row">
+                                                                <div class="col-md-4">
+                                                                    <div class="form-group">
+                                                                        <label>Phone No</label>
+                                                                        <input asp-for="Corporate.PhoneNo" class="form-control" />
+                                                                    </div>
+
+                                                                </div>
+                                                                <div class="col-md-4">
+                                                                    <div class="form-group">
+                                                                        <label>Incorporation/RC number</label>
+                                                                        <input asp-for="Corporate.IncorporationOrRCNumber" class="form-control" />
+                                                                    </div>
+
+                                                                </div>
+                                                                <div class="col-md-4">
+                                                                    <div class="form-group">
+                                                                        <label>Incorporation state</label>
+                                                                        <input type="hidden" id="hdnIncorporationState" asp-for="Corporate.IncorporationState" />
+                                                                        <Select asp-for="Corporate.IncorporationState" id="ddlIncorporationState" class="form-control" onchange="setddlState('ddlIncorporationState','hdnIncorporationState')">
+                                                                            <options>
+                                                                                <option value="">--Select State--</option>
+                                                                            </options>
+                                                                        </Select>
+                                                                    </div>
+
+                                                                </div>
+                                                            </div>
+                                                            <div class="row">
+                                                                <div class="col-md-4">
+                                                                    <div class="form-group">
+                                                                        <label>Incorporation date</label>
+                                                                        <input asp-for="Corporate.IncorporationDate" type="date" class="form-control" />
+                                                                    </div>
+
+                                                                </div>
+                                                                <div class="col-md-4">
+                                                                    <div class="form-group">
+                                                                        <label>Tax No</label>
+                                                                        <input asp-for="Corporate.TaxNo" class="form-control" />
+                                                                    </div>
+
+
+                                                                </div>
+                                                                <div class="col-md-4">
+                                                                    <div class="form-group">
+                                                                        <label>Company’s Bank</label>
+                                                                        <input asp-for="Corporate.CompanyBank" class="form-control" />
+                                                                    </div>
+
+                                                                </div>
+                                                            </div>
+
+                                                            <div class="row">
+                                                                <div class="col-md-4">
+                                                                    <div class="form-group">
+                                                                        <label>Account No</label>
+                                                                        <input asp-for="Corporate.AccountNo" class="form-control" />
+                                                                    </div>
+
+
+                                                                </div>
+                                                                <div class="col-md-4">
+                                                                    <div class="form-group">
+                                                                        <label>Bank Branch</label>
+                                                                        <input asp-for="Corporate.BankBranch" class="form-control" />
+                                                                    </div>
+
+                                                                </div>
+                                                                <div class="col-md-4">
+                                                                    <div class="form-group">
+                                                                        <label>URL</label>
+                                                                        <input asp-for="Corporate.URL" class="form-control" />
+                                                                    </div>
+
+                                                                </div>
+                                                            </div>
+                                                            <div class="row">
+                                                                <div class="col-md-4">
+                                                                    <div class="form-group">
+                                                                        <label>BVN</label>
+                                                                        <input asp-for="Corporate.BVN" class="form-control" />
+                                                                    </div>
+                                                                </div>
+                                                                <div class="col-md-6">
+                                                                    <div>
+
+                                                                        <label>Incorporation Certificate</label>
+                                                                        @if (Model.Corporate != null && !string.IsNullOrEmpty(Model.Corporate.CertificateOfIncorporationPath))
+                                                                        {
+                                                                        <input type="hidden" value="@Model.Corporate.CertificateOfIncorporationPath" asp-for="@Model.Corporate.CertificateOfIncorporationPath" />
+                                                                        @if (Model.Corporate.CertificateOfIncorporationPath.Contains("incorporationCertificates"))
+                                                                        {
+                                                                        <a href="@Model.Corporate.CertificateOfIncorporationPath">View</a>
+                                                                        }
+                                                                        }
+
+                                                                        @Html.TextBoxFor(m => m.Corporate.CertificationDocument, new { type = "file" })
+
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                            <div class="row">
+
+                                                                <div class="col-md-4">
+                                                                    <div class="card" style="margin:30px 0px 0px 0px" id="divDirectorCard1">
+                                                                        <div class="card-header" style="padding: 2px 15px 0px!important">
+                                                                            <h6 class="card-title">Director 1</h6>
+                                                                        </div>
+                                                                        <div class="card-body" style="padding: 0px 0px 6px 5px !important;height:113px">
+                                                                            <div class="row">
+                                                                                @if (Model.Director1 != null && (Model.Director1.Name != null))
+                                                                                {
+                                                                                <div class="col-4">
+
+                                                                                    @if (Model.Director1.ProfilePhotoPath != null && Model.Director1.ProfilePhotoPath != "")
+                                                                                    {
+                                                                                    <img src="@Model.Director1.ProfilePhotoPath" style="border-radius: 50%;width: 80px;height: 70px;" />
+                                                                                    <input type="hidden" asp-for="@Model.Director1.ProfilePhotoPath" value="@Model.Director1.ProfilePhotoPath" />
+
+                                                                                    }
+                                                                                    else
+                                                                                    {
+                                                                                    <img src="../../assets/img/image_placeholder.jpg" style="border-radius: 50%;width: 80px;height: 70px;" />
+
+                                                                                    }
+                                                                                </div>
+                                                                                <div class="col-8">
+
+                                                                                    <div class="row">
+                                                                                        <h8 class="card-category">@Model.Director1.Name @Model.Director1.Surname</h8>
+                                                                                    </div>
+                                                                                    <div class="row">
+                                                                                        @if ((Model.Director1.PhoneNo != null))
+                                                                                        {
+                                                                                        <label>@Model.Director1.PhoneNo</label>
+                                                                                        }
+                                                                                        else
+                                                                                        {
+                                                                                        <label></label>
+                                                                                        }
+                                                                                    </div>
+                                                                                    <div class="row">
+                                                                                        <div class="col-md-5">
+                                                                                            <button class="btn btn-success" type="button" title="Click to edit director" data-toggle="modal" data-target="#directorModal1">Edit</button>
+                                                                                        </div>
+                                                                                        <div class="col-md-4">
+                                                                                            <button class="btn btn-success" type="button" onclick="getConfirmationforDelete('btnDeleteDirector1')">Delete</button>
+                                                                                            <button class="btn btn-success" type="submit" id="btnDeleteDirector1" title="Click to delete director" style="display:none" formaction="DeleteDirector1">Delete</button>
+                                                                                        </div>
+
+                                                                                    </div>
+
+                                                                                </div>
+                                                                                }
+                                                                                else
+                                                                                {<div class="col-12" style="padding:0px 0px 0px 150px">
+                                                                                    <div class="row">
+                                                                                        <button class="btn btn-success" type="button" title="Click to add director" data-toggle="modal" data-target="#directorModal1">Add</button>
+                                                                                    </div>
+                                                                                </div>
+                                                                                }
+                                                                            </div>
+
+                                                                        </div>
+                                                                    </div>
+
+                                                                </div>
+                                                                <div class="col-md-4">
+                                                                    <div class="card" style="margin:30px 0px 0px 0px" id="divDirectorCard2">
+                                                                        <div class="card-header" style="padding: 2px 15px 0px!important;">
+                                                                            <h6 class="card-title">Director 2</h6>
+                                                                        </div>
+                                                                        <div class="card-body" style="padding: 0px 0px 6px 5px !important;height:113px">
+                                                                            <div class="row">
+                                                                                @if (Model.Director2 != null && Model.Director2.Name != null)
+                                                                                {
+                                                                                <div class="col-4">
+
+                                                                                    @if (Model.Director2.ProfilePhotoPath != null && Model.Director2.ProfilePhotoPath != "")
+                                                                                    {
+                                                                                    <img src="@Model.Director2.ProfilePhotoPath" style="border-radius: 50%;width: 80px;height: 70px;" />
+                                                                                    <input type="hidden" asp-for="@Model.Director2.ProfilePhotoPath" value="@Model.Director2.ProfilePhotoPath" />
+                                                                                    }
+                                                                                    else
+                                                                                    {
+                                                                                    <img src="../../assets/img/image_placeholder.jpg" style="border-radius: 50%;width: 80px;height: 70px;" />
+                                                                                    }
+                                                                                </div>
+                                                                                <div class="col-8">
+
+                                                                                    <div class="row">
+                                                                                        <h8 class="card-category">@Model.Director2.Name  @Model.Director2.Surname</h8>
+                                                                                    </div>
+                                                                                    <div class="row">
+                                                                                        @if (Model.Director2.PhoneNo != null)
+                                                                                        {
+                                                                                        <label>@Model.Director2.PhoneNo</label>
+                                                                                        }
+                                                                                        else
+                                                                                        {
+                                                                                        <label></label>
+                                                                                        }
+                                                                                    </div>
+                                                                                    <div class="row">
+                                                                                        <div class="col-md-5">
+                                                                                            <button class="btn btn-success" type="button" title="Click to edit director" data-toggle="modal" data-target="#directorModal2">Edit</button>
+                                                                                        </div>
+                                                                                        <div class="col-md-4">
+                                                                                            <button class="btn btn-success" type="button" onclick="getConfirmationforDelete('btnDeleteDirector2')">Delete</button>
+                                                                                            <button class="btn btn-success" type="submit" id="btnDeleteDirector2" title="Click to delete director" style="display:none" formaction="DeleteDirector2">Delete</button>
+                                                                                        </div>
+                                                                                    </div>
+
+                                                                                </div>
+                                                                                }
+                                                                                else
+                                                                                {<div class="col-12" style="padding:0px 0px 0px 150px">
+                                                                                    <div class="row">
+                                                                                        <button class="btn btn-success" type="button" title="Click to add director" data-toggle="modal" data-target="#directorModal2">Add</button>
+                                                                                    </div>
+                                                                                </div>
+                                                                                }
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+
+                                                                </div>
+
+                                                            </div>
+                                                            <div class="row" style="margin-top:20px">
+                                                                <div class="col-md-12">
+                                                                    <div class="form-group">
+                                                                        @if (ViewBag.LeadClientId != null && ViewBag.LeadClientId != Guid.Empty)
+                                                                        {
+                                                                        <div class="row">
+                                                                            <div class="col-md-2"><input onclick="redirectClientDetailPage()" id="btnCorporateSubmit" class="btn btn-fill btn-primary" value="Edit" readonly="readonly" /></div>
+                                                                            <div class="col-md-1"></div>
+                                                                            <div class="col-md-2"><input onclick="RedirectIndex()" class="btn btn-default" id="btnCorporateSubmitCancel" value="Cancel" readonly="readonly" /></div>
+                                                                        </div>
+
+                                                                        }
+                                                                        else
+                                                                        {
+                                                                        <div class="row">
+
+
+                                                                            <div class="col-md-2">
+                                                                                <input type="submit" id="btnCorporateSave" class="btn btn-fill btn-primary" style="width:110px !important;display:none" value="Save" formaction="CreateClient" />
+                                                                                <input type="button" id="btnCorporateSubmit" class="btn btn-fill btn-primary" style="width:110px !important" value="Save" onclick="validateDirectors();" />
+                                                                            </div>
+                                                                            <div class="col-md-1"></div>
+                                                                            <div class="col-md-2">
+                                                                                <input onclick="RedirectIndex()" class="btn btn-default" value="Cancel" readonly="readonly" />
+                                                                            </div>
+                                                                        </div>
+                                                                        }
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+
+
+                                                            <div class="row col-md-12 tab-pane">
+                                                                <div style="z-index:99999" class="modal fade" id="directorModal1" data-backdrop="static" data-keyboard="false" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+                                                                    <div class="modal-dialog modal-notice" style="max-width:850px!important">
+                                                                        <div class="modal-content">
+                                                                            <div class="modal-header">
+                                                                                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">
+                                                                                    <i class="now-ui-icons ui-1_simple-remove"></i>
+                                                                                </button>
+                                                                                <h5 class="modal-title" id="myModalLabel">Enter Director Detail</h5>
+                                                                            </div>
+                                                                            <div class="modal-body">
+                                                                                <div>
+
+                                                                                    <div class="row">
+                                                                                        <div class="col-md-3">
+
+                                                                                            <div class="fileinput fileinput-new text-center" data-provides="fileinput">
+                                                                                                <div class="fileinput-new thumbnail">
+                                                                                                    @if (Model.Director1 != null && Model.Director1.ProfilePhotoPath != null && Model.Director1.ProfilePhotoPath != "")
+                                                                                                    {
+                                                                                                    <img src="@Model.Director1.ProfilePhotoPath" id="imageUploadDirector1" name="image" multiple="multiple" alt="..." width="100%">
+                                                                                                    }
+                                                                                                    else
+                                                                                                    {
+                                                                                                    <img src="../../assets/img/image_placeholder.jpg" id="imageUploadDirector1" name="image" multiple="multiple" alt="..." width="100%">
+                                                                                                    }
+                                                                                                </div>
+                                                                                                <div class="fileinput-preview fileinput-exists thumbnail"></div>
+                                                                                                <div>
+                                                                                                    <span class="btn btn-rose btn-round btn-file">
+                                                                                                        <span class="fileinput-new">Select image</span>
+                                                                                                        <span class="fileinput-exists">Change</span>
+
+                                                                                                        @Html.TextBoxFor(m => m.Director1.ProfilePhoto, new { type = "file" })
+
+                                                                                                    </span>
+                                                                                                    @*<a href="#pablo" class="btn btn-danger btn-round fileinput-exists" data-dismiss="fileinput"><i class="fa fa-times"></i> Remove</a>*@
+                                                                                                </div>
+
+                                                                                            </div>
+                                                                                        </div>
+                                                                                        <div class="col-md-9">
+                                                                                            <div class="row">
+                                                                                                <div class="col-4">
+                                                                                                    <div class="form-group">
+                                                                                                        <label>Title</label>
+                                                                                                        <select class="form-control" asp-for="Director1.Title">
+                                                                                                            <options>
+                                                                                                                <option>Mr.</option>
+                                                                                                                <option>Mrs.</option>
+                                                                                                            </options>
+                                                                                                        </select>
+                                                                                                    </div>
+
+
+                                                                                                </div>
+                                                                                                <div class="col-4">
+                                                                                                    <div class="form-group">
+                                                                                                        <label>Name</label>
+                                                                                                        <input asp-for="Director1.Name" class="form-control" />
+                                                                                                    </div>
+                                                                                                </div>
+
+
+
+                                                                                                <div class="col-4">
+                                                                                                    <div class="form-group" id="IndividualId1">
+                                                                                                        <label>Surname</label>
+                                                                                                        <input asp-for="Director1.Surname" class="form-control" />
+                                                                                                    </div>
+
+
+                                                                                                </div>
+                                                                                            </div>
+                                                                                            <div class="row">
+                                                                                                <div class="col-4">
+                                                                                                    <div class="form-group" id="IndividualId2">
+                                                                                                        <label>Other Names</label>
+                                                                                                        <input asp-for="Director1.OtherNames" class="form-control" />
+                                                                                                    </div>
+                                                                                                </div>
+
+
+
+
+                                                                                                <div class="col-4">
+                                                                                                    <div style="width:100%" class="form-group">
+                                                                                                        <label>Date of birth</label>
+                                                                                                        <input style="width:100%" type="date" asp-for="Director1.DateOfBirth" class="form-control" />
+                                                                                                    </div>
+                                                                                                </div>
+
+
+
+                                                                                                <div class="col-4">
+                                                                                                    <div style="width:100%" class="form-group">
+                                                                                                        <label>Gender</label>
+                                                                                                        <select style="width:100%" class="form-control" placeholder="Serial Number" asp-for="Director1.Gender">
+                                                                                                            <options>
+                                                                                                                <option value=""> --- Select --- </option>
+                                                                                                                <option value="Male">Male</option>
+                                                                                                                <option value="Male">Female</option>
+                                                                                                            </options>
+                                                                                                        </select>
+                                                                                                    </div>
+                                                                                                </div>
+
+                                                                                            </div>
+                                                                                        </div>
+                                                                                    </div>
+
+                                                                                    <div class="row">
+                                                                                        <div class="col-3">
+                                                                                            <div class="form-group">
+                                                                                                <label>Nationality</label>
+                                                                                                <input type="hidden" id="hdnDirector1Nationality" asp-for="Director1.Nationality" />
+                                                                                                <Select asp-for="Director1.Nationality" id="ddlDirector1Nationality" class="form-control" onchange="setddlState('ddlDirector1Nationality','hdnDirector1Nationality')">
+                                                                                                    <options>
+                                                                                                        <option value="">--Nationality--</option>
+                                                                                                    </options>
+                                                                                                </Select>
+                                                                                            </div>
+                                                                                        </div>
+                                                                                        <div class="col-6">
+                                                                                            <div class="form-group">
+                                                                                                <label>Address</label>
+                                                                                                <input asp-for="Director1.Address" style="width:350px !important" class="form-control" />
+                                                                                            </div>
+                                                                                        </div>
+
+
+
+                                                                                        <div class="col-md-3">
+                                                                                            <div class="form-group">
+                                                                                                <label>Email</label>
+                                                                                                <input asp-for="Director1.Email" class="form-control" />
+                                                                                            </div>
+                                                                                        </div>
+                                                                                    </div>
+
+                                                                                    <div class="row">
+                                                                                        <div class="col-md-3">
+                                                                                            <div class="form-group">
+                                                                                                <label>Phone No</label>
+                                                                                                <input asp-for="Director1.PhoneNo" class="form-control" />
+                                                                                            </div>
+
+                                                                                        </div>
+                                                                                        <div class="col-md-3">
+                                                                                            <div class="form-group">
+                                                                                                <label>Tax No</label>
+                                                                                                <input asp-for="Director1.TaxNo" class="form-control" />
+                                                                                            </div>
+                                                                                        </div>
+
+                                                                                        <div class="col-md-3">
+                                                                                            <div class="form-group">
+                                                                                                <label>Occupation</label>
+                                                                                                <input asp-for="Director1.Occupation" class="form-control" />
+                                                                                            </div>
+
+                                                                                        </div>
+
+                                                                                        <div class="col-md-3">
+                                                                                            <div class="form-group">
+                                                                                                <label>Identification Type</label>
+                                                                                                <input asp-for="Director1.IdentificationType" class="form-control" />
+                                                                                            </div>
+                                                                                        </div>
+                                                                                    </div>
+
+                                                                                    <div class="row">
+                                                                                        <div class="col-md-3">
+                                                                                            <div class="form-group">
+                                                                                                <label>Identification No</label>
+                                                                                                <input asp-for="Director1.IdentificationNo" class="form-control" />
+                                                                                            </div>
+                                                                                        </div>
+
+                                                                                        <div class="col-md-3">
+                                                                                            <div class="form-group">
+                                                                                                <label>ID issue date</label>
+                                                                                                <input asp-for="Director1.IDIssueDate" type="date" class="form-control" />
+                                                                                            </div>
+                                                                                        </div>
+
+                                                                                        <div class="col-md-3">
+                                                                                            <div class="form-group">
+                                                                                                <label>ID expiry date</label>
+                                                                                                <input asp-for="Director1.IDExpiryDate" type="date" class="form-control" />
+                                                                                            </div>
+                                                                                        </div>
+                                                                                        <div class="col-md-3">
+                                                                                            <div class="form-group">
+                                                                                                <label>ID issuing country</label>
+                                                                                                <input type="hidden" id="hdnDirector1IDIssueingCoutnry" asp-for="Director1.IDIssuingCountry" />
+                                                                                                <select asp-for="Director1.IDIssuingCountry" id="ddlDirector1IDIssueingCoutnry" class="form-control" onchange="setddlState('ddlDirector1IDIssueingCoutnry','hdnDirector1IDIssueingCoutnry')">
+                                                                                                    <options>
+                                                                                                        <option value="">--Select Country--</option>
+                                                                                                    </options>
+                                                                                                </select>
+                                                                                            </div>
+                                                                                        </div>
+                                                                                    </div>
+
+
+                                                                                    <div class="row">
+                                                                                        <div class="col-md-3">
+                                                                                            <div class="form-group">
+                                                                                                <label>Source of income</label>
+                                                                                                <input asp-for="Director1.SourceOfIncome" class="form-control" />
+                                                                                            </div>
+                                                                                        </div>
+
+                                                                                    </div>
+
+                                                                                    <div class="row">
+                                                                                        <div class="col-md-12">
+                                                                                            <div class="form-group">
+                                                                                                <div class="row">
+                                                                                                    <div class="col-md-3"><input class="btn btn-fill btn-primary" type="button" onclick="Director1validate()" value="Save" /><input type="submit" class="btn btn-fill btn-primary" style="display:none" id="btnDirector1" value="Update" formaction="AddDirector" readonly="readonly" /></div>
+                                                                                                    <div class="col-md-1"></div>
+                                                                                                    <div class="col-md-2"><input data-dismiss="modal" aria-hidden="true" class="btn btn-default" onclick="resetDirectorValues('director1')" value="Cancel" readonly="readonly" /></div>
+                                                                                                </div>
+
+                                                                                            </div>
+                                                                                        </div>
+                                                                                    </div>
+
+                                                                                </div>
+                                                                            </div>
+
+
+
+                                                                        </div>
+
+
+
+
+
+
+                                                                    </div>
+
+                                                                </div>
+
+                                                            </div>
+
+
+                                                            <div class="row col-md-12 tab-pane">
+                                                                <div style="z-index:99999" class="modal fade" id="directorModal2" tabindex="-1" data-backdrop="static" data-keyboard="false" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+                                                                    <div class="modal-dialog modal-notice" style="max-width:850px!important">
+                                                                        <div class="modal-content">
+                                                                            <div class="modal-header">
+                                                                                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">
+                                                                                    <i class="now-ui-icons ui-1_simple-remove"></i>
+                                                                                </button>
+                                                                                <h5 class="modal-title" id="myModalLabel">Enter Director Detail</h5>
+                                                                            </div>
+                                                                            <div class="modal-body">
+                                                                                <div>
+
+                                                                                    <div class="row">
+                                                                                        <div class="col-md-3">
+
+                                                                                            <div class="fileinput fileinput-new text-center" data-provides="fileinput">
+                                                                                                <div class="fileinput-new thumbnail">
+                                                                                                    @if (Model.Director2 != null && Model.Director2.ProfilePhotoPath != null && Model.Director2.ProfilePhotoPath != "")
+                                                                                                    {
+                                                                                                    <img src="@Model.Director2.ProfilePhotoPath" id="imageUploadDirector1" name="image" multiple="multiple" alt="...">
+                                                                                                    }
+                                                                                                    else
+                                                                                                    {
+                                                                                                    <img src="../../assets/img/image_placeholder.jpg" id="imageUploadDirector1" name="image" multiple="multiple" alt="...">
+                                                                                                    }
+                                                                                                </div>
+                                                                                                <div class="fileinput-preview fileinput-exists thumbnail"></div>
+                                                                                                <div>
+                                                                                                    <span class="btn btn-rose btn-round btn-file">
+                                                                                                        <span class="fileinput-new">Select image</span>
+                                                                                                        <span class="fileinput-exists">Change</span>
+                                                                                                        @Html.TextBoxFor(m => m.Director2.ProfilePhoto, new { type = "file" })
+                                                                                                    </span>
+                                                                                                    @*<a href="#pablo" class="btn btn-danger btn-round fileinput-exists" data-dismiss="fileinput"><i class="fa fa-times"></i> Remove</a>*@
+                                                                                                </div>
+
+                                                                                            </div>
+
+                                                                                        </div>
+                                                                                        <div class="col-md-9">
+                                                                                            <div class="row">
+                                                                                                <div class="col-4">
+                                                                                                    <div class="form-group">
+                                                                                                        <label>Title</label>
+                                                                                                        <select class="form-control" asp-for="Director2.Title">
+                                                                                                            <options>
+                                                                                                                <option>Mr.</option>
+                                                                                                                <option>Mrs.</option>
+                                                                                                            </options>
+                                                                                                        </select>
+                                                                                                    </div>
+
+
+                                                                                                </div>
+                                                                                                <div class="col-4">
+                                                                                                    <div class="form-group">
+                                                                                                        <label>Name</label>
+                                                                                                        <input asp-for="Director2.Name" class="form-control" />
+                                                                                                    </div>
+                                                                                                </div>
+
+
+                                                                                                <div class="col-4">
+                                                                                                    <div class="form-group" id="IndividualId1">
+                                                                                                        <label>Surname</label>
+                                                                                                        <input asp-for="Director2.Surname" class="form-control" />
+                                                                                                    </div>
+
+
+                                                                                                </div>
+                                                                                            </div>
+                                                                                            <div class="row">
+                                                                                                <div class="col-4">
+                                                                                                    <div class="form-group" id="IndividualId2">
+                                                                                                        <label>Other Names</label>
+                                                                                                        <input asp-for="Director2.OtherNames" class="form-control" />
+                                                                                                    </div>
+                                                                                                </div>
+
+
+
+
+                                                                                                <div class="col-4">
+                                                                                                    <div class="form-group">
+                                                                                                        <label>Date of birth</label>
+                                                                                                        <input type="date" asp-for="Director2.DateOfBirth" class="form-control" />
+                                                                                                    </div>
+
+
+                                                                                                </div>
+                                                                                                <div class="col-4">
+                                                                                                    <div style="width:100%" class="form-group">
+                                                                                                        <label>Gender</label>
+                                                                                                        <select style="width:100%" class="form-control" placeholder="Serial Number" asp-for="Director2.Gender">
+                                                                                                            <options>
+                                                                                                                <option value=""> --- Select --- </option>
+                                                                                                                <option value="Male">Male</option>
+                                                                                                                <option value="Male">Female</option>
+                                                                                                            </options>
+                                                                                                        </select>
+                                                                                                    </div>
+                                                                                                </div>
+                                                                                            </div>
+
+                                                                                        </div>
+                                                                                    </div>
+                                                                                </div>
+
+                                                                                <div class="row">
+                                                                                    <div class="col-3">
+                                                                                        <div class="form-group">
+                                                                                            <label>Nationality</label>
+                                                                                            <input type="hidden" id="hdnDirector2Nationality" asp-for="Corporate.Nationality" />
+                                                                                            <Select asp-for="Director2.Nationality" id="ddlDirector2Nationality" class="form-control" onchange="setddlState('ddlDirector2Nationality','hdnDirector2Nationality')">
+                                                                                                <options>
+                                                                                                    <option value="">--Nationality--</option>
+                                                                                                </options>
+                                                                                            </Select>
+                                                                                        </div>
+                                                                                    </div>
+                                                                                    <div class="col-6">
+                                                                                        <div class="form-group">
+                                                                                            <label>Address</label>
+                                                                                            <input asp-for="Director2.Address" style="width:350px !important" class="form-control" />
+                                                                                        </div>
+                                                                                    </div>
+
+
+
+                                                                                    <div class="col-md-3">
+                                                                                        <div class="form-group">
+                                                                                            <label>Email</label>
+                                                                                            <input asp-for="Director2.Email" class="form-control" />
+                                                                                        </div>
+                                                                                    </div>
+                                                                                </div>
+                                                                                <div class="row">
+                                                                                    <div class="col-md-3">
+                                                                                        <div class="form-group">
+                                                                                            <label>Phone No</label>
+                                                                                            <input asp-for="Director2.PhoneNo" class="form-control" />
+                                                                                        </div>
+
+                                                                                    </div>
+                                                                                    <div class="col-md-3">
+                                                                                        <div class="form-group">
+                                                                                            <label>Tax No</label>
+                                                                                            <input asp-for="Director2.TaxNo" class="form-control" />
+                                                                                        </div>
+                                                                                    </div>
+
+                                                                                    <div class="col-md-3">
+                                                                                        <div class="form-group">
+                                                                                            <label>Occupation</label>
+                                                                                            <input asp-for="Director2.Occupation" class="form-control" />
+                                                                                        </div>
+
+                                                                                    </div>
+
+                                                                                    <div class="col-md-3">
+                                                                                        <div class="form-group">
+                                                                                            <label>Identification Type</label>
+                                                                                            <input asp-for="Director2.IdentificationType" class="form-control" />
+                                                                                        </div>
+                                                                                    </div>
+                                                                                </div>
+
+                                                                                <div class="row">
+                                                                                    <div class="col-md-3">
+                                                                                        <div class="form-group">
+                                                                                            <label>Identification No</label>
+                                                                                            <input asp-for="Director2.IdentificationNo" class="form-control" />
+                                                                                        </div>
+                                                                                    </div>
+
+                                                                                    <div class="col-md-3">
+                                                                                        <div class="form-group">
+                                                                                            <label>ID issue date</label>
+                                                                                            <input asp-for="Director2.IDIssueDate" type="date" class="form-control" />
+                                                                                        </div>
+                                                                                    </div>
+
+                                                                                    <div class="col-md-3">
+                                                                                        <div class="form-group">
+                                                                                            <label>ID expiry date</label>
+                                                                                            <input asp-for="Director2.IDExpiryDate" type="date" class="form-control" />
+                                                                                        </div>
+                                                                                    </div>
+                                                                                    <div class="col-md-3">
+                                                                                        <div class="form-group">
+                                                                                            <label>ID issuing country</label>
+                                                                                            <input type="hidden" id="hdnDirector2IDIssueingCoutnry" asp-for="Corporate.IDIssuingCountry" />
+                                                                                            <select asp-for="Director2.IDIssuingCountry" id="ddlDirector2IDIssueingCoutnry" class="form-control" onchange="setddlState('ddlDirector2IDIssueingCoutnry','hdnDirector2IDIssueingCoutnry')">
+                                                                                                <options>
+                                                                                                    <option value="">--Select Country--</option>
+                                                                                                </options>
+                                                                                            </select>
+                                                                                        </div>
+                                                                                    </div>
+                                                                                </div>
+
+
+                                                                                <div class="row">
+                                                                                    <div class="col-md-3">
+                                                                                        <div class="form-group">
+                                                                                            <label>Source of income</label>
+                                                                                            <input asp-for="Director2.SourceOfIncome" class="form-control" />
+                                                                                        </div>
+                                                                                    </div>
+
+                                                                                </div>
+                                                                                <div class="row">
+                                                                                    <div class="col-md-12">
+                                                                                        <div class="form-group">
+                                                                                            <div class="row">
+                                                                                                <div class="col-md-3"><input class="btn btn-fill btn-primary" type="button" onclick="Director2validate()" value="Save" /><input type="submit" id="btnDirector2" class="btn btn-fill btn-primary" style="display:none" value="Update" formaction="AddDirector" /></div>
+                                                                                                <div class="col-md-1"></div>
+                                                                                                <div class="col-md-2"><input data-dismiss="modal" aria-hidden="true" class="btn btn-default" onclick="resetDirectorValues('director2')" value="Cancel" readonly="readonly" /></div>
+                                                                                            </div>
+
+                                                                                        </div>
+                                                                                    </div>
+                                                                                </div>
+                                                                            </div>
+                                                                        </div>
+
+
+
+
+
+
+
+                                                                    </div>
+
+                                                                </div>
+
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </form>
+                                            </div>
+
+                                            <div class="tab-pane" id="policyDetails">
+                                                <form enctype="multipart/form-data" method="post">
+
+                                                    <input asp-for="clientId" class="form-control" style="display:none" />
+                                                    <div id="dvPolicies" class="row tab-content" style="margin-left:1px;margin-right:1px;">
+                                                        <div class="row col-md-12">
+                                                            <div class="col-md-4">
+                                                                <div class="form-group">
+                                                                    <label class="control-label">Policy Class</label>
+                                                                    <select id="ddlPC" asp-for="policyClassId" type="text" asp-items="ViewBag.PolicyClasses" class="form-control"></select>
+                                                                </div>
+                                                            </div>
+                                                            <div class="col-md-4">
+
+                                                            </div>
+                                                            <div class="col-md-4">
+
+                                                            </div>
+                                                        </div>
+                                                        <div class="row col-md-12">
+                                                            <hr />
+                                                        </div>
+                                                        <div class="row col-md-12" style="margin-left:5px">
+                                                            <div class="row">
+                                                                <div class="row col-md-12">
+
+
+                                                                    <div id="dvThirdPartyMotor" class="row col-md-12" style="display:none">
+                                                                        <div class="row col-md-12">
+                                                                            <div class="col-md-4">
+                                                                                <div class="form-group">
+                                                                                    <label class="control-label">Make Of Vehicle</label>
+                                                                                    <input name="MakeOfVehicle" id="txtMakeOfVehicle" class="form-control" />
+
+                                                                                </div>
+                                                                            </div>
+                                                                            <div class="col-md-4">
+                                                                                <div class="form-group">
+                                                                                    <label class="control-label">Model Of Vehicle</label>
+                                                                                    <input name="ModelOfVehicle" id="txtModelOfVehicle" class="form-control" />
+
+                                                                                </div>
+                                                                            </div>
+                                                                            <div class="col-md-4">
+                                                                                <div class="form-group">
+                                                                                    <label class="control-label">Year Of Make</label>
+                                                                                    @*<input name="YearOfMake" id="txtYearOfMake" onkeypress="return validateFloatKeyPress(this,event);" class="form-control" placeholder='yyyy' maxlength="4" />*@
+                                                                                    <select name="YearOfMake" id="txtYearOfMake" class="form-control"></select>
+                                                                                </div>
+                                                                            </div>
+                                                                        </div>
+
+                                                                        <div class="row col-md-12">
+                                                                            <div class="col-md-4">
+                                                                                <div class="form-group">
+                                                                                    <label class="control-label">Cubic Capacity</label>
+                                                                                    <input name="CubicCapacity" id="txtCubicCapacity" class="form-control" />
+
+                                                                                </div>
+                                                                            </div>
+                                                                            <div class="col-md-4">
+                                                                                <div class="form-group">
+                                                                                    <label class="control-label">Registration No</label>
+                                                                                    <input name="RegistrationNo" id="txtRegistrationNo" class="form-control" onkeypress="return validateAlphaNumericOnKeyPress(event);" />
+
+                                                                                </div>
+                                                                            </div>
+                                                                            <div class="col-md-4">
+                                                                                <div class="form-group">
+                                                                                    <label class="control-label">Risk Type</label>
+                                                                                    <select name="RiskType" id="txtRiskType" type="text" class="form-control">
+                                                                                        <option>Private</option>
+                                                                                        <option>Commercial</option>
+                                                                                    </select>
+
+                                                                                </div>
+                                                                            </div>
+                                                                        </div>
+                                                                        <div class="row col-md-12">
+                                                                            <div class="col-md-4">
+                                                                                <div class="form-group">
+                                                                                    <label class="control-label">Value Insured</label>
+                                                                                    <input name="ValueInsured" id="txtValueInsured" onchange="checkFloatNumber(this);" onkeypress="return validateFloatKeyPress(this,event);" class="form-control" step='0.01' placeholder='0.00' />
+
+                                                                                </div>
+                                                                            </div>
+                                                                            <div class="col-md-4">
+
+                                                                            </div>
+                                                                            <div class="col-md-4">
+
+                                                                            </div>
+                                                                        </div>
+
+                                                                    </div>
+                                                                    <div id="dvlifePolicy" class="row col-md-12" style="display:none">
+                                                                        <div class="row col-md-12">
+                                                                            <div class="col-md-4">
+                                                                                <div class="form-group">
+                                                                                    <label class="control-label">Name Of Assured</label>
+                                                                                    <input name="NameOfAssured" id="txtNameOfAssured" class="form-control" />
+
+                                                                                </div>
+                                                                            </div>
+                                                                            <div class="col-md-4">
+                                                                                <div class="form-group">
+                                                                                    <label class="control-label">DOB</label>
+                                                                                    @*<input asp-for="DOB" class="form-control" />*@
+                                                                                    <input id="idDOB" name="DOB" type="date" class="form-control" placeholder="Name">
+
+                                                                                </div>
+                                                                            </div>
+                                                                            <div class="col-md-4">
+                                                                                <div class="form-group">
+                                                                                    <label class="control-label">Sex</label>
+                                                                                    <select name="Sex" type="text" class="form-control">
+                                                                                        <option>Male</option>
+                                                                                        <option>Female</option>
+                                                                                    </select>
+
+                                                                                </div>
+                                                                            </div>
+                                                                        </div>
+
+                                                                        <div class="row col-md-12">
+                                                                            <div class="col-md-4">
+                                                                                <div class="form-group">
+                                                                                    <label class="control-label">Salary</label>
+                                                                                    <input name="Salary" onchange="checkFloatNumber(this);" onkeypress="return validateFloatKeyPress(this,event);" class="form-control" step='0.01' placeholder='0.00' />
+
+                                                                                </div>
+                                                                            </div>
+                                                                            <div class="col-md-4">
+                                                                                <div class="form-group">
+                                                                                    <label class="control-label">Sum Assessed</label>
+                                                                                    <input name="SumAssessed" id="txtSumAssessed" onchange="checkFloatNumber(this);" onkeypress="return validateFloatKeyPress(this,event);" class="form-control" step='0.01' placeholder='0.00' />
+
+                                                                                </div>
+                                                                            </div>
+                                                                            <div class="col-md-4">
+                                                                                <div class="form-group">
+                                                                                    <label class="control-label">Next Of Kin</label>
+                                                                                    <input name="NextOfKin" class="form-control" />
+
+                                                                                </div>
+                                                                            </div>
+                                                                        </div>
+
+                                                                    </div>
+
+                                                                    <div id="dvCorporateBond" class="row col-md-12" style="display:none">
+                                                                        <div class="row col-md-12">
+                                                                            <div class="col-md-4">
+                                                                                <div class="form-group">
+                                                                                    <label class="control-label">Nature Of Contract</label>
+                                                                                    <input name="NatureOfContract" id="txtNatureOfContract" class="form-control" />
+
+                                                                                </div>
+                                                                            </div>
+                                                                            <div class="col-md-4">
+                                                                                <div class="form-group">
+                                                                                    <label class="control-label">Project Name</label>
+                                                                                    <input name="ProjectName" id="txtProjectName" class="form-control" />
+
+                                                                                </div>
+                                                                            </div>
+                                                                            <div class="col-md-4">
+                                                                                <div class="form-group">
+                                                                                    <label class="control-label">Premium Rates</label>
+                                                                                    <input name="PremiumRates" id="txtPremiumRates" class="form-control" />
+
+                                                                                </div>
+                                                                            </div>
+                                                                        </div>
+
+                                                                        <div class="row col-md-12">
+                                                                            <div class="col-md-4">
+                                                                                <div class="form-group">
+                                                                                    <label class="control-label">Contract Amount</label>
+                                                                                    <input name="ContractAmount" id="txtContractAmount" onchange="checkFloatNumber(this);" onkeypress="return validateFloatKeyPress(this,event);" class="form-control" step='0.01' placeholder='0.00' />
+
+                                                                                </div>
+                                                                            </div>
+                                                                            <div class="col-md-4">
+                                                                                <div class="form-group">
+                                                                                    <label class="control-label">Bond Amount</label>
+                                                                                    <input name="BondAmount" id="txtBondAmount" onchange="checkFloatNumber(this);" onkeypress="return validateFloatKeyPress(this,event);" class="form-control" step='0.01' placeholder='0.00' />
+
+                                                                                </div>
+                                                                            </div>
+                                                                            <div class="col-md-4">
+
+                                                                            </div>
+                                                                        </div>
+
+
+                                                                    </div>
+
+
+                                                                    <!--Start policies common fields-->
+                                                                    <div class="row col-md-12"><hr /></div>
+                                                                    <div class="row col-md-12">
+                                                                        <div class="row col-md-12">
+                                                                            <div class="col-md-4">
+                                                                                <div class="form-group">
+                                                                                    <label class="control-label">Start Date</label>
+                                                                                    @*<input asp-for="StartDate" class="form-control" />*@
+                                                                                    <input id="idStartDate" name="Policy.StartDate" type="date" class="form-control">
+
+                                                                                </div>
+                                                                            </div>
+                                                                            <div class="col-md-4">
+                                                                                <div class="form-group">
+                                                                                    <label class="control-label">End Date</label>
+                                                                                    @*<input asp-for="EndDate" class="form-control" />*@
+                                                                                    <input id="idEndDate" name="Policy.EndDate" type="date" class="form-control">
+
+                                                                                </div>
+                                                                            </div>
+                                                                            <div class="col-md-4">
+                                                                                <div class="form-group">
+                                                                                    <label class="control-label">(%)Risk Owned By Broker</label>
+                                                                                    <input asp-for="policy.RiskOwnedByBroker" onchange="checkFloatNumber(this);" onkeypress="return validateFloatKeyPress(this,event);" class="form-control" step='0.01' placeholder='0.00' />
+
+                                                                                </div>
+                                                                            </div>
+                                                                        </div>
+                                                                        <div class="row col-md-12">
+                                                                            <div class="col-md-4">
+                                                                                <div class="form-group">
+                                                                                    <label class="control-label">Sum Insured</label>
+                                                                                    <input id="txtSumInsured" asp-for="policy.SumInsured" onchange="checkFloatNumber(this);" onkeypress="return validateFloatKeyPress(this,event);" class="form-control" step='0.01' placeholder='0.00' />
+
+                                                                                </div>
+                                                                            </div>
+                                                                            <div class="col-md-4">
+                                                                                <div class="form-group">
+                                                                                    <label class="control-label">Gross Premium</label>
+                                                                                    <input id="txtGP" asp-for="policy.GrossPremium" onchange="leadEndorsementGPOnChange(this);" onkeypress="return validateFloatKeyPress(this,event);" class="form-control" step='0.01' placeholder='0.00' />
+
+                                                                                </div>
+                                                                            </div>
+                                                                            <div class="col-md-4">
+                                                                                <div class="form-group">
+                                                                                    <label class="control-label">Commission</label>
+                                                                                    <input asp-for="policy.Commission" id="txtCommission" onchange="leadEndorsementCommOnChange(this);" onkeypress="return validateFloatKeyPress(this,event);" class="form-control" step='0.01' placeholder='0.00' />
+
+                                                                                </div>
+                                                                            </div>
+                                                                        </div>
+                                                                        <div class="row col-md-12">
+                                                                            <div class="col-md-4">
+                                                                                <div class="form-group">
+                                                                                    <label class="control-label">Net Premium</label>
+                                                                                    <input id="txtNetPremium" asp-for="policy.NetPremium" onchange="checkFloatNumber(this);" onkeypress="return validateFloatKeyPress(this,event);" class="form-control" step='0.01' placeholder='0.00' readonly/>
+
+                                                                                </div>
+                                                                            </div>
+                                                                            <div class="col-md-4">
+                                                                                <div class="form-group">
+                                                                                    <label class="control-label">Insurer</label>
+                                                                                    <select id="ddlIns" asp-for="policy.InsurerMasterId" type="text" asp-items="ViewBag.InsuresList" class="form-control"></select>
+                                                                                </div>
+                                                                            </div>
+                                                                            <div class="col-md-4">
+                                                                                <div class="form-group">
+                                                                                    <label class="control-label">Currency</label>
+                                                                                    <select id="ddlcurrency" asp-for="policy.Currency" type="text" asp-items="ViewBag.currencyList" class="form-control"></select>
+                                                                                </div>
+                                                                            </div>
+                                                                        </div>
+                                                                        <div class="row col-md-12">
+                                                                            <div class="col-md-4">
+                                                                                <div class="form-group">
+                                                                                    <label class="control-label">Transaction Type</label>
+                                                                                    <select id="ddlTrancationType" asp-for="policy.TranscationType" type="text" class="form-control">
+                                                                                        <option value="New Purchase">New Purchase</option>
+                                                                                        <option value="Renewal">Renewal</option>
+                                                                                        <option value="Addition">Addition</option>
+                                                                                    </select>
+                                                                                </div>
+                                                                            </div>
+                                                                            <div class="col-md-4">
+                                                                                <div class="form-group">
+                                                                                    <label class="control-label">Documents</label><br />
+                                                                                    <a href="#" onclick="AddDocuments()" id="btnAddDocument" style="margin-top:0px" data-toggle="modal" class="btn btn-info btn-sm btn-round" data-target="#documentModal" rel="tooltip">
+                                                                                        Select Files
+                                                                                    </a>
+                                                                                </div>
+                                                                            </div>
+                                                                            <div class="col-md-4">
+                                                                                <div class="form-group">
+
+
+                                                                                </div>
+                                                                            </div>
+                                                                        </div>
+                                                                        <div class="row col-md-12">
+                                                                            <div class="col-md-8">
+                                                                                <div class="row col-md-12">
+
+                                                                                    <div class="row">
+                                                                                        <div class="col-md-6">
+                                                                                            <div class="form-group">
+                                                                                                <label class="control-label">Agents</label>
+                                                                                                <input name="Agent1" class="form-control" />
+                                                                                            </div>
+                                                                                        </div>
+                                                                                        <div class="col-md-3">
+                                                                                            <div class="form-group">
+                                                                                                <label class="control-label">Proportion</label>
+                                                                                                <input name="prop1" id="prop1" onchange="checkFloatNumber(this);" onkeypress="return validateFloatKeyPress(this,event);" class="form-control" step='0.01' placeholder='0.00' />
+                                                                                            </div>
+                                                                                        </div>
+                                                                                        <div class="col-md-3">
+                                                                                            <div style="    margin-top: 17px;" class="form-group">
+                                                                                                <button onclick="showNextAgent()" type="button" class="btn btn-info btn-sm btn-round"> <i class="now-ui-icons ui-1_simple-add"></i> </button>
+                                                                                            </div>
+                                                                                        </div>
+                                                                                    </div>
+                                                                                    <div class="row" id="agent2" style="display:none">
+                                                                                        <div class="col-md-6">
+                                                                                            <div class="form-group">
+                                                                                                <input name="Agent2" id="Agent2" class="form-control" />
+                                                                                            </div>
+                                                                                        </div>
+                                                                                        <div class="col-md-3">
+                                                                                            <div class="form-group">
+                                                                                                <input name="prop2" id="prop2" onchange="checkFloatNumber(this);" onkeypress="return validateFloatKeyPress(this,event);" class="form-control" step='0.01' placeholder='0.00' />
+                                                                                            </div>
+                                                                                        </div>
+                                                                                        <div class="col-md-3">
+                                                                                            <div style="    margin-top: -7px;" class="form-group">
+                                                                                                <button onclick="removeAgent('agent2')" type="button" class="btn btn-info btn-sm btn-round"> <i class="now-ui-icons ui-1_simple-delete"></i> </button>
+                                                                                            </div>
+                                                                                        </div>
+                                                                                    </div>
+                                                                                    <div class="row" id="agent3" style="display:none">
+                                                                                        <div class="col-md-6">
+                                                                                            <div class="form-group">
+                                                                                                <input name="Agent3" id="Agent3" class="form-control" />
+                                                                                            </div>
+                                                                                        </div>
+                                                                                        <div class="col-md-3">
+                                                                                            <div class="form-group">
+                                                                                                <input name="prop3" id="prop3" onchange="checkFloatNumber(this);" onkeypress="return validateFloatKeyPress(this,event);" class="form-control" step='0.01' placeholder='0.00' />
+                                                                                            </div>
+                                                                                        </div>
+                                                                                        <div class="col-md-3">
+                                                                                            <div class="form-group">
+                                                                                                <div style="    margin-top: -7px;" class="form-group">
+                                                                                                    <button onclick="removeAgent('agent3')" type="button" class="btn btn-info btn-sm btn-round"> <i class="now-ui-icons ui-1_simple-delete"></i> </button>
+                                                                                                </div>
+                                                                                            </div>
+                                                                                        </div>
+                                                                                    </div>
+                                                                                    <div class="row" id="agent4" style="display:none">
+                                                                                        <div class="col-md-6">
+                                                                                            <div class="form-group">
+                                                                                                <input name="Agent4" id="Agent4" class="form-control" />
+                                                                                            </div>
+                                                                                        </div>
+                                                                                        <div class="col-md-3">
+                                                                                            <div class="form-group">
+                                                                                                <input name="prop4" id="prop4" onchange="checkFloatNumber(this);" onkeypress="return validateFloatKeyPress(this,event);" class="form-control" step='0.01' placeholder='0.00' />
+                                                                                            </div>
+                                                                                        </div>
+                                                                                        <div class="col-md-3">
+                                                                                            <div class="form-group">
+                                                                                                <div style="    margin-top: -7px;" class="form-group">
+                                                                                                    <button onclick="removeAgent('agent4')" type="button" class="btn btn-info btn-sm btn-round"> <i class="now-ui-icons ui-1_simple-delete"></i> </button>
+                                                                                                </div>
+                                                                                            </div>
+                                                                                        </div>
+                                                                                    </div>
+                                                                                    <div class="row" id="agent5" style="display:none">
+                                                                                        <div class="col-md-6">
+                                                                                            <div class="form-group">
+                                                                                                <input name="Agent5" id="Agent5" class="form-control" />
+                                                                                            </div>
+                                                                                        </div>
+                                                                                        <div class="col-md-3">
+                                                                                            <div class="form-group">
+                                                                                                <input name="prop5" id="prop5" onchange="checkFloatNumber(this);" onkeypress="return validateFloatKeyPress(this,event);" class="form-control" step='0.01' placeholder='0.00' />
+                                                                                            </div>
+                                                                                        </div>
+                                                                                        <div class="col-md-3">
+                                                                                            <div style="    margin-top: -7px;" class="form-group">
+                                                                                                <button onclick="removeAgent('agent5')" type="button" class="btn btn-info btn-sm btn-round"> <i class="now-ui-icons ui-1_simple-delete"></i> </button>
+                                                                                            </div>
+                                                                                        </div>
+                                                                                    </div>
+                                                                                </div>
+                                                                            </div>
+                                                                            <div class="col-md-12">
+                                                                                <input style="margin:10px;display:none" type="submit" id="idLeadSubmit" class="btn btn-success" value="Save" formaction="CreateLead" />
+                                                                                <input style="margin:10px;width:100px !important;" onclick="validateLeadData()" type="button" class="btn btn-fill btn-primary btn-round" value="Save" />
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                    <!--End policies common fields-->
+                                                                </div>
+                                                            </div>
+                                                        </div>
+
+                                                    </div>
+                                                    <div class="modal fade" id="documentModal" tabindex="-1" role="dialog" data-backdrop="static" data-keyboard="false" aria-labelledby="myModalLabel" aria-hidden="true" style="padding-top: 59px">
+                                                        <div style="max-width:400px" class="modal-dialog modal-notice">
+                                                            <div style="padding:0px !important" class="modal-content">
+                                                                <div style="padding:0px !important" class="modal-header">
+                                                                    <div id="dialogDocuments">
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </form>
+                                            </div>
+
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+@*@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+    }*@
+
+<script>
+
+    var documentsUploaded = false;
+    function AddDocuments()
+    {
+
+        var customerId = "";
+        var targeturl = '@Url.Action("AddLeadDocuments", "LeadDocument")?lid=';
+//var targeturl = '@Url.Action("GetLeadPolicyData", "PolicyLead")?lid=a11a116f-fd32-4c94-bc3b-976f18c9c10c';
+        if (!documentsUploaded) {
+            $.ajax({
+                url: targeturl,
+                type: "GET",
+                contentType: "application/json; charset=utf-8",
+                dataType: "html",
+                success: function (response) {
+                    documentsUploaded = true;
+                    $('#dialogDocuments').html(response);
+                    $('#documentModal').show();
+
+
+                },
+                failure: function (response) {
+                    alert(response.responseText);
+                },
+                error: function (response) {
+                    alert(response.responseText);
+                }
+            });
+        }
+        else {
+             $('#documentModal').show();
+        }
+    }
+
+
+
+    $(document).ready(function () {
+        var start = new Date().getFullYear(); //1970;
+        var end = 1970; //new Date().getFullYear();
+        var options = "";
+        for (var year = start; year >= end; year--) {
+            options += "<option>" + year + "</option>";
+        }
+        document.getElementById("txtYearOfMake").innerHTML = options;
+
+        var selectedText = $("#ddlPC option:selected").text();
+        var pc = $('#ddlPC').val();
+        setPolicyViewVisibility(pc);
+        //$('#spnPolicy').text(selectedValue);
+        $('#ddlPC').change(function () {
+
+            pc = $('#ddlPC').val();
+            selectedText = $("#ddlPC option:selected").text();
+
+            //$('#spnPolicy').text(selectedText);
+            setPolicyViewVisibility(pc);
+
+        });
+
+
+    });
+
+    function setPolicyViewVisibility(pc) {
+        documentsUploaded = false;
+    $('#btnAddDocument').text('Select Files');
+        if (pc == "8ED74480-CA28-418A-ADD6-FE25E8E15B86".toLowerCase()) {
+            //window.location.href = '/LifePolicies/Create'
+            $('#dvlifePolicy').show();
+            $('#dvGroupPolicy').hide();
+            $('#dvCorporateBond').hide();
+            $('#dvCompMotor').hide();
+            $('#dvThirdPartyMotor').hide();
+
+
+        } else if (pc == "C9CE6B9A-771F-4ED7-9CEE-6B8F131E4DA5".toLowerCase()) {
+            $('#dvlifePolicy').hide();
+
+            $('#dvCorporateBond').hide();
+
+            $('#dvThirdPartyMotor').show();
+
+            //window.location.href = '/ThirdPartyMotorPolicies/Create'
+        } else if (pc == "D2CFA791-27FC-4CEF-970E-9251FC92D120".toLowerCase()) {
+            //window.location.href = '/GrouplifePolicies/Create'
+
+            $('#dvlifePolicy').show();
+
+            $('#dvCorporateBond').hide();
+
+            $('#dvThirdPartyMotor').hide();
+
+        } else if (pc == "E56249E3-E821-4969-80C4-B97BD4798CC2".toLowerCase()) {
+            //window.location.href = '/CorporateBondPolicies/Create'
+            $('#dvlifePolicy').hide();
+
+            $('#dvCorporateBond').show();
+
+            $('#dvThirdPartyMotor').hide();
+
+        } else if (pc == "FCF9DDF7-BF80-4503-9C5E-CECF428491EC".toLowerCase()) {
+            $('#dvlifePolicy').hide();
+
+            $('#dvCorporateBond').hide();
+
+            $('#dvThirdPartyMotor').show();
+            //window.location.href = '/ComprehensiveMotorPolicies/Create'
+        }
+    }
+
+
+
+
+
+
+</script>
+
+
+
+
+@*Profile Scripts*@
+<script>
+    var elem = document.getElementById("ddlClientType");
+    elem.onchange = function () {
+
+        toggelRegistrationView();
+
+    };
+
+    $(document).ready(function () {
+        if (document.getElementById("hdnLeadClientId").value == "" || document.getElementById("hdnLeadClientId").value == "00000000-0000-0000-0000-000000000000") {
+            document.getElementById("ddlClientType").disabled = false;
+        }
+
+        //-------------------------------SELECT CASCADING-------------------------//
+        var selectedCountry = selectedRegion = selectedCity = countryCode = "";
+        // This is a demo API key for testing purposes. You should rather request your API key (free) from http://battuta.medunes.net/
+        var BATTUTA_KEY = "00000000000000000000000000000000";
+        // Populate country select box from battuta API
+        url =
+            "https://geo-battuta.net/api/country/all/?key=" +
+            BATTUTA_KEY +
+            "&callback=?";
+        // EXTRACT JSON DATA.
+        $.getJSON(url, function (data) {
+            $.each(data, function (index, value) {
+
+                // APPEND OR INSERT DATA TO SELECT ELEMENT. Set the country code in the id section rather than in the value.
+                $("#ddlIDIssuingCountry").append(
+                    '<option id="' + value.code + '" value="' + value.code + '">' + value.name + "</option>"
+                );
+                $("#ddlIndividualNationality").append(
+                    '<option id="' + value.code + '" value="' + value.code + '">' + value.name + "</option>"
+                );
+
+                $("#ddlDirector1Nationality").append(
+                    '<option id="' + value.code + '" value="' + value.code + '">' + value.name + "</option>"
+                );
+                $("#ddlDirector1IDIssueingCoutnry").append(
+                    '<option id="' + value.code + '" value="' + value.code + '">' + value.name + "</option>"
+                );
+
+                $("#ddlDirector2Nationality").append(
+                    '<option id="' + value.code + '" value="' + value.code + '">' + value.name + "</option>"
+                );
+                $("#ddlDirector2IDIssueingCoutnry").append(
+                    '<option  value="' + value.code + '">' + value.name + "</option>"
+                );
+
+
+
+
+            });
+            if (document.getElementById("ddlDirector1Nationality") != null) {
+                document.getElementById("ddlDirector1Nationality").value = document.getElementById("hdnDirector1Nationality").value;
+                document.getElementById("ddlDirector1IDIssueingCoutnry").value = document.getElementById("hdnDirector1IDIssueingCoutnry").value;
+                document.getElementById("ddlDirector2Nationality").value = document.getElementById("hdnDirector2Nationality").value;
+                document.getElementById("ddlDirector2IDIssueingCoutnry").value = document.getElementById("hdnDirector2IDIssueingCoutnry").value;
+
+                countryCode = "ng";
+                url =
+                    "https://geo-battuta.net/api/region/" +
+                    countryCode +
+                    "/all/?key=" +
+                    BATTUTA_KEY +
+                    "&callback=?";
+                $.getJSON(url, function (data) {
+
+                    $.each(data, function (index, value) {
+                        // APPEND OR INSERT DATA TO SELECT ELEMENT.
+
+                        $("#ddlIncorporationState").append(
+                            '<option value="' + value.region + '">' + value.region + "</option>"
+                        );
+                    });
+                    document.getElementById("ddlIncorporationState").value = document.getElementById("hdnIncorporationState").value;
+
+                })
+            }
+            else {
+                document.getElementById("ddlIndividualNationality").value = document.getElementById("hdnIndividualNationality").value;
+                document.getElementById("ddlIDIssuingCountry").value = document.getElementById("hdnIDIssuingCountry").value;
+            }
+
+
+        });
+    });
+
+    function setddlState(source, dest) {
+
+        document.getElementById(dest).value = document.getElementById(source).value;
+
+
+    }
+
+
+
+
+
+
+    function requiredIndividual(obj) {
+        $("#Individual_Name").attr('required', obj);
+        $("#Individual_Surname").attr('required', obj);
+        //   $("#Individual_OtherNames").attr('required', obj);
+        $("#ddlGender").attr('required', obj);
+        $("#ddlIndividualNationality").attr('required', obj);
+        $("#Individual_DateOfBirth").attr('required', obj);
+        $("#Individual_Address").attr('required', obj);
+        $("#Individual_PhoneNo").attr('required', obj);
+        $("#Individual_Email").attr('required', obj);
+        $("#Individual_Occupation").attr('required', obj);
+        //$("#Individual_TaxNo").attr('required', obj);
+        //$("#Individual_IdentificationType").attr('required', obj);
+        //$("#Individual_IdentificationNo").attr('required', obj);
+        //$("#Individual_IDIssueDate").attr('required', obj);
+        //$("#Individual_IDExpiryDate").attr('required', obj);
+        //$("#ddlIDIssuingCountry").attr('required', obj);
+        $("#Individual_SourceOfIncome").attr('required', obj);
+        //$("#Individual_Bank").attr('required', obj);
+        //$("#Individual_AccountNo").attr('required', obj);
+        //$("#Individual_BVN").attr('required', obj);
+        //$("#divProfilePhoto").attr('required', obj);
+
+        if (obj == true) {
+            document.getElementById("Individual_Email").setAttribute("type", "email");
+
+        }
+
+        if (obj == false) {
+
+            document.getElementById("Individual_Email").setAttribute("type", "text");
+        }
+
+
+
+    }
+    function requiredCorporate(obj) {
+        $("#Corporate_Name").attr('required', obj);
+        $("#Corporate_Address").attr('required', obj);
+        $("#Corporate_Email").attr('required', obj);
+        $("#Corporate_PhoneNo").attr('required', obj);
+        $("#Corporate_IncorporationOrRCNumber").attr('required', obj);
+        $("#ddlIncorporationState").attr('required', obj);
+        $("#Corporate_IncorporationDate").attr('required', obj);
+        //$("#Corporate_TaxNo").attr('required', obj);
+        //$("#Corporate_CompanyBank").attr('required', obj);
+        //$("#Corporate_AccountNo").attr('required', obj);
+        //$("#Corporate_BankBranch").attr('required', obj);
+        // $("#Corporate_URL").attr('required', obj);
+        //$("#Corporate_BVN").attr('required', obj);
+        if (obj == true) {
+            document.getElementById("Corporate_Email").setAttribute("type", "email");
+            // document.getElementById("Corporate_URL").setAttribute("type", "url");
+
+        }
+
+        if (obj == false) {
+
+            document.getElementById("Corporate_Email").setAttribute("type", "text");
+            //   document.getElementById("Corporate_URL").setAttribute("type", "text");
+        }
+
+
+
+
+
+    }
+    function validateDirectors() {
+
+        var flag = "true";
+        if (!ValidateDirector1()) {
+            flag = "false";
+
+            $("#divDirectorCard1").css({
+                "border-color": "#FF0000",
+                "border-width": "1px",
+                "border-style": "solid"
+            });
+        }
+        if (!ValidateDirector2()) {
+            flag = "false";
+            $("#divDirectorCard2").css({
+                "border-color": "#FF0000",
+                "border-width": "1px",
+                "border-style": "solid"
+            });
+
+
+
+        }
+        if (flag == "true") {
+            document.getElementById("btnCorporateSave").click();
+        }
+
+    }
+
+
+    function ValidateDirector1() {
+
+        if (
+            $("#Director1_Name").val() == "" ||
+            $("#Director1_Surname").val() == "" ||
+            //$("#Director1_OtherNames").val() == "" ||
+            $("#Director1_DateOfBirth").val() == "" ||
+            $("#Director1_Gender").val() == "" ||
+            $("#ddlDirector1Nationality").val() == "" ||
+            $("#Director1_Address").val() == "" ||
+            $("#Director1_Email").val() == "" ||
+            $("#Director1_PhoneNo").val() == "" ||
+            //$("#Director1_TaxNo").val() == "" ||
+            $("#Director1_Occupation").val() == "" ||
+            //$("#Director1_IdentificationType").val() == "" ||
+            //$("#Director1_IdentificationNo").val() == "" ||
+            //$("#Director1_IDIssueDate").val() == "" ||
+            //$("#Director1_IDExpiryDate").val() == "" ||
+            //$("#ddlDirector1IDIssueingCoutnry").val() == "" ||
+            $("#Director1_SourceOfIncome").val() == "") {
+            return false;
+
+        }
+        else {
+            return true;
+        }
+    }
+
+    function ValidateDirector2() {
+
+        if (
+            $("#Director2_Name").val() == "" ||
+            $("#Director2_Surname").val() == "" ||
+            //$("#Director2_OtherNames").val() == "" ||
+            $("#Director2_DateOfBirth").val() == "" ||
+            $("#Director2_Gender").val() == "" ||
+            $("#ddlDirector2Nationality").val() == "" ||
+            $("#Director2_Address").val() == "" ||
+            $("#Director2_Email").val() == "" ||
+            $("#Director2_PhoneNo").val() == "" ||
+            //$("#Director2_TaxNo").val() == "" ||
+            $("#Director2_Occupation").val() == "" ||
+            //$("#Director2_IdentificationType").val() == "" ||
+            //$("#Director2_IdentificationNo").val() == "" ||
+            //$("#Director2_IDIssueDate").val() == "" ||
+            //$("#Director2_IDExpiryDate").val() == "" ||
+            //$("#ddlDirector2IDIssueingCoutnry").val() == "" ||
+            $("#Director2_SourceOfIncome").val() == "") {
+            return false;
+
+        }
+        else {
+            return true;
+        }
+    }
+
+
+    function EmptyDirector1Model() {
+
+        $("#Director1_Name").val("");
+        $("#Director1_Surname").val("");
+        $("#Director1_OtherNames").val("");
+        $("#Director1_DateOfBirth").val("");
+        $("#Director1_Gender").val("")
+        $("#ddlDirector1Nationality").val("");
+        $("#Director1_Address").val("");
+        $("#Director1_Email").val("");
+        $("#Director1_PhoneNo").val("");
+        $("#Director1_TaxNo").val("");
+        $("#Director1_Occupation").val("");
+        $("#Director1_IdentificationType").val("");
+        $("#Director1_IdentificationNo").val("");
+        $("#Director1_IDIssueDate").val("");
+        $("#Director1_IDExpiryDate").val("");
+        $("#ddlDirector1IDIssueingCoutnry").val("");
+        $("#Director1_SourceOfIncome").val("");
+    }
+
+    function EmptyDirector2Model() {
+
+        $("#Director2_Name").val("");
+        $("#Director2_Surname").val("");
+        $("#Director2_OtherNames").val("");
+        $("#Director2_DateOfBirth").val("");
+        $("#Director2_Gender").val("");
+        $("#ddlDirector2Nationality").val("");
+        $("#Director2_Address").val("");
+        $("#Director2_Email").val("");
+        $("#Director2_PhoneNo").val("");
+        $("#Director2_TaxNo").val("");
+        $("#Director2_Occupation").val("");
+        $("#Director2_IdentificationType").val("");
+        $("#Director2_IdentificationNo").val("");
+        $("#Director2_IDIssueDate").val("");
+        $("#Director2_IDExpiryDate").val("");
+        $("#ddlDirector2IDIssueingCoutnry").val("");
+        $("#Director2_SourceOfIncome").val("");
+    }
+    function requiredDirector1(obj) {
+
+        $("#Director1_Name").attr('required', obj);
+        $("#Director1_Surname").attr('required', obj);
+        // $("#Director1_OtherNames").attr('required', obj);
+        $("#Director1_DateOfBirth").attr('required', obj);
+        $("#Director1_Gender").attr('required', obj);
+        $("#ddlDirector1Nationality").attr('required', obj);
+        $("#Director1_Address").attr('required', obj);
+        $("#Director1_Email").attr('required', obj);
+        $("#Director1_PhoneNo").attr('required', obj);
+        //$("#Director1_TaxNo").attr('required', obj);
+        $("#Director1_Occupation").attr('required', obj);
+        //$("#Director1_IdentificationType").attr('required', obj);
+        //$("#Director1_IdentificationNo").attr('required', obj);
+        //$("#Director1_IDIssueDate").attr('required', obj);
+        //$("#Director1_IDExpiryDate").attr('required', obj);
+        //$("#ddlDirector1IDIssueingCoutnry").attr('required', obj);
+        $("#Director1_SourceOfIncome").attr('required', obj);
+        if (obj == true) {
+            document.getElementById("Director1_Email").setAttribute("type", "email");
+
+        }
+
+        if (obj == false) {
+
+            document.getElementById("Director1_Email").setAttribute("type", "text");
+        }
+
+
+
+    }
+    function requiredDirector2(obj) {
+        $("#Director2_Name").attr('required', obj);
+        $("#Director2_Surname").attr('required', obj);
+        //  $("#Director2_OtherNames").attr('required', obj);
+        $("#Director2_DateOfBirth").attr('required', obj);
+        $("#Director2_Gender").attr('required', obj);
+        $("#ddlDirector2Nationality").attr('required', obj);
+        $("#Director2_Address").attr('required', obj);
+        $("#Director2_Email").attr('required', obj);
+        $("#Director2_PhoneNo").attr('required', obj);
+        //$("#Director2_TaxNo").attr('required', obj);
+        $("#Director2_Occupation").attr('required', obj);
+        //$("#Director2_IdentificationType").attr('required', obj);
+        //$("#Director2_IdentificationNo").attr('required', obj);
+        //$("#Director2_IDIssueDate").attr('required', obj);
+        //$("#Director2_IDExpiryDate").attr('required', obj);
+        //$("#ddlDirector2IDIssueingCoutnry").attr('required', obj);
+        $("#Director2_SourceOfIncome").attr('required', obj);
+        if (obj == true) {
+            document.getElementById("Director2_Email").setAttribute("type", "email");
+
+        }
+
+        if (obj == false) {
+
+            document.getElementById("Director2_Email").setAttribute("type", "text");
+        }
+
+    }
+
+    function resetDirectorValues(obj) {
+        if (obj == "director1") {
+            //    EmptyDirector1Model();
+        }
+        else {
+            //  EmptyDirector2Model();
+        }
+        requiredIndividual(false);
+        requiredCorporate(true);
+        requiredDirector1(false);
+        requiredDirector2(false);
+    }
+
+    function Director1validate() {
+
+        requiredIndividual(false);
+        requiredCorporate(false);
+        requiredDirector1(true);
+        requiredDirector2(false);
+        document.getElementById("btnDirector1").click();
+
+    }
+
+    function Director2validate() {
+        requiredIndividual(false);
+        requiredCorporate(false);
+        requiredDirector1(false);
+        requiredDirector2(true);
+        document.getElementById("btnDirector2").click();
+    }
+
+
+
+
+    function toggelRegistrationView() {
+        var e = document.getElementById("ddlClientType");
+        var selectedValue = e.options[e.selectedIndex].text;
+        if (selectedValue == 'Individual') {
+            //var hiddenDiv0 = document.getElementById("CorporateId1");
+            //hiddenDiv0.style.display = (this.value == "") ? "none" : "block";
+            $("#divIndividual").show();
+            $("#divIndividual1").show();
+            $("#divIndividual2").show(); divIndividual2
+            $("#divCorporate").hide();
+            $("#divProfilePhoto").show();
+            requiredIndividual(true);
+
+            requiredCorporate(false);
+            requiredDirector1(false);
+            requiredDirector2(false);
+
+
+        }
+        else {
+            $("#divIndividual").hide();
+            $("#divIndividual1").hide();
+            $("#divIndividual2").hide();
+
+            $("#divCorporate").show();
+            $("#divProfilePhoto").hide();
+            requiredIndividual(false);
+            requiredCorporate(true);
+            requiredDirector1(false);
+            requiredDirector2(false);
+
+
+        }
+
+    }
+    toggelRegistrationView();
+
+    if (document.getElementById("hdnLeadClientId").value != "" && document.getElementById("hdnLeadClientId").value != "00000000-0000-0000-0000-000000000000" && document.getElementById("hdnEdit").value != "true") {
+        var nodes = document.getElementById("profileDetails").getElementsByTagName('*');
+        for (var i = 0; i < nodes.length; i++) {
+            nodes[i].disabled = true;
+        }
+
+        document.getElementById("btnCorporateSubmit").disabled = false;
+        document.getElementById("btnindividualSubmit").disabled = false;
+        document.getElementById("btnindividualSubmitCancel").disabled = false;
+        document.getElementById("btnCorporateSubmitCancel").disabled = false;
+
+    }
+
+    function redirectClientDetailPage() {
+        var clientId = document.getElementById("hdnLeadClientId").value;
+        window.location.href = '/Client/Details/' + clientId + "?IsOpen=edit";
+
+    }
+    function RedirectIndex() {
+        window.location.href = "/Client";
+    }
+
+    function getConfirmationforDelete(obj) {
+
+        var result = confirm("Are you sure to delete?");
+
+
+        if (result) {
+            if (obj == "btnDeleteDirector1") {
+                //document.getElementById("Director1_Name").value = "";
+                EmptyDirector1Model();
+
+            }
+            else {
+                //document.getElementById("Director2_Name").value = "";
+                EmptyDirector2Model();
+            }
+            requiredIndividual(false);
+            requiredCorporate(false);
+            requiredDirector1(false);
+            requiredDirector2(false);
+            document.getElementById(obj).click();
+
+        }
+    }
+
+
+
+
+
+
+
+
+
+</script>

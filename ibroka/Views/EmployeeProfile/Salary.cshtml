@@ -1,0 +1,84 @@
+﻿@model E4S.Models.HumanResource.Salary
+
+@{
+    ViewData["Title"] = "Salary";
+    Layout = "~/Views/Shared/_LayoutEmployee.cshtml";
+}
+
+<div class="content">
+    <div class="card">
+        <div class="card-header text-center" data-background-color="orange">
+            <h3 class="card-title">
+                Salary 
+            </h3>
+            <h5 class="description">
+                This is what you earn.
+            </h5>
+        </div>
+        @*<h4 class="card-title"> Employee Jobs</h4>*@
+
+        <div class="row">
+            <div class="col-md-12">
+                <div class="card ">
+
+                  <div class="card-body ">
+
+                    <form>
+                      <div class="row">
+                        @*<div class="col-md-6 ">
+                          <div class="form-group">
+                            <label>Pay Grade</label>
+                            <input asp-for="PayGrade.PayGradeName" type="text"  class="form-control" placeholder="Country" disabled>
+                            @*</input>
+                          </div>
+                        </div>*@
+                        <div class="col-md-6 ">
+                          <div class="form-group">
+                            <label>Pay Frequency</label>
+                            <input asp-for="PayFrequency" type="text" class="form-control" disabled>
+                            @*</input>*@
+                          </div>
+                        </div>
+                      </div>
+
+
+                      <hr />
+
+                      <div class="row">
+                        <div class="col-md-6 ">
+                          <div class="form-group">
+                            <label>Amount</label>
+                            <input asp-for="Amount" type="number" readonly class="form-control" placeholder="Amount">
+                          </div>
+                        </div>
+                        <div class="col-md-6 ">
+                          <div class="form-group">
+                            <label>Currency</label>
+                            <input asp-for="Currency" readonly type="text" class="form-control" placeholder="Currency">
+                          </div>
+                        </div>
+                      </div>
+
+                      <div class="row">
+                        <div class="col-md-12">
+                          <div class="form-group">
+                            <label>Comments</label>
+                            <input type="text" class="form-control" readonly asp-for="Comment" placeholder="Comments">
+                          </div>
+                        </div>
+                      </div>
+                      @*<div class="card-footer">
+                        <button type="button" class="btn btn-fill btn-primary" name="btnSalary" id="btnSalary">Save</button>
+                      </div>*@
+                    </form>
+
+                  </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+

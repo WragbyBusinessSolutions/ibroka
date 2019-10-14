@@ -1,0 +1,163 @@
+﻿@model  E4S.ViewModel.EmployeeDashboardViewModel
+
+@{
+    ViewData["Title"] = "Employee Profile";
+    Layout = "~/Views/Shared/_LayoutEmployee.cshtml";
+}
+
+
+<div class="content">
+    <div class="row">
+      <div class=" card-title">
+        <div class="row">
+          <div class="col-md-4">
+            <div class="card card-user">
+              <div class="image">
+                <img src="../../assets/img/bg5.jpg" alt="...">
+              </div>
+              <div class="card-body">
+                <div class="author">
+                    <a asp-action="PersonalDetails">
+                        @if (Model.ImageURL == null)
+                        {
+                            <img class="avatar border-gray" src="~/assets/img/default-avatar1.png" alt="---">
+
+                        }
+                        else
+                        {
+                            <img class="avatar border-gray" src="@Model.ImageURL" alt="Employee Profile Image">
+
+                        }
+
+                        @if (Model.FirstName != null)
+                        {
+                            <h5 class="title">@Model.FirstName @Model.LastName</h5>
+
+                        }
+                        else
+                        {
+                            <h5 class="title">Please Update Profile</h5>
+
+                        }
+                    </a>
+                  <p class="description">
+                    @Model.JobTitle
+                  </p>
+                </div>
+                <p class="description text-center">
+                  @Model.Department
+                </p>
+              </div>
+              <hr>
+              @*<div class="button-container">
+                <button href="#" class="btn btn-neutral btn-icon btn-round btn-lg">
+                  <i class="fab fa-facebook-square"></i>
+                </button>
+                <button href="#" class="btn btn-neutral btn-icon btn-round btn-lg">
+                  <i class="fab fa-twitter"></i>
+                </button>
+                <button href="#" class="btn btn-neutral btn-icon btn-round btn-lg">
+                  <i class="fab fa-google-plus-square"></i>
+                </button>
+              </div>*@
+            </div>
+          </div>
+
+
+          @*<div class="col-md-8">
+            <div class="card">
+              <div class="card-header">
+                <h4 class="card-title">Leaves</h4>
+                <p class="category">Most Recent Leave Requests</p>
+              </div>
+              <div class="card-body">
+                <div class="table-responsive">
+                  <table class="table">
+                    <thead class=" text-primary">
+                    <th>
+                      Leave Request
+                    </th>
+                    <th>
+                      Days
+                    </th>
+                    <th>
+                      Is Approve
+                    </th>
+                    <th class="text-right">
+                      Action
+                    </th>
+                    </thead>
+                    <tbody>
+                      <tr>
+                        <td>
+                          Examination Leave
+                        </td>
+                        <td>
+                          10
+                        </td>
+                        <td>
+                          <a class="btn btn-sm btn-success">Approved</a>
+                        </td>
+                        <td class="text-right">
+                          <a href="#" class="btn btn-sm btn-info">Profile</a>
+                        </td>
+                      </tr>
+                      <tr>
+                        <td>
+                          Netherlands
+                        </td>
+                        <td>
+                          Baileux
+                        </td>
+                        <td class="text-right">
+                          $56,142
+                        </td>
+                        <td class="text-right">
+                          <a href="#" class="btn btn-sm btn-info">Profile</a>
+                        </td>
+                      </tr>
+                      <tr>
+                        <td>
+                          Korea, South
+                        </td>
+                        <td>
+                          Overland Park
+                        </td>
+                        <td class="text-right">
+                          $38,735
+                        </td>
+                        <td class="text-right">
+                          <a href="#" class="btn btn-sm btn-info">Profile</a>
+                        </td>
+                      </tr>
+                      <tr>
+                        <td>
+                          Malawi
+                        </td>
+                        <td>
+                          Feldkirchen in Kärnten
+                        </td>
+                        <td class="text-right">
+                          $63,542
+                        </td>
+                        <td class="text-right">
+                          <a href="#" class="btn btn-sm btn-info">Profile</a>
+                        </td>
+                      </tr>
+                    </tbody>
+                  </table>
+                  <div>
+                    <a href="#" class="pull-right">View more...</a>
+                  </div>
+
+                </div>
+              </div>
+            </div>
+          </div>*@
+
+        </div>
+
+
+      </div>
+    </div>
+</div>

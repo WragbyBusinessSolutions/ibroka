@@ -1,0 +1,299 @@
+﻿@model E4S.Models.HumanResource.EmployeeDetail
+
+@{
+    ViewData["Title"] = "Personal Details";
+    Layout = "~/Views/Shared/_LayoutEmployee.cshtml";
+}
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+
+<div class="content">
+    <div class="card">
+        <div class="card-header text-center" data-background-color="orange">
+            <h3 class="card-title">
+                Personal Details
+            </h3>
+            <h5 class="description">
+                <b> @Model.FirstName @Model.LastName</b>
+            </h5>
+        </div>
+        @*<h4 class="card-title"> Employee Jobs</h4>*@
+
+        <div class="row">
+            <div class="col-md-3">
+                <div class="col-md-12 content-center">
+                    <h5 class="card-title">Employee Image</h5>
+                    <form enctype="multipart/form-data" asp-action="UploadProfile" method="post">
+                      <div class="fileinput fileinput-new text-center" data-provides="fileinput">
+                        <div class="fileinput-new thumbnail">
+                          @if (Model.ImageUrl == null || Model.ImageUrl == "")
+                          {
+                            <img src="../../assets/img/image_placeholder.jpg" id="imageUploadForm" name="image" multiple="multiple" alt="...">
+
+                          }
+                          else
+                          {
+                            <img src="~/@Model.ImageUrl" id="imageUploadForm" name="image" multiple="multiple" alt="...">
+
+                          }
+                        </div>
+                        <div class="fileinput-preview fileinput-exists thumbnail"></div>
+                        <div>
+                          <span class="btn btn-rose btn-round btn-file">
+                            <span class="fileinput-new">Select image</span>
+                            <span class="fileinput-exists">Change</span>
+                            <input type="file" name="file" id="file"/>
+                          </span>
+                          <a href="#pablo" class="btn btn-danger btn-round fileinput-exists" data-dismiss="fileinput"><i class="fa fa-times"></i> Remove</a>
+                        </div>
+                        <div class="form-group">
+                          <button type="submit" class="btn btn-success btn-md fileinput-exists">Upload</button>
+                        </div>
+
+                      </div>
+
+                    </form>
+                </div>
+            </div>
+            <div class="col-md-9">
+                <div class="card ">
+                    <div class="card-body ">
+                        <!-- Start of the Emergency Contact tabs-->
+                        <div class="card-body">
+                          <form method="post" asp-action="PersonalDetails" asp-controller="EmployeeProfile">
+                            <div class="row">
+                              <input asp-for="Id" hidden>
+                              <div class="col-md-4 pr-1">
+                                <div class="form-group">
+                                  <label>First Name</label>
+                                  <input asp-for="FirstName" type="text" class="form-control" placeholder="First Name">
+                                </div>
+                              </div>
+                              <div class="col-md-4 px-1">
+                                <div class="form-group">
+                                  <label>Middle name</label>
+                                  <input asp-for="MiddleName" type="text" class="form-control" placeholder="Middle Name">
+                                </div>
+                              </div>
+                              <div class="col-md-4 pl-1">
+                                <div class="form-group">
+                                  <label for="exampleInputEmail1">Last Name</label>
+                                  <input asp-for="LastName" type="text" class="form-control" placeholder="Last Name">
+                                </div>
+                              </div>
+                            </div>
+                            <hr />
+                            <div class="row">
+                              <div class="col-md-6 pr-1">
+                                <div class="form-group">
+                                  <label>Employee ID</label>
+                                  <input asp-for="EmployeeId" type="text" class="form-control" readonly placeholder="Employee ID">
+                                </div>
+                              </div>
+
+                              <div class="col-md-6 pl-1">
+                                <div class="form-group">
+                                  <label>Other ID </label>
+                                  <input asp-for="OtherId" type="text" class="form-control" placeholder="Other ID">
+                                </div>
+                              </div>
+                            </div>
+                            <hr />
+                            <div class="row">
+                              <div class="col-md-4 pr-1">
+                                <div class="form-group">
+                                  <label>Gender</label>
+                                  <select asp-for="Gender" type="text" class="form-control" placeholder="Username">
+                                    <option>-- Select Gender</option>
+                                    <option value="Male">Male </option>
+                                    <option value="Female">Female</option>
+                                  </select>
+                                </div>
+                              </div>
+                              <div class="col-md-4 px-1">
+                                <div class="form-group">
+                                  <label>Marital Status</label>
+                                  <select asp-for="MaritalStatus" type="text" class="form-control" placeholder="Username">
+                                    <option> -- Select Marital Status -- </option>
+                                    <option value="Single">Single </option>
+                                    <option value="Married">Married</option>
+
+                                  </select>
+                                </div>
+                              </div>
+                              <div class="col-md-4 pl-1">
+                                <div class="form-group">
+                                  <label for="exampleInputEmail1">Date of Birth</label>
+                                  <input asp-for="DateOfBirth" type="Date" class="form-control" placeholder="date">
+                                </div>
+                              </div>
+                            </div>
+                            <hr />
+                            <div class="row">
+                              <div class="col-md-6 pr-1">
+                                <div class="form-group">
+                                  <label>Work E-Mail</label>
+                                  <input asp-for="Email" type="text" class="form-control" placeholder="Enter Work E-Mail">
+                                </div>
+                              </div>
+
+                              <div class="col-md-6 pl-1">
+                                <div class="form-group">
+                                  <label>Phone Number</label>
+                                  <input asp-for="OtherId" type="text" class="form-control" placeholder="Enter Phone Number">
+                                </div>
+                              </div>
+                            </div>
+                            <hr />
+                            <div class="card-footer ">
+                              <button type="submit" class="btn btn-fill btn-primary">Update</button>
+                            </div>
+                          </form>
+                        </div>
+                        <!-- the End of Emergency Contact Tabs-->
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+<script>
+    $(document).ready(function () {
+        //-------------------------------SELECT CASCADING-------------------------//
+        var selectedCountry = selectedRegion = selectedCity = countryCode = "";
+        // This is a demo API key for testing purposes. You should rather request your API key (free) from http://battuta.medunes.net/
+        var BATTUTA_KEY = "00000000000000000000000000000000";
+        // Populate country select box from battuta API
+        url =
+            "https://geo-battuta.net/api/country/all/?key=" +
+            BATTUTA_KEY +
+            "&callback=?";
+        // EXTRACT JSON DATA.
+        $.getJSON(url, function (data) {
+            $.each(data, function (index, value) {
+                // APPEND OR INSERT DATA TO SELECT ELEMENT. Set the country code in the id section rather than in the value.
+                $("#country").append(
+                    '<option id="' + value.code + '" value="' + value.code + '">' + value.name + "</option>"
+                );
+            });
+        });
+        // Country selected --> update region list .
+        $("#country").change(function () {
+            selectedCountry = this.options[this.selectedIndex].text;
+            countryCode = $(this).children(":selected").attr("id");
+            url =
+                "https://geo-battuta.net/api/region/" +
+                countryCode +
+                "/all/?key=" +
+                BATTUTA_KEY +
+                "&callback=?";
+            $.getJSON(url, function (data) {
+                $("#region option").remove();
+                $.each(data, function (index, value) {
+                    // APPEND OR INSERT DATA TO SELECT ELEMENT.
+                    $("#region").append(
+                        '<option value="' + value.region + '">' + value.region + "</option>"
+                    );
+                });
+            });
+        });
+        // Region selected --> updated city list
+        $("#region").on("change", function () {
+            selectedRegion = this.options[this.selectedIndex].text;
+            // Populate country select box from battuta API
+            region = $("#region").val();
+            url =
+                "https://geo-battuta.net/api/city/" +
+                countryCode +
+                "/search/?region=" +
+                region +
+                "&key=" +
+                BATTUTA_KEY +
+                "&callback=?";
+            $.getJSON(url, function (data) {
+                $("#city option").remove();
+                $.each(data, function (index, value) {
+                    // APPEND OR INSERT DATA TO SELECT ELEMENT.
+                    $("#city").append(
+                        '<option value="' + value.city + '">' + value.city + "</option>"
+                    );
+                });
+            });
+        });
+        // city selected --> update location string
+        $("#city").on("change", function () {
+            selectedCity = this.options[this.selectedIndex].text;
+            $("#location").html(
+                "Locatation: Country: " +
+                selectedCountry +
+                ", Region: " +
+                selectedRegion +
+                ", City: " +
+                selectedCity
+            );
+        });
+
+    });
+    // process form
+    function processForm() {
+        var username = password = country = region = city = '';
+        username = $('#username').val();
+        password = $('#password').val();
+        country = $('#country').val();
+        region = $('#region').val();
+        city = $('#city').val();
+        if (username != '' && password != '' && country != '' && region != '' && city != '') {
+            $("#location").html(
+                "Username: " + username +
+                " /Password: " + password +
+                " /Locatation: Country: " +
+                country +
+                ", Region: " +
+                region +
+                ", City: " +
+                city
+            );
+        } else {
+            $("#location").html('Complete Form 1st');
+            return false;
+        }
+    }
+</script>
+
+
+@*uploading fo images*@ 
+<script>
+    $(document).ready(function() {
+       $("#imageUploadForm").change(function() {
+         var formData = new FormData();
+         var totalFiles = document.getElementById("imageUploadForm").files.length;
+         for (var i = 0; i < totalFiles; i++) {
+           var file = document.getElementById("imageUploadForm").files[i];
+           formData.append("imageUploadForm", file);
+         }
+         $.ajax({
+           type: "POST",
+           url: '/Home/Upload',
+           data: formData,
+           dataType: 'json',
+           contentType: false,
+           processData: false
+             //success: function(response) {
+             //    alert('succes!!');
+             //},
+             //error: function(error) {
+             //    alert("errror");
+             //}
+         }).done(function() {
+           alert('success');
+         }.fail(function( xhr, status, errorThrown ) {
+             alert('fail');
+           };
+         });
+       });
+
+</script>

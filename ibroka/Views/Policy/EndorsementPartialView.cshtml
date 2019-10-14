@@ -1,0 +1,782 @@
+﻿@model E4S.ViewModel.LeadEndorsementVM
+<script src="~/js/LeadCustom.js"></script>
+<script src="~/assets/js/lead.js"></script>
+
+<div class="modal-content" style="width:850px;">
+    <form enctype="multipart/form-data" method="post">
+        <div style="padding:0px;" class="modal-header">
+
+            <div style="background-color:#214166; margin:0px;" class="row col-md-12">
+                <div class="col-md-6"><h4 style="padding:5px 10px; color:#fff; margin:0" class="modal-title" id="myModalLabel"><span id="txtTitle">Endorsement Details</span></h4></div>
+                <div class="col-md-6 pull-right">
+
+                </div>
+            </div>
+        </div>
+        <div style=" margin-bottom:-18px;" class="row col-md-12">
+            <div class="col-md-6"></div>
+            <div class="col-md-6 pull-right">
+                <input style="margin-top:10px; padding:7px 14px; width:30%; float:right; display:none" type="submit" value="Submit" id="btnUpdateEndorsement" asp-action="UpdateEndorsement" asp-controller="Policy" class="btn btn-info" />
+                <input style="margin-top:10px; padding:7px 14px; width:70px !important; float:right" type="button" value="Close" class="btn btn-info btn-round" onclick="closeAddEndorsementView()" />
+                
+                <input style="margin-top:10px; padding:7px 14px; width:70px !important; float:right; " type="button" value="Edit" class="btn btn-fill btn-primary btn-round" onclick="editLeadEndorsementData()" id="btnEdit" />
+                <input style="margin-top:10px; padding:7px 14px; width:70px !important; float:right;display:none" type="button" value="Save" class="btn btn-fill btn-primary btn-round" onclick="validateEndorsementData('edit')" id="btnEditData" />&nbsp;
+
+            </div>
+        </div><hr />
+        <div class="modal-body" style="margin-top:-30px;">
+            <div class="instruction">
+
+                <div id="dvPolicies" class=" tab-content" style="margin-left:1px;margin-right:1px;line-height:16px;">
+                    <div class="row">
+                        <div class="col-md-8">
+                            <div class="form-group">
+                                <label class="control-label"><b>Policy Class:</b></label>
+                                @Html.DisplayFor(modelItem => Model.policy.PolicyName)
+                                @*<select id="ddlPC" asp-for="policyClassId" type="text" asp-items="ViewBag.PolicyClasses" class="form-control" readonly></select>*@
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <input asp-for="leadEndorsement.Id" class="form-control" style="display:none" />
+                            <input asp-for="leadEndorsement.ClientId" class="form-control" style="display:none" />
+                            <input asp-for="leadEndorsement.PolicyClassId" class="form-control" style="display:none" />
+                            <input asp-for="leadEndorsement.CreatedBy" class="form-control" style="display:none" />
+                            @*<input asp-for="policy.Status" class="form-control" style="display:none" />*@
+                            <input asp-for="leadEndorsement.PolicyClassId" class="form-control" style="display:none" />
+                            <input asp-for="leadEndorsement.InsurerMasterId" class="form-control" style="display:none" />
+                            <input asp-for="leadEndorsement.OrganisationId" class="form-control" style="display:none" />
+                            <input asp-for="leadEndorsement.DateCreated" class="form-control" style="display:none" />
+                            <input asp-for="leadEndorsement.DateUpdated" class="form-control" style="display:none" />
+
+                            <input asp-for="leadEndorsement.LeadId" class="form-control" style="display:none" />
+                            <input asp-for="leadEndorsement.PolicyId" class="form-control" style="display:none" />
+                            <input asp-for="leadEndorsement.Currency" class="form-control" style="display:none" />
+                            @*<input asp-for="leadEndorsement.EndorsementNo" class="form-control" style="display:none" />*@
+
+                        </div>
+                        <div class="col-md-4">
+
+                        </div>
+                    </div>
+
+                    <div style="margin-left:5px">
+                        <div>
+                            <div>
+
+                                <div id="dvThirdPartyMotor" style="display:none">
+                                    <div class="row">
+                                        <div class="col-md-4">
+                                            <div class="form-group">
+                                                <label class="control-label"><b>Make Of Vehicle:</b></label>
+                                                <label id="txtMakeOfVehicle" class="control-label" />
+
+                                            </div>
+                                        </div>
+                                        <div class="col-md-4">
+                                            <div class="form-group">
+                                                <label class="control-label"><b>Model Of Vehicle:</b></label>
+                                                <label id="txtModelOfVehicle" class="control-label" />
+
+                                            </div>
+                                        </div>
+                                        <div class="col-md-4">
+                                            <div class="form-group">
+                                                <label class="control-label"><b>Year Of Make:</b></label>
+
+                                                <label id="txtYearOfMake" class="control-label"></label>
+
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-md-4">
+                                            <div class="form-group">
+                                                <label class="control-label"><b>Cubic Capacity:</b></label>
+                                                <label id="txtCubicCapacity" class="control-label" />
+
+                                            </div>
+                                        </div>
+                                        <div class="col-md-4">
+                                            <div class="form-group">
+                                                <label class="control-label"><b>Registration No:</b></label>
+                                                <label id="txtRegistrationNo" class="control-label" />
+
+                                            </div>
+                                        </div>
+                                        <div class="col-md-4">
+                                            <div class="form-group">
+                                                <label class="control-label"><b>Risk Type:</b></label>
+                                                <label id="txtRiskType" type="text" class="control-label">
+
+                                                </label>
+
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-md-4">
+                                            <div class="form-group">
+                                                <label class="control-label"><b>Value Insured:</b></label>
+                                                <label id="txtValueInsured" class="control-label" />
+
+                                            </div>
+                                        </div>
+                                        <div class="col-md-4">
+
+                                        </div>
+                                        <div class="col-md-4">
+
+                                        </div>
+
+                                    </div>
+                                </div>
+
+                                <div id="dvlifePolicy" style="display:none">
+                                    <div class="row">
+                                        <div class="col-md-4">
+                                            <div class="form-group">
+                                                <label class="control-label"><b>Name Of Assured:</b></label>
+                                                <label id="txtNameOfAssured" class="control-label" />
+
+                                            </div>
+                                        </div>
+                                        <div class="col-md-4">
+                                            <div class="form-group">
+                                                <label class="control-label"><b>DOB:</b></label>
+                                                @*<input asp-for="DOB" class="form-control" />*@
+                                                <label id="idDOB" class="control-label"></label>
+
+                                            </div>
+                                        </div>
+                                        <div class="col-md-4">
+                                            <div class="form-group">
+                                                <label class="control-label"><b>Sex:</b></label>
+                                                <lable id="txtSex" type="text" class="control-label">
+
+                                                </lable>
+
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="row">
+                                        <div class="col-md-4">
+                                            <div class="form-group">
+                                                <label class="control-label"><b>Salary:</b></label>
+                                                <label id="txtSalary" class="control-label" />
+
+                                            </div>
+                                        </div>
+                                        <div class="col-md-4">
+                                            <div class="form-group">
+                                                <label class="control-label"><b>Sum Assessed:</b></label>
+                                                <label id="txtSumAssessed" class="control-label" />
+
+                                            </div>
+                                        </div>
+                                        <div class="col-md-4">
+                                            <div class="form-group">
+                                                <label class="control-label"><b>Next Of Kin:</b></label>
+                                                <label id="txtNextOfKin" class="control-label" />
+
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                </div>
+                                <div id="dvCorporateBond" style="display:none">
+                                    <div class="row">
+                                        <div class="col-md-4">
+                                            <div class="form-group">
+                                                <label class="control-label"><b>Nature Of Contract:</b></label>
+                                                <label id="txtNatureOfContract" class="control-label" />
+
+                                            </div>
+                                        </div>
+                                        <div class="col-md-4">
+                                            <div class="form-group">
+                                                <label class="control-label"><b>Project Name:</b></label>
+                                                <label id="txtProjectName" class="control-label" />
+
+                                            </div>
+                                        </div>
+                                        <div class="col-md-4">
+                                            <div class="form-group">
+                                                <label class="control-label"><b>Premium Rates:</b></label>
+                                                <label id="txtPremiumRates" class="control-label" />
+
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="row">
+                                        <div class="col-md-4">
+                                            <div class="form-group">
+                                                <label class="control-label"><b>Contract Amount:</b></label>
+                                                <label id="txtContractAmount" class="control-label" />
+
+                                            </div>
+                                        </div>
+                                        <div class="col-md-4">
+                                            <div class="form-group">
+                                                <label class="control-label"><b>Bond Amount:</b></label>
+                                                <label id="txtBondAmount" class="control-label" />
+
+                                            </div>
+                                        </div>
+                                        <div class="col-md-4">
+
+                                        </div>
+                                    </div>
+
+
+                                </div>
+
+                                <hr />
+                                <div>
+                                    <div class="row">
+                                        <div class="col-md-4">
+                                            <div class="form-group">
+                                                <label class="control-label"><b>Start Date:</b></label>
+                                                @*@Html.DisplayFor(modelItem => Model.policy.StartDate)*@
+                                                @Convert.ToDateTime(Model.policy.StartDate).ToString("dd/MM/yyyy")
+
+                                            </div>
+                                        </div>
+                                        <div class="col-md-4">
+                                            <div class="form-group">
+                                                <label class="control-label"><b>End Date:</b></label>
+                                                @*@Html.DisplayFor(modelItem => Model.policy.EndDate)*@
+                                                @Convert.ToDateTime(Model.policy.EndDate).ToString("dd/MM/yyyy")
+
+                                            </div>
+                                        </div>
+                                        <div class="col-md-4">
+                                            <div class="form-group">
+                                                <label class="control-label"><b>Risk Owned By Broker:</b></label>
+                                                @Html.DisplayFor(modelItem => Model.policy.RiskOwnedByBroker)
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-md-4">
+                                            <div class="form-group">
+                                                <label class="control-label"><b>Sum Insured:</b></label>
+                                                @Html.DisplayFor(modelItem => Model.policy.SumInsured)
+                                            </div>
+                                        </div>
+                                        <div class="col-md-4">
+                                            <div class="form-group">
+                                                <label class="control-label"><b>Gross Premium:</b></label>
+                                                @Html.DisplayFor(modelItem => Model.policy.GrossPremium)
+                                            </div>
+                                        </div>
+                                        <div class="col-md-4">
+                                            <div class="form-group">
+                                                <label class="control-label"><b>Commission:</b></label>
+                                                @Html.DisplayFor(modelItem => Model.policy.Commission)
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-md-4">
+                                            <div class="form-group">
+                                                <label class="control-label"><b>Net Premium:</b></label>
+                                                @Html.DisplayFor(modelItem => Model.policy.NetPremium)
+                                            </div>
+                                        </div>
+                                        <div class="col-md-4">
+                                            <div class="form-group">
+                                                <label class="control-label"><b>Insurer:</b></label>
+                                                @Html.DisplayFor(modelItem => Model.policy.InsurerName)
+                                            </div>
+                                        </div>
+                                        <div class="col-md-4">
+                                            <div class="form-group">
+                                                <label class="control-label"><b>Currency:</b></label>
+                                                @Html.DisplayFor(modelItem => Model.policy.Currency)
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="row">
+                                        <div class="col-md-4">
+                                            <div class="form-group">
+                                                <label class="control-label"><b>Status:</b></label>
+                                                @Html.DisplayFor(modelItem => Model.policy.Status)
+
+                                            </div>
+                                        </div>
+                                        <div class="col-md-4">
+                                            <div class="form-group">
+                                                <label class="control-label"><b>Transaction Type:</b></label>
+                                                @Html.DisplayFor(modelItem => Model.policy.TranscationType)
+                                            </div>
+                                        </div><div class="col-md-4"></div>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-8">
+                                        <div class="">
+                                            <div class="row">
+                                                <div class="col-md-6">
+                                                    <div class="form-group">
+                                                        <label class="control-label"><b>Agents</b></label>
+
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-3">
+                                                    <div class="form-group">
+                                                        <label class="control-label"><b>Proportion</b></label>
+
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-3">
+
+                                                </div>
+                                            </div>
+                                            <div class="row">
+                                                <div class="col-md-6">
+                                                    <div class="form-group">
+
+                                                        <label id="txtAgent1" class="control-label" />
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-3">
+                                                    <div class="form-group">
+
+                                                        <label id="txtprop1" class="control-label" />
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-3">
+
+                                                </div>
+                                            </div>
+                                            <div class="row" id="agent2" style="display:none;margin-top:5px;">
+                                                <div class="col-md-6">
+                                                    <div class="form-group">
+                                                        <label id="txtAgent2" class="control-label" />
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-3">
+                                                    <div class="form-group">
+                                                        <label id="txtprop2" class="control-label" />
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-3">
+
+                                                </div>
+                                            </div>
+                                            <div class="row" id="agent3" style="display:none;margin-top:5px;">
+                                                <div class="col-md-6">
+                                                    <div class="form-group">
+                                                        <label id="txtAgent3" class="control-label" />
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-3">
+                                                    <div class="form-group">
+                                                        <label id="txtprop3" class="control-label" />
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-3">
+
+                                                </div>
+                                            </div>
+                                            <div class="row" id="agent4" style="display:none;margin-top:5px;">
+                                                <div class="col-md-6">
+                                                    <div class="form-group">
+                                                        <label id="txtAgent4" name="Agent4" class="control-label" />
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-3">
+                                                    <div class="form-group">
+                                                        <label id="txtprop4" class="control-label" />
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-3">
+                                                    <div class="form-group">
+
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="row" id="agent5" style="display:none;margin-top:5px;">
+                                                <div class="col-md-6">
+                                                    <div class="form-group">
+                                                        <label id="txtAgent5" class="control-label" />
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-3">
+                                                    <div class="form-group">
+                                                        <label id="txtprop5" class="control-label" />
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-3">
+
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-4">
+
+                                    </div>
+                                </div>
+                            </div>
+                            <!--End policies common fields-->
+                        </div>
+                    </div>
+
+                    <hr />
+                    <!--Start policies common fields-->
+                    @*<div class="row col-md-12"><hr /></div>*@
+                    <div class="row">
+                        <div class="col-md-4">
+                            <div style="margin-left:17px" class="form-group">
+                                <label class="control-label">Category</label>
+
+                                <select id="ddlTrancationType" asp-for="leadEndorsement.TranscationType" type="text" class="form-control" required>
+
+                                    <option value="Renewal">Renewal</option>
+                                    <option value="Addition">Addition</option>
+                                </select>
+
+                            </div>
+                        </div>
+                        <div class="col-md-8">
+                            <div class="form-group">
+                                <label class="control-label">Description</label>
+                                <textarea id="txtDescription" asp-for="leadEndorsement.Description" class="form-control" style="border:solid 1px grey ;" required />
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-4">
+                            <div style="margin-left:17px" class="form-group">
+                                <label class="control-label">Start Date</label>
+                                @*<input asp-for="StartDate" class="form-control" />*@
+                                <input id="idStartDate" name="StartDate" type="date" class="form-control">
+
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="form-group">
+                                <label class="control-label">End Date</label>
+
+                                <input id="idEndDate" name="EndDate" type="date" class="form-control">
+
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="form-group">
+                                <label class="control-label">Gross Premium</label>
+                                <input id="txtGP" asp-for="leadEndorsement.GrossPremium" onchange="leadEndorsementGPOnChange(this);" onkeypress="return validateFloatKeyPress(this,event);" class="form-control" step='0.01' placeholder='0.00' required />
+
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-4" style="padding-left:31px;">
+                            <div class="form-group">
+                                <label class="control-label">Commission</label>
+                                <input asp-for="leadEndorsement.Commission" id="txtCommission" onchange="leadEndorsementCommOnChange(this);" onkeypress="return validateFloatKeyPress(this,event);" class="form-control" step='0.01' placeholder='0.00' required />
+
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="form-group">
+                                <label class="control-label">Net Premium</label>
+                                <input asp-for="leadEndorsement.NetPremium" id="txtNetPremium" class="form-control" placeholder='0.00' readonly />
+
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="form-group">
+                                <label class="control-label">Status</label>
+                                <select asp-for="leadEndorsement.Status" type="text" class="form-control">
+                                    <option>New</option>
+                                    <option>Won</option>
+                                    <option>Abandon</option>
+                                    <option>Lost</option>
+                                </select>
+
+                            </div>
+                        </div>
+                    </div>
+
+
+                    <div class="row col-md-12">
+                        <div class="col-md-8">
+                            <div class="">
+
+                                <div class="row">
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            <label class="control-label">Agents</label>
+                                            <input name="Agent1" id="Agent1" type="text" class="form-control" />
+                                        </div>
+                                    </div>
+                                    <div class="col-md-3">
+                                        <div class="form-group">
+                                            <label class="control-label">Proportion</label>
+                                            <input name="prop1" id="prop1" type="text" onchange="checkFloatNumber(this);" onkeypress="return validateFloatKeyPress(this,event);" class="form-control" step='0.01' placeholder='0.00' />
+                                        </div>
+                                    </div>
+                                    <div class="col-md-3">
+                                        <div style="    margin-top: -22px;" class="form-group">
+                                            <button id="btnShowNextAgent" onclick="showNext_Agent()" type="button" class="btn btn-info btn-sm btn-round"> <i class="now-ui-icons ui-1_simple-add"></i> </button>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row" id="agent_2" style="display:none;margin-top:5px;">
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            <input name="Agent2" id="Agent2" class="form-control" />
+                                        </div>
+                                    </div>
+                                    <div class="col-md-3">
+                                        <div class="form-group">
+                                            <input name="prop2" id="prop2" onchange="checkFloatNumber(this);" onkeypress="return validateFloatKeyPress(this,event);" class="form-control" step='0.01' placeholder='0.00' />
+                                        </div>
+                                    </div>
+                                    <div class="col-md-3">
+                                        <div style="margin-top: -40px;" class="form-group">
+                                            <button onclick="removeAgent('agent_2')" type="button" class="btn btn-info btn-sm btn-round"> <i class="now-ui-icons ui-1_simple-delete "></i> </button>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row" id="agent_3" style="display:none;margin-top:5px;">
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            <input name="Agent3" id="Agent3" class="form-control" />
+                                        </div>
+                                    </div>
+                                    <div class="col-md-3">
+                                        <div class="form-group">
+                                            <input name="prop3" id="prop3" onchange="checkFloatNumber(this);" onkeypress="return validateFloatKeyPress(this,event);" class="form-control" step='0.01' placeholder='0.00' />
+                                        </div>
+                                    </div>
+                                    <div class="col-md-3">
+                                        <div class="form-group">
+                                            <div style="margin-top: -40px;" class="form-group">
+                                                <button onclick="removeAgent('agent_3')" type="button" class="btn btn-info btn-sm btn-round"> <i class="now-ui-icons ui-1_simple-delete"></i> </button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row" id="agent_4" style="display:none;margin-top:5px;">
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            <input name="Agent4" id="Agent4" class="form-control" />
+                                        </div>
+                                    </div>
+                                    <div class="col-md-3">
+                                        <div class="form-group">
+                                            <input name="prop4" id="prop4" onchange="checkFloatNumber(this);" onkeypress="return validateFloatKeyPress(this,event);" class="form-control" step='0.01' placeholder='0.00' />
+                                        </div>
+                                    </div>
+                                    <div class="col-md-3">
+                                        <div class="form-group">
+                                            <div style="margin-top: -40px;" class="form-group">
+                                                <button onclick="removeAgent('agent_4')" type="button" class="btn btn-info btn-sm btn-round"> <i class="now-ui-icons ui-1_simple-delete"></i> </button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row" id="agent_5" style="display:none;margin-top:5px;">
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            <input name="Agent5" id="Agent5" class="form-control" />
+                                        </div>
+                                    </div>
+                                    <div class="col-md-3">
+                                        <div class="form-group">
+                                            <input name="prop5" id="prop5" onchange="checkFloatNumber(this);" onkeypress="return validateFloatKeyPress(this,event);" class="form-control" step='0.01' placeholder='0.00' />
+                                        </div>
+                                    </div>
+                                    <div class="col-md-3">
+                                        <div style="margin-top: -40px;" class="form-group">
+                                            <button onclick="removeAgent('agent_5')" type="button" class="btn btn-info btn-sm btn-round"> <i class="now-ui-icons ui-1_simple-delete"></i> </button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+
+                        </div>
+                    </div>
+
+                    <!--End policies common fields-->
+                </div>
+            </div>
+        </div>
+
+    </form>
+</div>
+
+
+<script>
+    $(document).ready(function () {
+
+             $('input').attr('readonly', true);
+            $('select').attr('readonly', true);
+            $('select').prop('disabled', true);
+
+            //$('#idLead_Submit').hide();
+            //$('#btnShowNextAgent').hide();
+            //$('#btnUpdateLead').show();
+
+        leadDetailsData = JSON.parse('@Html.Raw(Json.Serialize(ViewBag.LeadsData))');
+        pcid = JSON.parse('@Html.Raw(Json.Serialize(Model.policy.PolicyClassId))');
+
+        if (pcid.toLowerCase() == "C9CE6B9A-771F-4ED7-9CEE-6B8F131E4DA5".toLowerCase() || pcid.toLowerCase() == "FCF9DDF7-BF80-4503-9C5E-CECF428491EC".toLowerCase()) {
+            $('#dvThirdPartyMotor').show();
+            for (var i = 0; i < leadDetailsData.length; i++) {
+                if (leadDetailsData[i].FieldName == 'MakeOfVehicle') {
+                    $('#txtMakeOfVehicle').text(leadDetailsData[i].FieldValue);
+                }
+                if (leadDetailsData[i].FieldName == 'ModelOfVehicle') {
+                    $('#txtModelOfVehicle').text(leadDetailsData[i].FieldValue);
+                }
+                if (leadDetailsData[i].FieldName == 'YearOfMake') {
+                    $('#txtYearOfMake').text(leadDetailsData[i].FieldValue);
+                }
+                if (leadDetailsData[i].FieldName == 'CubicCapacity') {
+                    $('#txtCubicCapacity').text(leadDetailsData[i].FieldValue);
+                }
+                if (leadDetailsData[i].FieldName == 'RegistrationNo') {
+                    $('#txtRegistrationNo').text(leadDetailsData[i].FieldValue);
+                }
+                if (leadDetailsData[i].FieldName == 'RiskType') {
+                    $('#txtRiskType').text(leadDetailsData[i].FieldValue);
+                }
+                if (leadDetailsData[i].FieldName == 'ValueInsured') {
+                    $('#txtValueInsured').text(leadDetailsData[i].FieldValue);
+                }
+            }
+        } else if (pcid.toLowerCase() == "8ED74480-CA28-418A-ADD6-FE25E8E15B86".toLowerCase() || pcid.toLowerCase() == "D2CFA791-27FC-4CEF-970E-9251FC92D120".toLowerCase()) {
+            $('#dvlifePolicy').show();
+            for (var i = 0; i < leadDetailsData.length; i++) {
+                if (leadDetailsData[i].FieldName == 'NameOfAssured') {
+                    $('#txtNameOfAssured').text(leadDetailsData[i].FieldValue);
+                }
+                if (leadDetailsData[i].FieldName == 'NextOfKin') {
+                    $('#txtNextOfKin').text(leadDetailsData[i].FieldValue);
+                }
+                if (leadDetailsData[i].FieldName == 'Salary') {
+                    $('#txtSalary').text(leadDetailsData[i].FieldValue);
+                }
+                if (leadDetailsData[i].FieldName == 'Sex') {
+                    $('#txtSex').text(leadDetailsData[i].FieldValue);
+                }
+                if (leadDetailsData[i].FieldName == 'DOB') {
+                    $('#idDOB').text(leadDetailsData[i].FieldValue);
+                } if (leadDetailsData[i].FieldName == 'SumAssessed') {
+                    $('#txtSumAssessed').text(leadDetailsData[i].FieldValue);
+                }
+            }
+        } else if (pcid.toLowerCase() == "E56249E3-E821-4969-80C4-B97BD4798CC2".toLowerCase()) {
+            $('#dvCorporateBond').show();
+            for (var i = 0; i < leadDetailsData.length; i++) {
+                if (leadDetailsData[i].FieldName == 'NatureOfContract') {
+                    $('#txtNatureOfContract').text(leadDetailsData[i].FieldValue);
+                }
+                if (leadDetailsData[i].FieldName == 'ProjectName') {
+                    $('#txtProjectName').text(leadDetailsData[i].FieldValue);
+                }
+                if (leadDetailsData[i].FieldName == 'PremiumRates') {
+                    $('#txtPremiumRates').text(leadDetailsData[i].FieldValue);
+                }
+                if (leadDetailsData[i].FieldName == 'ContractAmount') {
+                    $('#txtContractAmount').text(leadDetailsData[i].FieldValue);
+                }
+                if (leadDetailsData[i].FieldName == 'BondAmount') {
+                    $('#txtBondAmount').text(leadDetailsData[i].FieldValue);
+                }
+            }
+        }
+
+        agentList = JSON.parse('@Html.Raw(Json.Serialize(Model.policy.AgentList))');
+        for (var i = 0; i < agentList.length; i++) {
+            if (i == 0) {
+                $('#txtAgent1').text(agentList[i].agentName);
+                $('#txtprop1').text(agentList[i].proportion);
+            }
+            if (i == 1) {
+                $('#agent2').show();
+
+                $('#txtAgent2').text(agentList[i].agentName);
+                $('#txtprop2').text(agentList[i].proportion);
+
+            }
+            if (i == 2) {
+                $('#agent3').show();
+
+                $('#txtAgent3').text(agentList[i].agentName);
+                $('#txtprop3').text(agentList[i].proportion);
+            }
+            if (i == 3) {
+                $('#agent4').show();
+
+                $('#txtAgent4').text(agentList[i].agentName);
+                $('#txtprop4').text(agentList[i].proportion);
+            }
+            if (i == 4) {
+                $('#agent5').show();
+
+                $('#txtAgent5').text(agentList[i].agentName);
+                $('#txtprop5').text(agentList[i].proportion);
+            }
+        }
+        //
+
+        var psDate = JSON.parse('@Html.Raw(Json.Serialize(Model.startDate))');
+        var peDate = JSON.parse('@Html.Raw(Json.Serialize(Model.endDate))');
+        var leDesc = JSON.parse('@Html.Raw(Json.Serialize(Model.leadEndorsement.Description))');
+
+        $('#idStartDate').val(psDate);
+        $('#idEndDate').val(peDate);
+
+        $('#txtDescription').val(leDesc);
+
+        var agent_List = JSON.parse('@Html.Raw(Json.Serialize(Model.AgentList))');
+       
+        for (var i = 0; i < agent_List.length; i++) {
+            if (i == 0) {
+                $('#Agent1').val(agent_List[i].agentName);
+                $('#prop1').val(agent_List[i].proportion);
+            }
+            if (i == 1) {
+                $('#agent_2').show();
+
+                $('#Agent2').val(agent_List[i].agentName);
+                $('#prop2').val(agent_List[i].proportion);
+
+            }
+            if (i == 2) {
+                $('#agent_3').show();
+
+                $('#Agent3').val(agent_List[i].agentName);
+                $('#prop3').val(agent_List[i].proportion);
+            }
+            if (i == 3) {
+                $('#agent_4').show();
+
+                $('#Agent4').val(agent_List[i].agentName);
+                $('#prop4').val(agent_List[i].proportion);
+            }
+            if (i == 4) {
+                $('#agent_5').show();
+
+                $('#Agent5').val(agent_List[i].agentName);
+                $('#prop5').val(agent_List[i].proportion);
+            }
+        }
+    });
+
+
+
+    function closeLeadView() {
+         $('#endorseModal').modal('hide');
+
+    }
+</script>

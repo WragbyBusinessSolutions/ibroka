@@ -1,0 +1,436 @@
+﻿@model E4S.ViewModel.LeadDebitVM
+
+<style>
+    .table td, .table th {
+        padding: .75rem;
+        vertical-align: top;
+        padding: 3px !important;
+        border-top: none !important;
+    }
+
+    .labelHeader {
+        font-size: 9px !important;
+        font-weight: bold;
+    }
+
+    .labelValue {
+        font-size: 9px !important;
+    }
+
+    .tdValWidth {
+        width: 200px;
+    }
+</style>
+<script src="~/assets/js/lead.js"></script>
+<script src="~/js/LeadCustom.js"></script>
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/0.9.0rc1/jspdf.min.js"></script>
+
+@*<script src="https://kendo.cdn.telerik.com/2017.2.621/js/jquery.min.js"></script> // dependency for Kendo UI API*@
+<script src="https://kendo.cdn.telerik.com/2017.2.621/js/jszip.min.js"></script>
+<script src="https://kendo.cdn.telerik.com/2017.2.621/js/kendo.all.min.js"></script>
+
+
+<div class="modal-content" style="width:700px;">
+    <div class="success" style="display:none">
+        <div class="alert alert-success alert-dismissible" role="alert">
+            @*<button id="btnCloseMsg" type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>*@
+            Email Sent Successfully.
+        </div>
+    </div>
+    <div class="danger" style="display:none">
+        <div class="alert alert-danger alert-dismissible" role="alert">
+            @*<button id="btnCloseMsg" type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>*@
+            Sending Email Failed.
+        </div>
+    </div>
+
+    <div class="row" id="print">
+        <input type="hidden" id="txtClientId" value="@Model.clientId" />
+        <table style="width:90%; margin:auto" class="table">
+            <tr>
+                <td style="width:30%">
+                    @if (@Model.imageUrl != null && @Model.imageUrl != "")
+                    {
+
+                        <img style="height:50px;width:50px" src="@Model.imageUrl" />
+
+                    }
+                    else
+                    {
+                        <img src="../../assets/img/image_placeholder.jpg" style="height:50px;width:50px" id="imageUploadForm" name="image" multiple="multiple" alt="...">
+                    }
+
+
+                </td>
+                <td>
+                    <table>
+                        <tr>
+                            <td class="labelHeader">@Model.organisationName</td>
+                        </tr>
+                        <tr>
+                            <td class="labelHeader">@Model.addresss</td>
+                        </tr>
+                        <tr>
+                            <td class="labelHeader">@Model.city</td>
+                        </tr>
+                        <tr>
+                            <td class="labelHeader">@Model.phone  @Model.email</td>
+                        </tr>
+                    </table>
+                </td>
+            </tr>
+
+        </table>
+        <table style="width:90%; margin:auto" class="table">
+            <tr>
+                <td>
+                    <h6 style="width:30%; margin:0px auto" class="text-center">DEBIT NOTE</h6>
+                </td>
+            </tr>
+        </table>
+
+
+        <table style="width:90%; margin:auto; line-height:5px;" class="table">
+            <thead>
+                <tr>
+                    <td class="text-right"><span class="labelHeader"><b>DEBIT NOTE NO:</b></span></td>
+                    <td style="margin-bottom:80px"><span class="labelValue">@Model.leadPolicyDebitNote.DebitNote_No</span></td>
+                    <td>|</td>
+                    <td class="text-right" style="width:120px;"><span class="labelHeader">DATE OF GENERATION</span></td>
+                    <td class="text-left labelValue">@Model.leadPolicyDebitNote.DateCreated.ToShortDateString()</td>
+                    <td>|</td>
+                    <td class="text-right"><span class="labelHeader"><b>BRANCH:</b></span></td>
+                    <td class="text-left labelValue">@Model.branchName</td>
+
+                </tr>
+                <tr><td colspan="8">&nbsp;<br /><br /><br /></td></tr>
+                <tr>
+                    <td colspan="8">
+                        <div class="row  col-md-12" style="width:100%">
+                            <div class=" col-md-3 labelHeader"><b>CUSTOMER NO:</b></div>
+                            <div class=" col-md-6 labelValue">@Model.Client.ClientCode</div>
+                            <div class=" col-md-3 labelValue"></div>
+                        </div>
+                    </td>
+
+                </tr>
+                <tr>
+                    <td colspan="8">
+                        <div class="row  col-md-12" style="width:100%">
+
+                            <div class=" col-md-3 labelHeader"><b>POLICY NO:</b></div>
+                            <div class=" col-md-6 labelValue"><span class="pull-left">@Model.policyNo</span></div>
+                            <div class=" col-md-3 labelValue"></div>
+                        </div>
+                    </td>
+
+                </tr>
+                <tr><td colspan="8" style="line-height:0px;">&nbsp;</td></tr>
+                <tr>
+                    <td colspan="8">
+                        <div class="row  col-md-12">
+                            <div class=" col-md-3 labelHeader"><b>CUSTOMER NAME:</b></div>
+                            <div class=" col-md-6 labelValue">
+                                @if (@Model.Client.Type == "Individual")
+                                {
+                                    <label class="labelValue" style="margin-top:0px !important">
+                                        @Model.Client.Title @Model.Client.Name  @Model.Client.Surname
+                                    </label>
+                                }
+                                else
+                                {
+                                    <label class="labelValue" style="margin-top:0px !important">
+                                        @Model.Client.Name
+                                    </label>
+                                }
+                            </div>
+                            <div class=" col-md-3 labelValue"></div>
+                        </div>
+                    </td>
+
+                </tr>
+                <tr>
+                    <td colspan="8">
+                        <div class="row  col-md-12">
+                            <div class=" col-md-3 labelHeader" style="width:100px !important;"><b>ENDORSEMENT NO:</b></div><div class=" col-md-6 labelValue">
+                                NIL
+                            </div>
+                            <div class=" col-md-3 labelValue"></div>
+                        </div>
+                    </td>
+
+                </tr>
+
+                <tr><td colspan="8" style="line-height:0px;">&nbsp;</td></tr>
+                <tr>
+                    <td colspan="8">
+                        <div class="row  col-md-12">
+                            <div class=" col-md-3 labelHeader"><b>CUSTOMER ADDRESS:</b></div>
+                            <div class=" col-md-6 labelValue" style="line-height:1.2">@Model.Client.Address</div>
+                            <div class=" col-md-3 labelValue"></div>
+                        </div>
+                    </td>
+
+                </tr>
+                <tr>
+                    <td colspan="8">
+                        <div class="row  col-md-12">
+                            <div class=" col-md-3 labelHeader"><b>RISK NO:</b></div><div class=" col-md-9"></div>
+                        </div>
+                    </td>
+
+                </tr>
+                <tr><td colspan="8">&nbsp;<br /><br /><br /></td></tr>
+                <tr>
+                    <td colspan="8">
+                        <div class="row  col-md-12">
+                            <div class=" col-md-3 labelHeader"><b>SUM INSURED:</b></div><div class=" col-md-3 labelValue">@Model.leadPolicy.SumInsured</div><div class=" col-md-3 labelHeader"></div><div class=" col-md-3"></div>
+                        </div>
+                    </td>
+                   
+                </tr>
+                <tr><td colspan="8" style="line-height:0px;">&nbsp;</td></tr>
+                <tr>
+                    <td colspan="8">
+                        <div class="row  col-md-12">
+                            <div class=" col-md-3 labelHeader"><b>INSURER:</b></div><div class=" col-md-3 labelValue">@Model.insurerName</div><div class=" col-md-3 labelHeader"></div><div class=" col-md-3"></div>
+                        </div>
+                    </td>
+
+                </tr>
+                <tr><td colspan="8" style="line-height:0px;">&nbsp;</td></tr>
+                <tr>
+                    <td colspan="8">
+                        <div class="row  col-md-12">
+                            <div class=" col-md-3 labelHeader"><b>Policy CLASS:</b></div><div class=" col-md-3 labelValue">@Model.policyName</div><div class=" col-md-3 labelHeader"></div><div class=" col-md-3"></div>
+                        </div>
+                    </td>
+                    
+                </tr>
+                <tr><td colspan="8" style="line-height:0px;">&nbsp;</td></tr>
+                <tr>
+                    <td colspan="8">
+                        <div class="row  col-md-12">
+                            <div class=" col-md-3 labelHeader"><b>TRANSACTION TYPE:</b></div><div class=" col-md-3 labelValue">@Model.leadPolicy.TranscationType</div><div class=" col-md-3 labelHeader"></div><div class=" col-md-3"></div>
+                        </div>
+                    </td>
+                   
+                </tr>
+                <tr><td colspan="8" style="line-height:0px;">&nbsp;</td></tr>
+                <tr>
+                    <td colspan="8">
+                        <div class="row  col-md-12">
+                            <div class=" col-md-3 labelHeader"><b>DEBIT AMOUNT:</b></div>
+                            <div class=" col-md-3 labelValue"><label class="labelValue" id="lblDebitNoteAmount" style="margin-top:0px;">@Model.leadPolicy.NetPremium</label></div>
+                            <div class=" col-md-3 labelHeader"></div><div class=" col-md-3"></div>
+                        </div>
+                    </td>
+                    
+                </tr>
+                <tr><td colspan="8" style="line-height:0px;">&nbsp;</td></tr>
+                <tr>
+                    <td colspan="8">
+                        <div class="row  col-md-12">
+                            <div class=" col-md-3 labelHeader"><b>CURRENCY:</b></div><div class=" col-md-3"><label class="labelValue" id="lblDebitNoteAmountCurrency" style="margin-top:0px;">@Model.leadPolicy.Currency</label></div><div class=" col-md-3 labelHeader"></div><div class=" col-md-3"></div>
+                        </div>
+                    </td>
+                    
+                </tr>
+                <tr><td colspan="8" style="line-height:0px;">&nbsp;</td></tr>
+                <tr>
+                    <td colspan="8">
+                        <div class="row  col-md-12">
+                            <div class=" col-md-3 labelHeader"><b>RISK TYPE:</b></div><div class=" col-md-3 labelValue">NIL</div><div class=" col-md-3 labelHeader"></div><div class=" col-md-3"></div>
+                        </div>
+                    </td>
+                    
+                </tr>
+
+                <tr><td colspan="8" style="line-height:0px;">&nbsp;</td></tr>
+                <tr>
+                    <td colspan="8">
+                        <div class="row  col-md-12">
+                            <div class=" col-md-3 labelHeader"><b>COVERAGE PERIOD:</b></div><div class=" col-md-3 labelValue"></div><div class=" col-md-3 labelHeader"></div><div class=" col-md-3"></div>
+                        </div>
+                    </td>
+                    
+                </tr>
+                <tr><td colspan="8" style="line-height:0px;">&nbsp;</td></tr>
+                <tr>
+                    <td colspan="8">
+                        <div class="row  col-md-12">
+                            <div class=" col-md-4 labelHeader"><label class="labelHeader">START DATE:</label> <label class="labelValue">@Model.leadPolicy.StartDate.ToShortDateString()</label></div><div class=" col-md-3 labelValue"><label class="labelHeader">END DATE:</label> <label class="labelValue">@Model.leadPolicy.EndDate.ToShortDateString()</label></div><div class=" col-md-3 labelHeader"></div><div class=" col-md-3"></div>
+                        </div>
+                    </td>
+                    
+                </tr>
+                <tr><td colspan="8" style="line-height:0px;">&nbsp;</td></tr>
+                <tr>
+                    <td colspan="8">
+                        <div class="row  col-md-12">
+                            <div class=" col-md-3 labelHeader"><b>AMOUNT IN WORDS:</b></div>
+                            <div class=" col-md-9 labelValue"><label class="labelHeader" id="lblAmountwords" style="margin-top:0px;"></label></div>
+                            <div class=" col-md-3 labelHeader"></div><div class=" col-md-3"></div>
+                        </div>
+                    </td>
+                    
+                </tr>
+
+
+            </thead>
+        </table>
+
+        <div class="row" style="width:80%; margin:5px 50px; border-top:1px solid #cccc">
+            <p style="font-size:12px !important;">
+                NAICCOM mandated note- "please note that cover commences when premium is paid as mandated by national insurance commission (NAICCOM) on the ‘No Premium, No Cover ‘guideline"
+            </p>
+            <table>
+                <tr>
+                    <td><label class="labelHeader"><b>PREPARED BY:</b></label></td>
+                    <td colspan="3"><label class="labelValue">@Model.preparedBy</label></td>
+
+                    <td colspan="4"><label><hr /></label></td>
+                </tr>
+            </table>
+
+
+        </div>
+
+    </div>
+    <div class="row" style="margin:-7px;">
+        <div class="pull-right col-md-12">
+            <div class="col-md-8"></div>
+            <div class="col-md-4 pull-right">
+                <button style="margin-right:150px;top:-1px" id="btnEmail" class="btn btn-fill btn-primary btn-round" onclick="EmailDebitNotePDF()">Email</button>
+                <button style="margin-right:66px;top:-1px" id="btnDownload" class="btn btn-fill btn-primary btn-round" onclick="ExportPdf()"><i class="fa fa-download" aria-hidden="true"></i></button>
+                
+                @if (Model.isNew)
+                {
+                    <input style="margin-top:10px; padding:7px 14px; width:70px !important;height:36px!important;float:right" type="button" value="Close" class="btn btn-info btn-round" onclick="closeLeadDebitNotePopup()" />
+                }
+                else
+                {
+                    <input style="margin-top:10px; padding:7px 14px; width:70px !important;height:36px!important;float:right" type="button" value="Close" class="btn btn-info btn-round" onclick="cancelAddLead()" />
+                }
+            </div>
+        </div>
+    </div>
+    <input type="hidden" id="hdnLeadPolicyId" value="@Model.leadPolicy.Id" />
+</div>
+<script>
+    $(document).ready(function () {
+
+        var wordAmount = convertNumberToWords(parseInt(document.getElementById('lblDebitNoteAmount').innerHTML));
+        if ($('#lblDebitNoteAmountCurrency').text() == 'NGN') {
+            wordAmount = wordAmount + ' Naira Only';
+        } else {
+            wordAmount = wordAmount + ' Only';
+        }
+
+        document.getElementById('lblAmountwords').innerHTML = wordAmount;
+
+    });
+
+    var specialElementHandlers = {
+        '#print-btn': function (element, renderer) {
+            return true;
+        }
+    };
+
+
+    function ExportPdf() {
+        kendo.drawing.drawDOM("#print",
+            {
+                paperSize: "A4",
+
+                margin: { top: "1cm", bottom: "1cm" },
+                scale: 0.8,
+                height: 500
+            })
+            .then(function (group) {
+                kendo.drawing.pdf.saveAs(group, "debitnote.pdf")
+            });
+    }
+
+    function EmailDebitNotePDF() {
+
+
+        kendo.drawing.drawDOM("#print",
+            {
+                paperSize: "A4",
+
+                margin: { top: "1cm", bottom: "1cm" },
+                scale: 0.8,
+                height: 500
+            })
+            .then(function (group) {
+                return kendo.drawing.exportPDF(group, {
+
+                });
+
+            }).done(function (data) {
+                var debitNotePdf = {
+                    leadPolicyId: $("#hdnLeadPolicyId").val(),
+                    debitNoteBase64: data
+                };
+                $.ajax({
+                    type: "POST",
+                    url: "/PolicyLead/sendEmail",
+                    processData: false,  // tell jQuery not to process the data
+                    contentType: false,  // tell jQuery not to set contentType
+                    headers: {
+                        RequestVerificationToken:
+                            $('input:hidden[name="__RequestVerificationToken"]').val()
+                    },
+                    data: JSON.stringify(debitNotePdf),
+                    contentType: 'application/json; charset=utf-8',
+                    dataType: 'json',
+                    success: function (r) {
+                        if (r.msg == "Success") {
+                            //$('.alert-success').show();
+                            $('.success').show();
+                            setTimeout(closeSuccessMsg, 4000)
+                        }
+                        else {
+                            //$('.alert-danger').show();
+                            $('.danger').show();
+                            setTimeout(closeDangerMsg, 4000)
+                        }
+                    },
+                    error: function () {
+
+                        //$('.alert-danger').show();
+                        $('.danger').show();
+                        setTimeout(closeDangerMsg, 4000)
+                    }
+
+                });
+
+            });
+    }
+    function closeLeadDebitNotePopup() {
+        var cid = $('#txtClientId').val();//?id=' + cid+'&IsOpen=leads'
+        window.location.href = '/Client/Details/?id=' + cid + '&IsOpen=leads';
+    }
+
+</script>
+
+<script>
+    //$(document).ready(function () {
+
+    //    setTimeout(closeMsg, 5000)
+
+    //});
+
+    function closeSuccessMsg() {
+        $('.success').hide();
+
+        //$('#btnCloseMsg').click();
+    }
+
+    function closeDangerMsg() {
+        $('.danger').hide();
+
+        //$('#btnCloseMsg').click();
+    }
+</script>

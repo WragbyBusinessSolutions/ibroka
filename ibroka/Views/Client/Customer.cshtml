@@ -1,0 +1,247 @@
+﻿@model IEnumerable<E4S.Models.LeadManagement.LeadPolicy>
+@{
+  ViewData["Title"] = "Customer";
+  Layout = "~/Views/Shared/_LayoutLeadManagement.cshtml";
+}
+<style>
+  .top-margin {
+    margin-top: 40px;
+  }
+</style>
+
+
+<div class="content">
+  @Html.Partial("~/Views/Manage/_StatusMessage.cshtml", ViewData["StatusMessage"])
+  <div class="row">
+    <div class="col-md-12">
+      <div class="card ">
+        <div class="card-header">
+          <h4 class="card-title"> Customers List</h4>
+        </div>
+        @*<div class="card-body ">
+              <form method="#" action="#">
+                  <div class="row">
+                      <div class="col-md-4">
+
+                          <label>Job Title</label>
+                          <div class="">
+                              <select class="selectpicker" data-size="7" data-style="btn btn-round" title="Job Title">
+                                  <option disabled selected>Job Title</option>
+                                  <option value="2">Foobar</option>
+                                  <option value="3">Is great</option>
+                              </select>
+                          </div>
+                      </div>
+
+                      <div class="col-md-4">
+
+                          <label>Department</label>
+                          <div class="">
+                              <select class="selectpicker" data-size="7" data-style="btn btn-round" title="Department">
+                                  <option disabled selected>Department</option>
+                                  <option value="2">Foobar</option>
+                                  <option value="3">Is great</option>
+                              </select>
+                          </div>
+                      </div>
+                      <div class="col-md-4">
+
+                          <label>Employment Status</label>
+                          <div class="">
+                              <select class="selectpicker" data-size="7" data-style="btn btn-round" title="Employment Status">
+                                  <option disabled selected>Employment Status</option>
+                                  <option value="2">Foobar</option>
+                                  <option value="3">Is great</option>
+                              </select>
+                          </div>
+                      </div>
+                  </div>
+              </form>
+          </div>
+          <div class="card-footer ">
+              <button type="submit" class="btn btn-fill btn-success">Search</button>
+          </div>*@
+      </div>
+    </div>
+
+  </div>
+
+  <div class="row">
+    <div class="col-md-12">
+      <div class="card">
+        <div class="card-header">
+          @*<a asp-action="AddEmployee" asp-controller="Employees" class="btn btn-fill btn-info">Add New Employee</a>*@
+          @*<button class="btn btn-info" data-toggle="modal" data-target="#noticeModal">*@
+          @*<a asp-action="AddEmployee" class="btn btn-info">Add New Employee</a>*@
+          @*</button>*@
+
+          @*<button class="btn btn-danger pull-right" data-toggle="modal" data-target="#uploadModal">
+                Upload Employee CSV
+            </button>*@
+
+
+          <!-- end notice modal -->
+          @*<button type="submit" class="btn btn-fill btn-info">Add Employee</button>*@
+        </div>
+
+
+
+        <div class="card-body">
+          <div class="toolbar">
+            <!-- Here you can write extra buttons/actions for the toolbar              -->
+          </div>
+
+
+          <table id="datatable" class="table table-striped table-bordered" cellspacing="0" width="100%">
+            <thead class="text-primary">
+            <th class="text-center">
+              #
+            </th>
+            <th>
+              Name
+            </th>
+            @*<th>
+              Age
+            </th>*@
+            <th>
+              Phone No
+            </th>
+            <th>
+              Email
+            </th>
+            <th>
+              Type
+            </th>
+            <th>
+              Date
+            </th>
+            <th>
+              Action
+            </th>
+
+            </thead>
+
+
+            <tbody>
+
+              @{
+                int i = 1;
+
+                @if (Model.Count() < 1)
+                {
+                <td></td>
+                <td></td>
+                <td></td>
+                <td>No Data to Display</td>
+                <td></td>
+                <td></td>
+                <td></td>
+
+              }
+
+
+                foreach (var item in Model)
+                {
+
+                  <tr>
+                    <td class="text-center">
+                      @i
+                    </td>
+
+                    <td>
+                      <a asp-action="Details" asp-route-id="@item.Client.Id">@item.Client.Surname @item.Client.Name </a>
+                      @*<a href="#"></a>*@
+                    </td>
+                    @*<td>
+                      @item.Client.Age
+                    </td>*@
+                    <td>
+                      @item.Client.PhoneNo
+                    </td>
+                    <td>
+                      @item.Client.Email
+                    </td>
+                    <td>
+                      @item.Client.Type
+                    </td>
+                    <td>
+                      @item.Client.DateCreated.ToString("dd/MM/yyyy")
+                    </td>
+                    <td>
+                      <a asp-action="Details" class="btn btn-md btn-info" asp-route-id="@item.Client.Id" title=" Employee Details" data-toggle="tooltip" data-placement="top"><i class="fa fa-eye"></i></a>
+
+                    </td>
+                  </tr>
+
+                  { i = i + 1; }
+                }
+              }
+
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+
+    </div>
+
+  </div>
+
+
+
+
+
+
+
+  @section Scripts {
+
+    <!--  DataTables.net Plugin, full documentation here  -->
+    <script src="~/assets/js/plugins/jquery.dataTables.min.js"></script>
+
+    <script>
+      $(document).ready(function () {
+        $('#datatable').DataTable({
+          "pagingType": "full_numbers",
+          "lengthMenu": [
+            [10, 25, 50, -1],
+            [10, 25, 50, "All"]
+          ],
+          responsive: true,
+          language: {
+            search: "_INPUT_",
+            searchPlaceholder: "Search records",
+          }
+
+        });
+
+        var table = $('#datatable').DataTable();
+
+        // Edit record
+        table.on('click', '.edit', function () {
+          $tr = $(this).closest('tr');
+
+          var data = table.row($tr).data();
+          alert('You press on Row: ' + data[0] + ' ' + data[1] + ' ' + data[2] + '\'s row.');
+        });
+
+        // Delete a record
+        table.on('click', '.remove', function (e) {
+          $tr = $(this).closest('tr');
+          table.row($tr).remove().draw();
+          e.preventDefault();
+        });
+
+        //Like record
+        table.on('click', '.like', function () {
+          alert('You clicked on Like button');
+        });
+      });
+
+
+    </script>
+
+
+  }
+
+
+

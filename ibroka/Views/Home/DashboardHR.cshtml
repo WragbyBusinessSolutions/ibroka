@@ -1,0 +1,427 @@
+﻿@model E4S.ViewModel.HRDashboardViewModel
+
+@{
+  ViewData["Title"] = "Dashboard HR";
+  Layout = "~/Views/Shared/_LayoutHumanResouces.cshtml";
+}
+
+<style>
+  .body-card {
+    margin-left: 2%;
+    margin-right: 2%;
+    margin-top: 1%;
+    margin-bottom: 2%;
+  }
+
+  .table-font {
+    font-weight: 500;
+  }
+
+  .iconstyle {
+    font-size: 25px;
+    margin-top: 20px;
+  }
+
+  .link {
+    text-decoration: none;
+  }
+
+  #chartdiv {
+    width: 100%;
+    height: 390px;
+  }
+
+  #chartdivs {
+    width: 100%;
+    height: 500px;
+  }
+
+  #chartdive {
+    width: 100%;
+    height: 500px;
+  }
+
+  .picture {
+    background: fixed;
+  }
+
+    .picture:hover {
+      border-radius: 7px;
+      box-shadow: 0 0 11px rgba(33,33,33,.2);
+      padding: 10px;
+    }
+
+  .amcharts-chart-div > a {
+    display: none !important;
+  }
+</style>
+
+
+<div class="content">
+  <div class="row">
+    <div class="col-md-12">
+      <div class="card card-stats card-raised">
+        <div class="card-body">
+          <div class="row">
+            <div class="col-md-4">
+              <div class="statistics">
+                <div class="info">
+                  <div class="icon icon-primary">
+                    <i class="now-ui-icons users_single-02"></i>
+
+                  </div>
+                  <h3 class="info-title">@Model.TotalEmployee</h3>
+                  <h6 class="stats-title">TOTAL EMPLOYEES</h6>
+
+                </div>
+              </div>
+            </div>
+            @*<div class="col-md-3">
+                  <div class="statistics">
+                      <div class="info">
+                          <div class="icon icon-success">
+                              <i class="now-ui-icons business_money-coins"></i>
+                          </div>
+                          <h3 class="info-title">
+                              45
+                          </h3>
+                          <h6 class="stats-title">Today Revenue</h6>
+                      </div>
+                  </div>
+              </div>*@
+            <div class="col-md-4">
+              <div class="statistics">
+                <div class="info">
+                  <div class="icon icon-info">
+                    <i class="now-ui-icons objects_support-17"></i>
+                  </div>
+                  <h3 class="info-title">@Model.PendingLeave</h3>
+                  <h6 class="stats-title">TOTAL EMPLOYEES ON LEAVE</h6>
+                </div>
+              </div>
+            </div>
+            <div class="col-md-4">
+              <div class="statistics">
+                <div class="info">
+                  <div class="icon icon-danger">
+                    <i class="now-ui-icons ui-2_chat-round"></i>
+
+                  </div>
+                  <h3 class="info-title">0</h3>
+                  <h6 class="stats-title">TOTAL PENDING REQUESTS</h6>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="col-md-6">
+      <div class="card">
+
+        <div class="card-header">
+          <h4 class="card-title">Departments</h4>
+          <p class="category">Head Count Per Department</p>
+        </div>
+        <div class="card-body">
+          <div class="chart-area">
+            <div id="chartdiv" style="width: 100%; height: 400px; background-color: #FFFFFF;"></div>
+          </div>
+        </div>
+        @*<div class="card-footer">
+            <div class="stats">
+              <i class="now-ui-icons ui-2_time-alarm"></i> Last 7 days
+            </div>
+          </div>*@
+      </div>
+
+
+
+
+
+
+
+
+      @*<div class="card-body">
+          <div class="table-responsive">
+            <table class="table">
+              <thead class=" text-primary">
+              <th>
+                Employee
+              </th>
+              <th>
+                Department
+              </th>
+              <th>
+                Job Title
+              </th>
+              <th>
+                Status
+              </th>
+              <th class="text-right">
+                Action
+              </th>
+              </thead>
+              <tbody>
+                <tr>
+                  <td>
+                    Elijah Adewuyi
+                  </td>
+                  <td>
+                    DDAI
+                  </td>
+                  <td>
+                    Dev Ops
+                  </td>
+                  <td>
+                    Active
+                  </td>
+                  <td class="text-right">
+                    <a href="#" class="btn btn-sm btn-info">Profile</a>
+                  </td>
+                </tr>
+                @foreach (var item in Model.LatestEmployeeVMs)
+                {
+                  <tr>
+                    <td>
+                      @item.EmployeeName
+                    </td>
+                    <td>
+                      @item.Department
+                    </td>
+                    <td>
+                      @item.JobTitle
+                    </td>
+                    <td>
+                      @item.IsActive
+                    </td>
+                    <td class="text-right">
+                      <a href="#" class="btn btn-sm btn-info">Profile</a>
+                    </td>
+                  </tr>
+
+                }
+                <tr>
+                  <td>
+                    Deola Akanji
+                  </td>
+                  <td>
+                    DevOps
+                  </td>
+                  <td>
+                    Frontend Developer
+                  </td>
+                  <td >
+                    Active
+                  </td>
+                  <td class="text-right">
+                    <a href="#" class="btn btn-sm btn-info">Profile</a>
+                  </td>
+                </tr>
+                <tr>
+                  <td>
+                    Bayo Kolade
+                  </td>
+                  <td>
+                    Business Solutions
+                  </td>
+                  <td>
+                    Functional Consultant
+                  </td>
+                  <td>
+                    Active
+                  </td>
+                  <td class="text-right">
+                    <a href="#" class="btn btn-sm btn-info">Profile</a>
+                  </td>
+                </tr>
+                <tr>
+                  <td>
+                    Ayo Babajide
+                  </td>
+                  <td>
+                    Cloud Solutions
+                  </td>
+                  <td>
+                    Cloud Architect
+                  </td>
+                  <td>
+                    Active
+                  </td>
+                  <td class="text-right">
+                    <a href="#" class="btn btn-sm btn-info">Profile</a>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+            <div>
+              <a href="#" class="pull-right">View more...</a>
+            </div>
+
+          </div>
+
+        </div>*@
+    </div>
+    @*</div>*@
+
+    <div class="col-md-6">
+      <div class="card">
+        <div class="card-header">
+          <h4 class="card-title">Leaves</h4>
+          <p class="category">Most Recent Leave Requests</p>
+        </div>
+        <div class="card-body">
+          <div class="table">
+            <table class="table">
+              <thead class=" text-primary">
+              <th>
+                Employee
+              </th>
+              <th>
+                Leave Request
+              </th>
+
+
+              <th class="text-right"></th>
+              </thead>
+              <tbody>
+                @foreach (var item in Model.ActiveLeaves)
+                {
+                  <tr>
+                    <td>
+                      @item.EmployeeDetail.FirstName @item.EmployeeDetail.LastName
+                    </td>
+                    <td>
+                      @item.LeaveTitle
+                    </td>
+
+                    @*<td class="text-left">
+                        <a href="#" class="btn btn-round btn-info btn-icon btn-sm like" title="View Profile"><i class="fas fa-angle-right"></i></a>
+
+
+                      </td>*@
+                  </tr>
+
+                }
+
+              </tbody>
+            </table>
+            <div>
+              <a asp-action="Index" asp-controller="Leaves" class="pull-right">View more...</a>
+            </div>
+
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+
+</div>
+<script src="~/assets/js/plugins/chartjs.min.js"></script>
+
+
+
+<script type="text/javascript" src="https://www.amcharts.com/lib/3/amcharts.js"></script>
+<script type="text/javascript" src="https://www.amcharts.com/lib/3/serial.js"></script>
+<script type="text/javascript" src="https://www.amcharts.com/lib/3/themes/light.js"></script>
+
+
+<!-- amCharts javascript code -->
+<script type="text/javascript">
+
+
+  AmCharts.makeChart("chartdiv",
+
+    {
+	"type": "serial",
+      "categoryField": "category",
+  "colors": [
+		"#54c0f6",
+		"#FF69B4",
+		"#B0DE09",
+		"#0D8ECF",
+		"#2A0CD0",
+		"#CD0D74",
+		"#CC0000",
+		"#00CC00",
+		"#0000CC",
+		"#DDDDDD",
+		"#999999",
+		"#333333",
+		"#990000"
+	],
+	"startDuration": 1,
+	"categoryAxis": {
+		"gridPosition": "start",
+		"gridAlpha": 0
+	},
+	"trendLines": [],
+	"graphs": [
+		{
+			"balloonText": "[[title]] of [[category]]:[[value]]",
+			"fillAlphas": 1,
+			"id": "AmGraph-1",
+			"title": "Male",
+			"type": "column",
+			"valueField": "column-1"
+		},
+		{
+			"balloonText": "[[title]] of [[category]]:[[value]]",
+			"fillAlphas": 1,
+			"id": "AmGraph-2",
+			"title": "Female",
+			"type": "column",
+			"valueField": "column-2"
+		}
+	],
+	"guides": [],
+	"valueAxes": [
+		{
+			"id": "ValueAxis-1",
+			"stackType": "regular",
+			"title": "Axis title"
+		}
+	],
+	"allLabels": [],
+	"balloon": {},
+	"legend": {
+		"enabled": true,
+		"useGraphSettings": true
+	},
+	//"titles": [
+	//	{
+	//		"id": "Title-1",
+	//		"size": 15,
+	//		//"text": "Chart Title"
+	//	}
+	//],
+      "dataProvider": [
+
+    @foreach (var item in Model.HeadCounts)
+    {
+
+         @:{
+         @:"category": "@item.Department",
+         @:"column-1": @item.Male,
+         @:"column-2": @item.Female,
+         @:},
+
+    }
+
+  //  {
+		//	"category": "Sales",
+		//	"column-1": 2,
+		//	"column-2": 3
+		//}
+
+	]
+}
+  );
+
+
+</script>

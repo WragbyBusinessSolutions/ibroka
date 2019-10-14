@@ -1,0 +1,804 @@
+﻿
+@{
+    ViewData["Title"] = "Report";
+    Layout = "~/Views/Shared/_LayoutNew.cshtml";
+}
+
+
+<style>
+    .body-card {
+        margin-left: 2%;
+        margin-right: 2%;
+        margin-top: 1%;
+        margin-bottom: 2%;
+    }
+
+    .table-font {
+        font-weight: 500;
+    }
+
+    .iconstyle {
+        font-size: 25px;
+        margin-top: 20px;
+    }
+
+    .picture {
+        background: fixed;
+    }
+
+        .picture:hover {
+            border-radius: 7px;
+            box-shadow: 0 0 11px rgba(33,33,33,.2);
+            padding: 10px;
+        }
+</style>
+
+<div class="content">
+
+    <br />
+    @*<div class="col-md-12">
+            <div class="card card-stats card-raised">
+                <div class="card-body">
+                    <div class="row">
+                        <div class="col-md-4">
+                            <h4>Reports</h4>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </div>*@
+
+
+    <!-- notice modal monthly premium income -->
+    <div class="modal fade" id="noticeModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-notice">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">
+                        <i class="now-ui-icons ui-1_simple-remove"></i>
+                    </button>
+                    <h5 class="modal-title" id="myModalLabel">Monthly Report</h5>
+                </div>
+                <div id="loading-overlay">
+                    <div class="loading-icon"></div>
+                </div>
+
+                <div class="modal-body">
+                    <div class="instruction">
+                        <form>
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <div class="form-group">
+                                        <label>Select Month</label>
+                                        <select type="text" class="form-control">
+                                            <option value=''>--Select Month--</option>
+                                            <option selected value='1'>Janaury</option>
+                                            <option value='2'>February</option>
+                                            <option value='3'>March</option>
+                                            <option value='4'>April</option>
+                                            <option value='5'>May</option>
+                                            <option value='6'>June</option>
+                                            <option value='7'>July</option>
+                                            <option value='8'>August</option>
+                                            <option value='9'>September</option>
+                                            <option value='10'>October</option>
+                                            <option value='11'>November</option>
+                                            <option value='12'>December</option>
+                                        </select>
+                                    </div>
+                                    <div>
+                                        <select class="selectpicker" data-style="btn btn-default btn-round" title="Choose City" data-size="7">
+                                            <option value=''>--Select Month--</option>
+                                            <option selected value='1'>Janaury</option>
+                                            <option value='2'>February</option>
+                                            <option value='3'>March</option>
+                                            <option value='4'>April</option>
+                                            <option value='5'>May</option>
+                                            <option value='6'>June</option>
+                                            <option value='7'>July</option>
+                                            <option value='8'>August</option>
+                                            <option value='9'>September</option>
+                                            <option value='10'>October</option>
+                                            <option value='11'>November</option>
+                                            <option value='12'>December</option>
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="">
+                                <button type="submit" class="btn btn-fill btn-primary btn-round" asp-action="MonthlyPremium">Generate</button>
+                                <button type="button" class="btn btn-info btn-round" data-dismiss="modal">Close</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- end notice modal monthly premium income -->
+    <!--  monthly unremitted premium income -->
+    <div class="modal fade" id="noticeModal1" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-notice">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">
+                        <i class="now-ui-icons ui-1_simple-remove"></i>
+                    </button>
+                    <h5 class="modal-title" id="myModalLabel">Monthly Report</h5>
+                </div>
+                <div id="loading-overlay">
+                    <div class="loading-icon"></div>
+                </div>
+
+                <div class="modal-body">
+                    <div class="instruction">
+                        <form>
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <div class="form-group">
+                                        <label>Select Month</label>
+                                        <select type="text" class="form-control">
+                                            <option value=''>--Select Month--</option>
+                                            <option selected value='1'>Janaury</option>
+                                            <option value='2'>February</option>
+                                            <option value='3'>March</option>
+                                            <option value='4'>April</option>
+                                            <option value='5'>May</option>
+                                            <option value='6'>June</option>
+                                            <option value='7'>July</option>
+                                            <option value='8'>August</option>
+                                            <option value='9'>September</option>
+                                            <option value='10'>October</option>
+                                            <option value='11'>November</option>
+                                            <option value='12'>December</option>
+                                        </select>
+                                    </div>
+                                    <div>
+                                        <select class="selectpicker" data-style="btn btn-default btn-round" title="Choose City" data-size="7">
+                                            <option value=''>--Select Month--</option>
+                                            <option selected value='1'>Janaury</option>
+                                            <option value='2'>February</option>
+                                            <option value='3'>March</option>
+                                            <option value='4'>April</option>
+                                            <option value='5'>May</option>
+                                            <option value='6'>June</option>
+                                            <option value='7'>July</option>
+                                            <option value='8'>August</option>
+                                            <option value='9'>September</option>
+                                            <option value='10'>October</option>
+                                            <option value='11'>November</option>
+                                            <option value='12'>December</option>
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="">
+                                <button type="submit" class="btn btn-fill btn-primary btn-round" asp-action="UnremittedPremium">Generate</button>
+                                <button type="button" class="btn btn-info btn-round" data-dismiss="modal">Close</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- monthly unremitted premium income -->
+
+    <div class="col-md-12">
+        <div class="card  card-tasks">
+            <div class="card-header ">
+                <h4 class="card-title">Monthly Returns</h4>
+            </div>
+            <div class="card-body ">
+                <div class="table-full-width ">
+                    <table class="table">
+                        <tbody>
+                            <tr>
+                                <td>
+                                </td>
+                                <td class="img-row">
+                                    <div class="icon icon-info iconstyle col-md-1">
+                                        <i class="now-ui-icons business_chart-bar-32"></i>
+                                    </div>
+                                </td>
+                                <td class="text-left">Monthly Premium Income/Production Schedule</td>
+                                <td class="td-actions text-right">
+                                    <button type="button" rel="tooltip" class="btn btn-danger" data-toggle="modal" data-target="#noticeModal" data-original-title="Generate Report">
+                                        <i class="now-ui-icons ui-2_settings-90"></i>
+                                        Generate
+                                    </button>
+                                    <a rel="tooltip" title="" asp-action="History" class="btn btn-info m-2">
+                                        View History
+                                    </a>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                </td>
+                                <td class="img-row">
+                                    <div class="icon icon-info iconstyle col-md-1">
+                                        <i class="now-ui-icons shopping_tag-content"></i>
+                                    </div>
+                                </td>
+                                <td class="text-left">Monthly Umremitted Premium Report</td>
+                                <td class="td-actions text-right">
+                                    <button type="button" rel="tooltip" class="btn btn-danger" data-toggle="modal" data-target="#noticeModal1" data-original-title="Generate Report">
+                                        <i class="now-ui-icons ui-2_settings-90"></i>
+                                        Generate
+                                    </button>
+                                    <a rel="tooltip" title="" asp-action="History" class="btn btn-info m-2">
+                                        View History
+                                    </a>
+                                </td>
+                            </tr>
+                            <tr></tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+            <div class="card-footer ">
+
+
+                <!--  Quarterly Returns on Personel -->
+                <div class="modal fade" id="noticeModal2" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+                    <div class="modal-dialog modal-notice">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">
+                                    <i class="now-ui-icons ui-1_simple-remove"></i>
+                                </button>
+                                <h5 class="modal-title" id="myModalLabel">Quarterly Report</h5>
+                            </div>
+                            <div id="loading-overlay">
+                                <div class="loading-icon"></div>
+                            </div>
+
+                            <div class="modal-body">
+                                <div class="instruction">
+                                    <form>
+                                        <div class="row">
+                                            <div class="col-md-12">
+                                                <div class="form-group">
+                                                    <label>Select Quarter</label>
+                                                    <select type="text" class="form-control">
+                                                        <option value=''>--Select Quarter--</option>
+                                                        <option selected value='1'>First Quarter(January - March)</option>
+                                                        <option value='2'>Second Quarter(April - June)</option>
+                                                        <option value='3'>Third Quarter(July - September)</option>
+                                                        <option value='4'>Fourth Quarter(October - December)</option>
+                                                    </select>
+                                                </div>
+                                                <div>
+                                                    <select class="selectpicker" data-style="btn btn-default btn-round" title="Choose City" data-size="7">
+                                                        <option value=''>--Select Quarter--</option>
+                                                        <option selected value='1'>First Quarter(January - March)</option>
+                                                        <option value='2'>Second Quarter(April - June)</option>
+                                                        <option value='3'>Third Quarter(July - September)</option>
+                                                        <option value='4'>Fourth Quarter(October - December)</option>
+                                                    </select>
+                                                    <br />
+                                                    <br />
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="">
+                                            <button type="submit" class="btn btn-fill btn-primary btn-round" asp-action="PersonnelReport">Generate</button>
+                                            <button type="button" class="btn btn-info btn-round" data-dismiss="modal">Close</button>
+                                        </div>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- Quarterly Returns on Personel -->
+                <!-- Quarterly Returns on Commission and Rebates -->
+                <div class="modal fade" id="noticeModal3" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+                    <div class="modal-dialog modal-notice">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">
+                                    <i class="now-ui-icons ui-1_simple-remove"></i>
+                                </button>
+                                <h5 class="modal-title" id="myModalLabel">Quarterly Report</h5>
+                            </div>
+                            <div id="loading-overlay">
+                                <div class="loading-icon"></div>
+                            </div>
+
+                            <div class="modal-body">
+                                <div class="instruction">
+                                    <form>
+                                        <div class="row">
+                                            <div class="col-md-12">
+                                                <div class="form-group">
+                                                    <label>Select Quarter</label>
+                                                    <select type="text" class="form-control">
+                                                        <option value=''>--Select Quarter--</option>
+                                                        <option selected value='1'>First Quarter(January - March)</option>
+                                                        <option value='2'>Second Quarter(April - June)</option>
+                                                        <option value='3'>Third Quarter(July - September)</option>
+                                                        <option value='4'>Fourth Quarter(October - December)</option>
+                                                    </select>
+                                                </div>
+                                                <div>
+                                                    <select class="selectpicker" data-style="btn btn-default btn-round" title="Choose City" data-size="7">
+                                                        <option value=''>--Select Quarter--</option>
+                                                        <option selected value='1'>First Quarter(January - March)</option>
+                                                        <option value='2'>Second Quarter(April - June)</option>
+                                                        <option value='3'>Third Quarter(July - September)</option>
+                                                        <option value='4'>Fourth Quarter(October - December)</option>
+                                                    </select>
+                                                    <br />
+                                                    <br />
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="">
+                                            <button type="submit" class="btn btn-fill btn-primary btn-round" asp-action="CommissionRebatesReport">Generate</button>
+                                            <button type="button" class="btn btn-info btn-round" data-dismiss="modal">Close</button>
+                                        </div>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!--Quarterly Returns on Commission and Rebates -->
+                <!--  Quarterly Returns on Returned/Refunded Premium and Cancelled/Reversed business -->
+                <div class="modal fade" id="noticeModal4" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+                    <div class="modal-dialog modal-notice">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">
+                                    <i class="now-ui-icons ui-1_simple-remove"></i>
+                                </button>
+                                <h5 class="modal-title" id="myModalLabel">Quarterly Report</h5>
+                            </div>
+                            <div id="loading-overlay">
+                                <div class="loading-icon"></div>
+                            </div>
+
+                            <div class="modal-body">
+                                <div class="instruction">
+                                    <form>
+                                        <div class="row">
+                                            <div class="col-md-12">
+                                                <div class="form-group">
+                                                    <label>Select Quarter</label>
+                                                    <select type="text" class="form-control">
+                                                        <option value=''>--Select Quarter--</option>
+                                                        <option selected value='1'>First Quarter(January - March)</option>
+                                                        <option value='2'>Second Quarter(April - June)</option>
+                                                        <option value='3'>Third Quarter(July - September)</option>
+                                                        <option value='4'>Fourth Quarter(October - December)</option>
+                                                    </select>
+                                                </div>
+                                                <div>
+                                                    <select class="selectpicker" data-style="btn btn-default btn-round" title="Choose City" data-size="7">
+                                                        <option value=''>--Select Quarter--</option>
+                                                        <option selected value='1'>First Quarter(January - March)</option>
+                                                        <option value='2'>Second Quarter(April - June)</option>
+                                                        <option value='3'>Third Quarter(July - September)</option>
+                                                        <option value='4'>Fourth Quarter(October - December)</option>
+                                                    </select>
+                                                    <br />
+                                                    <br />
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="">
+                                            <button type="submit" class="btn btn-fill btn-primary btn-round" asp-action="RefundedPremiumReport">Generate</button>
+                                            <button type="button" class="btn btn-info btn-round" data-dismiss="modal">Close</button>
+                                        </div>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- Quarterly Returns on Returned/Refunded Premium and Cancelled/Reversed business -->
+
+
+                <div class="stats">
+                    <i class="now-ui-icons "></i>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-12">
+        <div class="card  card-tasks">
+            <div class="card-header ">
+                <h5 class="card-category"></h5>
+                <h4 class="card-title">Quarterly Returns</h4>
+            </div>
+            <div class="card-body ">
+                <div class="table-full-width ">
+                    <table class="table">
+                        <tbody>
+                            <tr>
+                                <td>
+                                </td>
+                                <td class="img-row">
+                                    <div class="icon icon-info iconstyle col-md-1">
+                                        <i class="now-ui-icons education_paper"></i>
+                                    </div>
+                                </td>
+                                <td class="text-left">Quarterly Returns on Personnel</td>
+                                <td class="td-actions text-right">
+                                    <button type="button" rel="tooltip" class="btn btn-danger" data-toggle="modal" data-target="#noticeModal2" data-original-title="Generate Report">
+                                        <i class="now-ui-icons ui-2_settings-90"></i>
+                                        Generate
+                                    </button>
+                                    <a rel="tooltip" title="" asp-action="History" class="btn btn-info m-2">
+                                        View History
+                                    </a>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                </td>
+                                <td class="img-row">
+                                    <div class="icon icon-info iconstyle col-md-1">
+                                        <i class="now-ui-icons business_money-coins"></i>
+                                    </div>
+                                </td>
+                                <td class="text-left">Quarterly Returns on Commission and Rebates (CRR)</td>
+                                <td class="td-actions text-right">
+                                    <button type="button" rel="tooltip" class="btn btn-danger" data-toggle="modal" data-target="#noticeModal3" data-original-title="Generate Report">
+                                        <i class="now-ui-icons ui-2_settings-90"></i>
+                                        Generate
+                                    </button>
+                                    <a rel="tooltip" title="" asp-action="History" class="btn btn-info m-2">
+                                        View History
+                                    </a>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                </td>
+                                <td class="img-row">
+                                    <div class="icon icon-info iconstyle col-md-1">
+                                        <i class="now-ui-icons shopping_box"></i>
+                                    </div>
+                                </td>
+                                <td class="text-left">Quarterly Returns on Returned/Refunded Premium and Cancelled/Reversed business.</td>
+                                <td class="td-actions text-right">
+                                    <button type="button" rel="tooltip" class="btn btn-danger" data-toggle="modal" data-target="#noticeModal4" data-original-title="Generate Report">
+                                        <i class="now-ui-icons ui-2_settings-90"></i>
+                                        Generate
+                                    </button>
+                                    <a rel="tooltip" title="" asp-action="History" class="btn btn-info m-2">
+                                        View History
+                                    </a>
+                                </td>
+                            </tr>
+
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+            <div class="card-footer ">
+                <div class="stats">
+                    <i class="now-ui-icons "></i>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!--  bi-annual returns of operations -->
+    <div class="modal fade" id="noticeModal5" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-notice">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">
+                        <i class="now-ui-icons ui-1_simple-remove"></i>
+                    </button>
+                    <h5 class="modal-title" id="myModalLabel">Bi-Annual Report</h5>
+                </div>
+                <div id="loading-overlay">
+                    <div class="loading-icon"></div>
+                </div>
+
+                <div class="modal-body">
+                    <div class="instruction">
+                        <form>
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <div class="form-group">
+                                        <label>Select Year-Half</label>
+                                        <select type="text" class="form-control">
+                                            <option value=''>--Select Year-Half--</option>
+                                            <option value='1'>January - June</option>
+                                            <option value='2'>July - December</option>
+                                        </select>
+                                    </div>
+                                    <div>
+                                        <select class="selectpicker" data-style="btn btn-default btn-round" data-size="7">
+                                            <option value=''>--Select Year-Half--</option>
+                                            <option value='1'>January - June</option>
+                                            <option value='2'>July - December</option>
+                                        </select>
+                                        <br />
+                                        <br />
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="">
+                                <button type="submit" class="btn btn-fill btn-primary btn-round" asp-action="BiAnnualReport">Generate</button>
+                                <button type="button" class="btn btn-info btn-round" data-dismiss="modal">Close</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- bi-annual returns of operations -->
+    <!-- clients account bi-annually -->
+    <div class="modal fade" id="noticeModal6" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-notice">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">
+                        <i class="now-ui-icons ui-1_simple-remove"></i>
+                    </button>
+                    <h5 class="modal-title" id="myModalLabel">Bi-Annual Report</h5>
+                </div>
+                <div id="loading-overlay">
+                    <div class="loading-icon"></div>
+                </div>
+
+                <div class="modal-body">
+                    <div class="instruction">
+                        <form>
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <div class="form-group">
+                                        <label>Select Year-Half</label>
+                                        <select type="text" class="form-control">
+                                            <option value=''>--Select Year-Half--</option>
+                                            <option value='1'>January - June</option>
+                                            <option value='2'>July - December</option>
+                                        </select>
+                                    </div>
+                                    <div>
+                                        <select class="selectpicker" data-style="btn btn-default btn-round" data-size="7">
+                                            <option value=''>--Select Year-Half--</option>
+                                            <option value='1'>January - June</option>
+                                            <option value='2'>July - December</option>
+                                        </select>
+                                        <br />
+                                        <br />
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="">
+                                <button type="submit" class="btn btn-fill btn-primary btn-round" asp-action="ClientsAccount">Generate</button>
+                                <button type="button" class="btn btn-info btn-round" data-dismiss="modal">Close</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- clients account bi-annually -->
+
+
+    <div class="col-md-12">
+        <div class="card  card-tasks">
+            <div class="card-header ">
+                <h5 class="card-category"></h5>
+                <h4 class="card-title">Bi-Annual Returns</h4>
+            </div>
+            <div class="card-body ">
+                <div class="table-full-width ">
+                    <table class="table">
+                        <tbody>
+                            <tr>
+                                <td> </td>
+                                <td class="img-row">
+                                    <div class="icon icon-info iconstyle col-md-1">
+                                        <i class="now-ui-icons files_single-copy-04"></i>
+                                    </div>
+                                </td>
+                                <td class="text-left">Bi-Annual Returns of Operations - (Management Accounts in Excel Format)</td>
+                                <td class="td-actions text-right">
+                                    <button type="button" rel="tooltip" class="btn btn-danger" data-toggle="modal" data-target="#noticeModal5" data-original-title="Generate Report">
+                                        <i class="now-ui-icons ui-2_settings-90"></i>
+                                        Generate
+                                    </button>
+                                    <a rel="tooltip" title="" asp-action="History" class="btn btn-info m-2">
+                                        View History
+                                    </a>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                </td>
+                                <td class="img-row">
+                                    <div class="icon icon-info iconstyle col-md-1">
+                                        <i class="now-ui-icons business_chart-bar-32"></i>
+                                    </div>
+                                </td>
+                                <td class="text-left">Clients Account Bi-Annually </td>
+                                <td class="td-actions text-right">
+                                    <button type="button" rel="tooltip" class="btn btn-danger" data-toggle="modal" data-target="#noticeModal6" data-original-title="Generate Report">
+                                        <i class="now-ui-icons ui-2_settings-90"></i>
+                                        Generate
+                                    </button>
+                                    <a rel="tooltip" title="" asp-action="History" class="btn btn-info m-2">
+                                        View History
+                                    </a>
+                                </td>
+                            </tr>
+
+
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+            <div class="card-footer ">
+                <div class="stats">
+                    <i class="now-ui-icons "></i>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <!-- Annual Report -->
+    <div class="modal fade" id="noticeModal7" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-notice">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">
+                        <i class="now-ui-icons ui-1_simple-remove"></i>
+                    </button>
+                    <h5 class="modal-title" id="myModalLabel">Annual Report</h5>
+                </div>
+                <div id="loading-overlay">
+                    <div class="loading-icon"></div>
+                </div>
+
+                <div class="modal-body">
+                    <div class="instruction">
+                        <form>
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <div class="form-group">
+                                        <label>Select Year</label>
+                                        <select type="text" class="form-control">
+                                            <option value=''>--Select Year---</option>
+                                            <option value="2019">2019</option>
+                                            <option value="2018">2018</option>
+                                            <option value="2017">2017</option>
+                                            <option value="2016">2016</option>
+                                            <option value="2015">2015</option>
+                                            <option value="2014">2014</option>
+                                            <option value="2013">2013</option>
+                                            <option value="2012">2012</option>
+                                            <option value="2011">2011</option>
+                                            <option value="2010">2010</option>
+                                            <option value="2009">2009</option>
+                                            <option value="2008">2008</option>
+                                            <option value="2007">2007</option>
+                                            <option value="2006">2006</option>
+                                            <option value="2005">2005</option>
+                                            <option value="2004">2004</option>
+                                            <option value="2003">2003</option>
+                                            <option value="2002">2002</option>
+                                            <option value="2001">2001</option>
+                                            <option value="2000">2000</option>
+                                            <option value="1999">1999</option>
+                                            <option value="1998">1998</option>
+                                            <option value="1997">1997</option>
+                                            <option value="1996">1996</option>
+                                            <option value="1995">1995</option>
+                                            <option value="1994">1994</option>
+                                            <option value="1993">1993</option>
+                                            <option value="1992">1992</option>
+                                            <option value="1991">1991</option>
+                                            <option value="1990">1990</option>
+                                        </select>
+                                    </div>
+                                    <div>
+                                        <select class="selectpicker" data-style="btn btn-default btn-round" data-size="7">
+                                            <option value=''>--Select Year---</option>
+                                            <option value="2019">2019</option>
+                                            <option value="2018">2018</option>
+                                            <option value="2017">2017</option>
+                                            <option value="2016">2016</option>
+                                            <option value="2015">2015</option>
+                                            <option value="2014">2014</option>
+                                            <option value="2013">2013</option>
+                                            <option value="2012">2012</option>
+                                            <option value="2011">2011</option>
+                                            <option value="2010">2010</option>
+                                            <option value="2009">2009</option>
+                                            <option value="2008">2008</option>
+                                            <option value="2007">2007</option>
+                                            <option value="2006">2006</option>
+                                            <option value="2005">2005</option>
+                                            <option value="2004">2004</option>
+                                            <option value="2003">2003</option>
+                                            <option value="2002">2002</option>
+                                            <option value="2001">2001</option>
+                                            <option value="2000">2000</option>
+                                            <option value="1999">1999</option>
+                                            <option value="1998">1998</option>
+                                            <option value="1997">1997</option>
+                                            <option value="1996">1996</option>
+                                            <option value="1995">1995</option>
+                                            <option value="1994">1994</option>
+                                            <option value="1993">1993</option>
+                                            <option value="1992">1992</option>
+                                            <option value="1991">1991</option>
+                                            <option value="1990">1990</option>
+                                        </select>
+                                        <br />
+                                        <br />
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="">
+                                <button type="submit" class="btn btn-fill btn-primary btn-round" asp-action="BusinessSchedule">Generate</button>
+                                <button type="button" class="btn btn-info btn-round" data-dismiss="modal">Close</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!--  Annual Report  -->
+
+
+    <div class="col-md-12">
+        <div class="card  card-tasks">
+            <div class="card-header ">
+                <h5 class="card-category"></h5>
+                <h4 class="card-title">Annual Returns</h4>
+            </div>
+            <div class="card-body ">
+                <div class="table-full-width ">
+                    <table class="table">
+                        <tbody>
+                            <tr>
+                                <td>
+                                </td>
+                                <td class="img-row">
+                                    <div class="icon icon-info iconstyle col-md-1">
+                                        <i class="now-ui-icons shopping_credit-card"></i>
+                                    </div>
+                                </td>
+                                <td class="text-left">Form !C (Schedule of Business generated) for Insurance Levey Assessment - Annually)</td>
+                                <td class="td-actions text-right">
+                                    <button type="button" rel="tooltip" class="btn btn-danger" data-toggle="modal" data-target="#noticeModal7" data-original-title="Generate Report">
+                                        <i class="now-ui-icons ui-2_settings-90"></i>
+                                        Generate
+                                    </button>
+                                    <a rel="tooltip" title="" asp-action="History" class="btn btn-info m-2">
+                                        View History
+                                    </a>
+                                </td>
+                            </tr>
+
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+            <div class="card-footer ">
+                <div class="stats">
+                    <i class="now-ui-icons "></i>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>
+
+
+

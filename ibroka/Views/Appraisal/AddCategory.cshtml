@@ -1,0 +1,128 @@
+﻿
+@{
+    ViewData["Title"] = "Category";
+    Layout = "~/Views/Shared/_LayoutHumanResouces.cshtml";
+}
+
+
+
+
+<div class="content">
+  
+        <div class="col-md-12">
+            <div class="card ">
+                <div class="card-header ">
+                    <h4 class="card-title">Add Category</h4>
+                </div>
+                <div class="card-body ">
+                    <form method="post" asp-action="AddCategory" asp-controller="Appraisal" class="form-horizontal">
+                        <div class="row">
+                            <label class="col-sm-2 col-form-label">Category Name</label>
+                            <div class="col-sm-10">
+                              <div class="form-group">
+                                <input type="text" id="Category" name="Category" class="form-control" placeholder="Category Name" required>
+                              </div>
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <label class="col-sm-2 col-form-label"> </label>
+                            <div class="col-sm-10">
+                              <div class="form-check form-check-inline">
+                                <label class="form-check-label">
+                                  <input id="PreFilled" name="PreFilled" value="true" class="form-check-input" type="checkbox">
+                                  <span class="form-check-sign"></span>
+                                  Pre-Filled
+                                </label>
+                              </div>                               
+                            </div>
+                        </div>
+                        <div class="row">
+                            <label class="col-sm-2 col-form-label"></label>
+                            <div class="col-sm-10">
+                                <div class="form-group">
+                                    <button type="submit" class="btn btn-fill btn-info">Create</button>
+                                </div>
+                            </div>
+                        </div>                          
+                    </form>
+                </div>
+            </div>
+        </div>
+          
+
+        @*<div class="col-md-12 ">
+          <div class="card card-body ">
+
+            <div class="card-header">
+              <h5 class="card-title">Set KPIs</h5>
+            </div>
+            <div class="card-body">
+              <div class="table-responsive">
+                <table class="table">
+                  <thead class="text-primary">
+                  <th class="text-center">
+                    #
+                  </th>
+                  <th>
+                    KPIs
+                  </th>
+                  <th class="text-right">
+                    Weight %
+                  </th>
+                  <th class="text-right">
+                    Actions
+                  </th>
+                  </thead>
+
+                  <tbody>
+                    <tr>
+                      <td class="text-center">
+                        1
+                      </td>
+                      <td>
+                        How best can you describe you achievement for this organisation?
+                      </td>
+                      <td class="text-right">
+                        24
+                      </td>
+                      <td class="text-right">
+                        <button type="button" rel="tooltip" class="btn btn-danger btn-icon btn-sm ">
+                          <i class="now-ui-icons ui-1_simple-remove"></i>
+                        </button>
+                      </td>
+                    </tr>
+                    <tr>
+                      <td class="text-center">
+                        2
+                      </td>
+                      <td>
+                        <input type="text" id="" name="" class="form-control" placeholder="KPI">
+                      </td>
+                      <td class="text-right">
+                        <input style="width:75px" type="number" id="" name="" class="form-control pull-right" placeholder="25%">
+                      </td>
+                      <td class="text-right">
+                        <button type="button" rel="tooltip" class="btn btn-success btn-icon btn-sm ">
+                          <i class="now-ui-icons ui-1_simple-add"></i>
+                        </button>
+                      </td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+
+
+
+
+
+
+        </div>
+
+</div>*@
+
+<script>
+    $('#myModal').modal(options)
+</script>
+

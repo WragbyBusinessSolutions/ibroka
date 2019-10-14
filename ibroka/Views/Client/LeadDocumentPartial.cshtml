@@ -1,0 +1,123 @@
+﻿@model E4S.ViewModel.LeadDocumentVM
+
+<div class="modal-content" style="width:500px;">
+    <div style="padding:0px;margin-top: -23px;height: 10p;" class="modal-header">
+        <div style="background-color:#214166; margin:0px;" class="row col-md-12">
+            <div class="col-md-8">
+                <span style="padding:0px 0px; color:#fff; margin:0" class="modal-title" id="myModalLabel">
+                    <span id="txtTitle" style="font-size: 20px;">Documents</span>
+                </span>
+            </div>
+        </div>
+
+
+    </div>
+
+    <div class="row" style="margin-left: 260px;">
+        <div class="fileinput text-right col-md-6 fileinput-exists" data-provides="fileinput" style="font-size: 12px;padding: 0px 0px !important;width:70px !important; ">
+            <span class="btn btn-primary btn-round btn-file" style="padding: 7px 7px;width: 70px !important;">
+                <span class="fileinput-new">Add File</span>
+                <span class="fileinput-exists">Add File</span>
+                <input type="hidden" value="" name=""><input type="file" name="filePicker" multiple="multiple" id="filePicker">
+            </span>
+        </div><div class="text-right col-md-6" style="margin-left: -36px;">
+            <input type="button" value="Close" onclick="closedocumenmodel()" class="btn btn-info btn-round" style="padding: 5px 14px;width: 70px !important;">
+        </div>
+
+    </div>
+    <div id="divDocuments" style="height:200px;margin-left: 35px;overflow-y: visible;overflow-x:hidden">
+        @if (@Model.documents != null)
+        {
+            @for (int i = 0; i < Model.documents.Count; i++)
+            {
+        <div class="row" style="color:black;margin-top:11px" id="@("divdocument" + i.ToString())">
+            <div class="col-md-8">
+                <a target="_blank" href="@Model.documents[i].FilePath" style="color:black;">@Model.documents[i].FileName</a>
+                <input type="hidden" name="@("hdndocument" + i.ToString())" value="@Model.documents[i].FilePath">
+                <a href="#" onclick='removeDocument("@("divdocument" + i.ToString())")' style="margin-left:20px">X</a>
+            </div>
+
+            </div>
+                }
+                <input type="hidden" id="hdnTotalCount" value="@Model.documents.Count" />
+                }
+                else
+                {
+                <input type="hidden" id="hdnTotalCount" value="0" />
+                }
+            </div>
+
+        </div>
+<script>
+    var rownumber = document.getElementById("hdnTotalCount").value;
+    var counterDocuments = 0;
+    if (rownumber !== "0") {        
+        counterDocuments = parseInt(rownumber);
+    }
+
+    var handleFileSelect = function (evt) {
+        var files = evt.target.files;
+
+
+
+
+        if (files) {
+            convertBase64(files, 0);
+        }
+    };
+
+    if (window.File && window.FileReader && window.FileList && window.Blob) {
+        document.getElementById('filePicker').addEventListener('change', handleFileSelect, false);
+    } else {
+        alert('The File APIs are not fully supported in this browser.');
+    }
+
+    function convertBase64(files, index) {
+
+        var reader = new FileReader();
+
+        reader.onload = function (readerEvt) {
+            var binaryString = readerEvt.target.result;
+            var documentDiv1 = "<div class=\"row\" style=\"color:black;margin-top:11px\" id=\"divdocument" + rownumber + "\"><div class=\"col-md-8\"><a href=\"#\" style=\"color:black;\">" + file.name + "</a><input type=\"hidden\" name=\"hdndocument" + rownumber + "\" value=\"" + file.name + "#data:" + file.type + ";base64," + btoa(binaryString) + "\"><a  href=\"#\"  onclick=\"removeDocument('divdocument" + rownumber + "\')\" style=\"margin-left:20px\" >X</a></div></div>";
+            document.getElementById("divDocuments").innerHTML = document.getElementById("divDocuments").innerHTML + documentDiv1;
+            rownumber = rownumber + 1;
+            counterDocuments = counterDocuments + 1;
+
+            index = index + 1;
+            if (files[index] != null)
+                convertBase64(files, index)
+        };
+
+        var file = files[index];
+
+        reader.readAsBinaryString(file);
+
+    }
+
+
+    function removeDocument(divId) {
+
+        var result = confirm("Are you sure to delete?");
+
+
+        if (result) {
+
+            $("#" + divId).remove();
+            if (counterDocuments > 0) {
+                counterDocuments = counterDocuments - 1;
+
+            }
+        }
+
+    }
+
+    function closedocumenmodel() {
+        if (counterDocuments > 0) {
+            $('#btnAddDocument').text('Uploaded Documents (' + counterDocuments + ')');
+        }
+        else {
+            $('#btnAddDocument').text('Select Files');
+        }
+        $("#documentModal").modal("hide")
+    }
+</script>

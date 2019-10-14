@@ -1,0 +1,71 @@
+﻿@model E4S.Models.LeadManagement.PolicyClassMaster
+
+@{
+  ViewData["Title"] = "Add User";
+}
+
+
+
+@Html.Partial("~/Views/Manage/_StatusMessage.cshtml", ViewData["StatusMessage"])
+
+<div class="content">
+
+
+  <div class="row">
+    <div class="col-md-12">
+      <div class="card ">
+        <div class="card-header ">
+          <h4 class="card-title">Add New User</h4>
+        </div>
+        <div class="card-body ">
+          <form asp-action="AddPolicyClass" asp-controller="Admin" method="post" class="form-horizontal">
+            <div class="row">
+              <label class="col-md-3 col-form-label">Policy Name</label>
+              <div class="col-md-9">
+                <div class="form-group">
+                  <input type="text" asp-for="Name" class="form-control">
+                </div>
+              </div>
+            </div>
+            <div class="row">
+              <label class="col-md-3 col-form-label">Commission Percentage %</label>
+              <div class="col-md-9">
+                <div class="form-group">
+                  <input type="text" asp-for="CommisionPercent" placeholder="20.0" class="form-control">
+                </div>
+              </div>
+            </div>
+
+            <div class="row">
+              <label class="col-md-3 col-form-label"></label>
+              <div class="col-md-9">
+                <div class="form-group">
+                  <button type="submit" class="btn btn-fill btn-primary">Create Policy Class</button>
+                </div>
+              </div>
+            </div>
+          </form>
+
+
+
+        </div>
+      </div>
+    </div>
+
+
+
+
+
+
+
+
+
+
+
+
+  </div>
+</div>
+
+
+
+

@@ -1,0 +1,576 @@
+﻿@model E4S.Models.LeadManagement.Lead
+
+<script src="~/js/LeadCustom.js"></script>
+<link href="~/css/custom.css" rel="stylesheet" />
+<div class="modal-content" style="width:850px; padding-top:0px; padding-left:0px;">
+    <form enctype="multipart/form-data" method="post">
+        <div style="padding:0px;" class="modal-header">
+
+            <div style="background-color:#214166; margin:0px;" class="row col-md-12">
+                <div class="col-md-8"><h4 style="padding:5px 20px; color:#fff; margin:0" class="modal-title" id="myModalLabel"><span id="txtTitle"> Enter New Lead Details</span></h4></div>
+                <div class="col-md-4 pull-right">
+
+                </div>
+            </div>
+
+
+        </div>
+        <div style="margin:0px;" class="row col-md-12">
+            <div class="col-md-8"></div>
+            <div class="col-md-4 pull-right">
+                <input style="margin-top:10px; padding:7px 14px; width:70px !important;  float:right" type="button" value="Close" class="btn btn-info btn-round" onclick="cancelAddLead()" />
+
+                <input style="margin-top:10px; padding:7px 14px; width:30%; display:none; float:right" type="submit" value="Submit" id="idLeadSubmit" asp-action="SaveLead" asp-controller="Client" class="btn btn-fill btn-primary btn-round" />
+                <input style="margin-top:10px; padding:7px 14px; width:70px !important;  float:right" type="button" value="Save" class="btn btn-fill btn-primary btn-round" onclick="validateLeadData()" id="btnlead_submit" />&nbsp;
+            </div>
+        </div>
+        <div style="padding:10px 0px;margin-top:-25px; " class="modal-body">
+            <div class="instruction">
+                <div id="dvPolicies" class=" tab-content" style="margin-left:1px;margin-right:1px;">
+                    <div class="row col-md-12">
+                        <div class="col-md-8">
+                            <div class="form-group">
+                                <label class="control-label">Policy Class</label>
+                                <select id="ddlPC" asp-for="policyClassId" type="text" asp-items="ViewBag.PolicyClasses" class="form-control"></select>
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <input asp-for="clientId" class="form-control" style="display:none" />
+                        </div>
+                        <div class="col-md-4">
+
+                        </div>
+                    </div>
+
+                    <div style="margin-left:5px">
+                        <div class="">
+                            <div>
+                                <div id="dvThirdPartyMotor">
+                                    <div class="row">
+                                        <div class="col-md-4">
+                                            <div style="margin-left:17px" class="form-group">
+                                                <label class="control-label">Make Of Vehicle</label>
+                                                <input name="MakeOfVehicle" id="txtMakeOfVehicle" class="form-control" />
+
+                                            </div>
+                                        </div>
+                                        <div class="col-md-4">
+                                            <div class="form-group">
+                                                <label class="control-label">Model Of Vehicle</label>
+                                                <input name="ModelOfVehicle" id="txtModelOfVehicle" class="form-control" />
+
+                                            </div>
+                                        </div>
+                                        <div class="col-md-4">
+                                            <div class="form-group">
+                                                <label class="control-label">Year Of Make</label>
+                                                @*<input name="YearOfMake" id="txtYearOfMake" onkeypress="return validateFloatKeyPress(this,event);" class="form-control" placeholder='yyyy' maxlength="4" />*@
+                                                <select name="YearOfMake" id="txtYearOfMake" class="form-control"></select>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="row">
+                                        <div class="col-md-4" style="padding-left:31px;">
+                                            <div class="form-group">
+                                                <label class="control-label">Cubic Capacity</label>
+                                                <input name="CubicCapacity" id="txtCubicCapacity" class="form-control" />
+
+                                            </div>
+                                        </div>
+                                        <div class="col-md-4">
+                                            <div class="form-group">
+                                                <label class="control-label">Registration No</label>
+                                                <input name="RegistrationNo" id="txtRegistrationNo" class="form-control" onkeypress="return validateAlphaNumericOnKeyPress(event);" />
+
+                                            </div>
+                                        </div>
+                                        <div class="col-md-4">
+                                            <div class="form-group">
+                                                <label class="control-label">Risk Type</label>
+                                                <select name="RiskType" id="txtRiskType" type="text" class="form-control">
+                                                    <option>Private</option>
+                                                    <option>Commercial</option>
+                                                </select>
+
+                                            </div>
+                                        </div>
+
+
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-md-4" style="padding-left:31px;">
+                                            <div class="form-group">
+                                                <label class="control-label">Value Insured</label>
+                                                <input name="ValueInsured" id="txtValueInsured" onchange="checkFloatNumber(this);" onkeypress="return validateFloatKeyPress(this,event);" class="form-control" step='0.01' placeholder='0.00' />
+
+                                            </div>
+                                        </div>
+                                        <div class="col-md-4">
+
+                                        </div>
+                                        <div class="col-md-4">
+
+                                        </div>
+                                    </div>
+
+                                </div>
+                                <div id="dvlifePolicy" class="row" style="display:none">
+                                    <div class="row col-md-12">
+                                        <div class="col-md-4" style="padding-left:31px;">
+                                            <div class="form-group">
+                                                <label class="control-label">Name Of Assured</label>
+                                                <input name="NameOfAssured" id="txtNameOfAssured" class="form-control" />
+
+                                            </div>
+                                        </div>
+                                        <div class="col-md-4">
+                                            <div class="form-group">
+                                                <label class="control-label">DOB</label>
+                                                @*<input asp-for="DOB" class="form-control" />*@
+                                                <input id="idDOB" name="DOB" type="date" class="form-control" placeholder="Name">
+
+                                            </div>
+                                        </div>
+                                        <div class="col-md-4">
+                                            <div class="form-group">
+                                                <label class="control-label">Sex</label>
+                                                <select name="Sex" type="text" class="form-control">
+                                                    <option>Male</option>
+                                                    <option>Female</option>
+                                                </select>
+
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="row col-md-12">
+                                        <div class="col-md-4" style="padding-left:31px;">
+                                            <div class="form-group">
+                                                <label class="control-label">Salary</label>
+                                                <input name="Salary" onchange="checkFloatNumber(this);" onkeypress="return validateFloatKeyPress(this,event);" class="form-control" step='0.01' placeholder='0.00' />
+
+                                            </div>
+                                        </div>
+                                        <div class="col-md-4">
+                                            <div class="form-group">
+                                                <label class="control-label">Sum Assessed</label>
+                                                <input name="SumAssessed" id="txtSumAssessed" onchange="checkFloatNumber(this);" onkeypress="return validateFloatKeyPress(this,event);" class="form-control" step='0.01' placeholder='0.00' />
+
+                                            </div>
+                                        </div>
+                                        <div class="col-md-4">
+                                            <div class="form-group">
+                                                <label class="control-label">Next Of Kin</label>
+                                                <input name="NextOfKin" class="form-control" />
+
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                </div>
+
+                                <div id="dvCorporateBond" class="row col-md-12" style="display:none">
+                                    <div class="row col-md-12">
+                                        <div class="col-md-4">
+                                            <div class="form-group">
+                                                <label class="control-label">Nature Of Contract</label>
+                                                <input name="NatureOfContract" id="txtNatureOfContract" class="form-control" />
+
+                                            </div>
+                                        </div>
+                                        <div class="col-md-4">
+                                            <div class="form-group">
+                                                <label class="control-label">Project Name</label>
+                                                <input name="ProjectName" id="txtProjectName" class="form-control" />
+
+                                            </div>
+                                        </div>
+                                        <div class="col-md-4">
+                                            <div class="form-group">
+                                                <label class="control-label">Premium Rates</label>
+                                                <input name="PremiumRates" id="txtPremiumRates" class="form-control" />
+
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="row col-md-12">
+                                        <div class="col-md-4">
+                                            <div class="form-group">
+                                                <label class="control-label">Contract Amount</label>
+                                                <input name="ContractAmount" id="txtContractAmount" onchange="checkFloatNumber(this);" onkeypress="return validateFloatKeyPress(this,event);" id="txtContractAmount" class="form-control" step='0.01' placeholder='0.00' />
+
+                                            </div>
+                                        </div>
+                                        <div class="col-md-4">
+                                            <div class="form-group">
+                                                <label class="control-label">Bond Amount</label>
+                                                <input name="BondAmount" id="txtBondAmount" onchange="checkFloatNumber(this);" onkeypress="return validateFloatKeyPress(this,event);" class="form-control" step='0.01' placeholder='0.00' />
+
+                                            </div>
+                                        </div>
+                                        <div class="col-md-4">
+
+                                        </div>
+                                    </div>
+
+
+                                </div>
+
+                                <!--Start policies common fields-->
+                                @*<div class="row col-md-12"><hr /></div>*@
+                                <hr />
+                                <div class="row" style="margin-top:-16px;">
+                                    <div class="col-md-4">
+                                        <div style="margin-left:17px" class="form-group">
+                                            <label class="control-label">Start Date</label>
+                                            @*<input asp-for="StartDate" class="form-control" />*@
+                                            <input id="idStartDate" name="Policy.StartDate" type="date" class="form-control">
+
+                                        </div>
+                                    </div>
+                                    <div class="col-md-4">
+                                        <div class="form-group">
+                                            <label class="control-label">End Date</label>
+                                            @*<input asp-for="EndDate" class="form-control" />*@
+                                            <input id="idEndDate" name="Policy.EndDate" type="date" class="form-control">
+
+                                        </div>
+                                    </div>
+                                    <div class="col-md-4">
+                                        <div class="form-group">
+                                            <label class="control-label">(%)Risk Owned By Broker</label>
+                                            <input asp-for="policy.RiskOwnedByBroker"  onchange="checkFloatNumber(this);" onkeypress="return validateFloatKeyPress(this,event);" class="form-control" step='0.01' placeholder='0.00' />
+
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-4" style="padding-left:31px;">
+                                        <div class="form-group">
+                                            <label class="control-label">Sum Insured</label>
+                                            <input asp-for="policy.SumInsured" id="txtSumInsured" onchange="checkFloatNumber(this);" onkeypress="return validateFloatKeyPress(this,event);" class="form-control" step='0.01' placeholder='0.00' />
+
+                                        </div>
+                                    </div>
+                                    <div class="col-md-4">
+                                        <div class="form-group">
+                                            <label class="control-label">Gross Premium</label>
+                                            <input id="txtGP" asp-for="policy.GrossPremium" onchange="leadEndorsementGPOnChange(this);" onkeypress="return validateFloatKeyPress(this,event);" class="form-control" step='0.01' placeholder='0.00' />
+
+                                        </div>
+                                    </div>
+                                    <div class="col-md-4">
+                                        <div class="form-group">
+                                            <label class="control-label">Commission</label>
+                                            <input asp-for="policy.Commission" id="txtCommission" onchange="leadEndorsementCommOnChange(this);" onkeypress="return validateFloatKeyPress(this,event);" class="form-control" step='0.01' placeholder='0.00' />
+
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-4" style="padding-left:31px;">
+                                        <div class="form-group">
+                                            <label class="control-label">Net Premium</label>
+                                            <input asp-for="policy.NetPremium" id="txtNetPremium" onchange="checkFloatNumber(this);" onkeypress="return validateFloatKeyPress(this,event);" class="form-control" step='0.01' placeholder='0.00' readonly />
+
+                                        </div>
+                                    </div>
+
+                                    <div class="col-md-4">
+                                        <div class="form-group">
+                                            <label class="control-label">Insurer</label>
+                                            <select id="ddlIns" asp-for="policy.InsurerMasterId" type="text" asp-items="ViewBag.InsuresList" class="form-control"></select>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-4">
+                                        <div class="form-group">
+                                            <label class="control-label">Currency</label>
+                                            <select id="ddlcurrency" asp-for="policy.Currency" type="text" asp-items="ViewBag.currencyList" class="form-control"></select>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row col-md-12">
+                                    <div class="col-md-4">
+                                        <div class="form-group">
+                                            <label class="control-label">Transaction Type</label>
+                                            <select id="ddlTrancationType" asp-for="policy.TranscationType" type="text" class="form-control">
+                                                <option value="New Purchase">New Purchase</option>
+                                                <option value="Renewal">Renewal</option>
+                                                <option value="Addition">Addition</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-4">
+                                        <div class="form-group">
+                                            <label class="control-label">Documents</label><br />
+                                            <a href="#" onclick="AddDocuments()" id="btnAddDocument" style="margin-top:0px" data-toggle="modal" class="btn btn-info btn-sm btn-round" data-target="#documentModal" rel="tooltip">
+                                                Select Files
+                                            </a>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-4">
+                                        <div class="form-group">
+
+
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row col-md-12">
+                                    <div class="col-md-8">
+                                        <div class="">
+
+                                            <div class="row">
+                                                <div class="col-md-6">
+                                                    <div class="form-group">
+                                                        <label class="control-label">Agents</label>
+                                                        <input name="Agent1" class="form-control" />
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-3">
+                                                    <div class="form-group">
+                                                        <label class="control-label">Proportion</label>
+                                                        <input name="prop1" id="prop1" onchange="checkFloatNumber(this);" onkeypress="return validateFloatKeyPress(this,event);" class="form-control" step='0.01' placeholder='0.00' />
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-3">
+                                                    <div style="    margin-top: -8px;" class="form-group">
+                                                        <button id="btnShowNextAgent" onclick="showNextAgent()" type="button" class="btn btn-info btn-sm btn-round"> <i class="now-ui-icons ui-1_simple-add"></i> </button>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="row" id="agent2" style="display:none;margin-top:5px;">
+                                                <div class="col-md-6">
+                                                    <div class="form-group">
+                                                        <input name="Agent2" id="Agent2" class="form-control" />
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-3">
+                                                    <div class="form-group">
+                                                        <input name="prop2" id="prop2" onchange="checkFloatNumber(this);" onkeypress="return validateFloatKeyPress(this,event);" class="form-control" step='0.01' placeholder='0.00' />
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-3">
+                                                    <div style="margin-top: -40px;" class="form-group">
+                                                        <button onclick="removeAgent('agent2')" type="button" class="btn btn-info btn-sm btn-round"> <i class="now-ui-icons ui-1_simple-delete "></i> </button>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="row" id="agent3" style="display:none;margin-top:5px;">
+                                                <div class="col-md-6">
+                                                    <div class="form-group">
+                                                        <input name="Agent3" id="Agent3" class="form-control" />
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-3">
+                                                    <div class="form-group">
+                                                        <input name="prop3" id="prop3" onchange="checkFloatNumber(this);" onkeypress="return validateFloatKeyPress(this,event);" class="form-control" step='0.01' placeholder='0.00' />
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-3">
+                                                    <div class="form-group">
+                                                        <div style="margin-top: -40px;" class="form-group">
+                                                            <button onclick="removeAgent('agent3')" type="button" class="btn btn-info btn-sm btn-round"> <i class="now-ui-icons ui-1_simple-delete"></i> </button>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="row" id="agent4" style="display:none;margin-top:5px;">
+                                                <div class="col-md-6">
+                                                    <div class="form-group">
+                                                        <input name="Agent4" id="Agent4" class="form-control" />
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-3">
+                                                    <div class="form-group">
+                                                        <input name="prop4" id="prop4" onchange="checkFloatNumber(this);" onkeypress="return validateFloatKeyPress(this,event);" class="form-control" step='0.01' placeholder='0.00' />
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-3">
+                                                    <div class="form-group">
+                                                        <div style="margin-top: -40px;" class="form-group">
+                                                            <button onclick="removeAgent('agent4')" type="button" class="btn btn-info btn-sm btn-round"> <i class="now-ui-icons ui-1_simple-delete"></i> </button>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="row" id="agent5" style="display:none;margin-top:5px;">
+                                                <div class="col-md-6">
+                                                    <div class="form-group">
+                                                        <input name="Agent5" id="Agent5" class="form-control" />
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-3">
+                                                    <div class="form-group">
+                                                        <input name="prop5" id="prop5" onchange="checkFloatNumber(this);" onkeypress="return validateFloatKeyPress(this,event);" class="form-control" step='0.01' placeholder='0.00' />
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-3">
+                                                    <div style="margin-top: -40px;" class="form-group">
+                                                        <button onclick="removeAgent('agent5')" type="button" class="btn btn-info btn-sm btn-round"> <i class="now-ui-icons ui-1_simple-delete"></i> </button>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-4">
+
+                                    </div>
+                                </div>
+
+                                <!--End policies common fields-->
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="modal fade" id="documentModal" tabindex="-1" role="dialog" data-backdrop="static" data-keyboard="false" aria-labelledby="myModalLabel" aria-hidden="true" style="padding-top: 59px">
+            <div style="max-width:400px" class="modal-dialog modal-notice">
+                <div style="padding:0px !important" class="modal-content">
+                    <div style="padding:0px !important" class="modal-header">
+                        <div id="dialogDocuments">
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </form>
+</div>
+
+<script src="~/assets/js/lead.js"></script>
+<script>
+    var documentsUploaded = false;
+    function AddDocuments() {
+
+        var customerId = "";
+        var targeturl = '@Url.Action("AddLeadDocuments", "LeadDocument")?lid=';
+//var targeturl = '@Url.Action("GetLeadPolicyData", "PolicyLead")?lid=a11a116f-fd32-4c94-bc3b-976f18c9c10c';
+        if (!documentsUploaded) {
+            $.ajax({
+                url: targeturl,
+                type: "GET",
+                contentType: "application/json; charset=utf-8",
+                dataType: "html",
+                success: function (response) {
+                    documentsUploaded = true;
+                    $('#dialogDocuments').html(response);
+                    $('#documentModal').show();
+
+
+                },
+                failure: function (response) {
+                    alert(response.responseText);
+                },
+                error: function (response) {
+                    alert(response.responseText);
+                }
+            });
+        }
+        else {
+             $('#documentModal').show();
+        }
+    }
+
+
+    $(document).ready(function () {
+
+        var selectedText = $("#ddlPC option:selected").text();
+        var pc = $('#ddlPC').val();
+        setPolicyViewVisibility(pc);
+        //$('#spnPolicy').text(selectedValue);
+        $('#ddlPC').change(function () {
+
+            pc = $('#ddlPC').val();
+            selectedText = $("#ddlPC option:selected").text();
+
+            //$('#spnPolicy').text(selectedText);
+            setPolicyViewVisibility(pc);
+
+        });
+
+        $("input").change(function () {
+            return parseFloat(this.value).toFixed(2);
+        });
+
+        var start = new Date().getFullYear(); //1970;
+        var end = 1970; //new Date().getFullYear();
+        var options = "";
+        for (var year = start; year >= end; year--) {
+            options += "<option>" + year + "</option>";
+        }
+        document.getElementById("txtYearOfMake").innerHTML = options;
+    });
+
+    function setPolicyViewVisibility(pc) {
+    documentsUploaded = false;
+    $('#btnAddDocument').text('Select Files');
+        if (pc == "8ED74480-CA28-418A-ADD6-FE25E8E15B86".toLowerCase()) {
+            //window.location.href = '/LifePolicies/Create'
+            $('#dvlifePolicy').show();
+            $('#dvGroupPolicy').hide();
+            $('#dvCorporateBond').hide();
+            $('#dvCompMotor').hide();
+            $('#dvThirdPartyMotor').hide();
+
+
+        } else if (pc == "C9CE6B9A-771F-4ED7-9CEE-6B8F131E4DA5".toLowerCase()) {
+            $('#dvlifePolicy').hide();
+            $('#dvGroupPolicy').hide();
+            $('#dvCorporateBond').hide();
+            $('#dvCompMotor').hide();
+            $('#dvThirdPartyMotor').show();
+
+            //window.location.href = '/ThirdPartyMotorPolicies/Create'
+        } else if (pc == "D2CFA791-27FC-4CEF-970E-9251FC92D120".toLowerCase()) {
+            //window.location.href = '/GrouplifePolicies/Create'
+
+            $('#dvlifePolicy').show();
+
+            $('#dvCorporateBond').hide();
+
+            $('#dvThirdPartyMotor').hide();
+
+        } else if (pc == "E56249E3-E821-4969-80C4-B97BD4798CC2".toLowerCase()) {
+            //window.location.href = '/CorporateBondPolicies/Create'
+            $('#dvlifePolicy').hide();
+            $('#dvGroupPolicy').hide();
+            $('#dvCorporateBond').show();
+            $('#dvCompMotor').hide();
+            $('#dvThirdPartyMotor').hide();
+
+        } else if (pc == "FCF9DDF7-BF80-4503-9C5E-CECF428491EC".toLowerCase()) {
+            $('#dvlifePolicy').hide();
+            $('#dvGroupPolicy').hide();
+            $('#dvCorporateBond').hide();
+            $('#dvCompMotor').show();
+            $('#dvThirdPartyMotor').show();
+            //window.location.href = '/ComprehensiveMotorPolicies/Create'
+        }
+    }
+
+//    function validateAlphaNumericOnKeyPress(event) {
+//    var validChars = /[ A-Za-z0-9]/;
+
+//    var keyChar = String.fromCharCode(event.which || event.keyCode);
+//    return validChars.test(keyChar) ? keyChar : false;
+//}
+</script>
+
+<style>
+    .k-confirm .k-window-titlebar::before,
+    .k-alert .k-window-titlebar::before {
+        content: 'Alert';
+        font-weight: bold;
+    }
+
+    .k-confirm .k-window-titlebar .k-dialog-title {
+        visibility: collapse;
+    }
+
+    .k-dialog .k-window-titlebar .k-dialog-title {
+        visibility: hidden;
+    }
+</style>

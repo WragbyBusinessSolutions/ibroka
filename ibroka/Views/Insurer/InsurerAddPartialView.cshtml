@@ -1,0 +1,116 @@
+﻿@model E4S.ViewModel.InsurerVM
+
+<script src="~/assets/js/lead.js"></script>
+<script src="~/js/LeadCustom.js"></script>
+<link href="~/css/custom.css" rel="stylesheet" />
+<div class="modal-content" style="width:850px; padding-top:0px; padding-left:0px;">
+    <form enctype="multipart/form-data" method="post">
+        <div style="padding:0px;" class="modal-header">
+            <div style="background-color:#214166; margin:0px;" class="row col-md-12">
+                <div class="col-md-8"><h4 style="padding:5px 20px; color:#fff; margin:0" class="modal-title" id="myModalLabel"><span id="txtTitle"> Enter New Insurer Details</span></h4></div>
+                <div class="col-md-4 pull-right">
+
+                </div>
+            </div>
+            <input asp-for="insurerMaster.Id" id="txtId" class="form-control" hidden />
+            <input asp-for="insurerMaster.OrganisationId" id="txtOrgId" class="form-control" hidden />
+            <input asp-for="insurerMaster.NewRecord" id="txtRecordType" class="form-control" hidden />
+
+        </div>
+
+        <div style="padding:10px 0px; " class="modal-body">
+            <div class="instruction">
+
+                <div style="margin-left:5px">
+                    <div class="">
+                        <div>
+                            <div id="dvThirdPartyMotor">
+                                <div class="row">
+                                    <div class="col-md-4">
+                                        <div style="margin-left:17px" class="form-group">
+                                            <label class="control-label">Name</label>
+                                            <input asp-for="insurerMaster.Name" id="txtName" class="form-control" required />
+
+                                        </div>
+                                    </div>
+                                    <div class="col-md-4">
+                                        <div class="form-group">
+                                            <label class="control-label">Display Name</label>
+                                            <input asp-for="insurerMaster.DisplayName" id="txtDisplayName" class="form-control" required />
+
+                                        </div>
+                                    </div>
+                                    <div class="col-md-4">
+                                        <div class="form-group">
+                                            <label class="control-label">Phone No.</label>
+
+                                            <input asp-for="insurerMaster.PhoneNo" id="txtPhoneNo" class="form-control" />
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="row">
+                                    <div class="col-md-4" style="padding-left:31px;">
+                                        <div class="form-group">
+                                            <label class="control-label">Address</label>
+                                            <input asp-for="insurerMaster.Address" id="txtAddress" class="form-control" />
+
+                                        </div>
+                                    </div>
+                                    <div class="col-md-4">
+                                        <div class="form-group">
+                                            <label class="control-label">Email</label>
+                                            <input asp-for="insurerMaster.Email" id="txtEmail" class="form-control" />
+
+                                        </div>
+                                    </div>
+                                    <div class="col-md-4">
+                                        <div class="form-group">
+                                            <label class="control-label">Description</label>
+                                            <input asp-for="insurerMaster.Description" id="txtDescription" class="form-control" />
+                                        </div>
+                                    </div>
+
+
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-4" style="padding-left:31px;">
+                                        <div class="form-group">
+                                            <label class="control-label">Web Url</label>
+                                            <input asp-for="insurerMaster.WebUrl" id="txtWebUrl" class="form-control" />
+
+                                        </div>
+                                    </div>
+                                    <div class="col-md-4">
+                                        <div class="form-group">
+                                            <label class="control-label">Commission</label>
+                                            <input asp-for="insurerMaster.Commission" id="txtCommission" onchange="checkFloatNumber(this);" onkeypress="return validateFloatKeyPress(this,event);" class="form-control" step='0.01' placeholder='0.00' required />
+
+                                        </div>
+                                    </div>
+                                    <div class="col-md-4">
+
+                                    </div>
+                                </div>
+
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+
+        <div style="margin:0px;" class="row col-md-12">
+            <div class="col-md-8"></div>
+            <div class="col-md-4 pull-right">
+                <input style="margin-top:10px; padding:7px 14px; width:70px !important;  float:right" type="button" value="Close" class="btn btn-info btn-round" onclick="closeAddInsurer()" />
+
+                <input style="margin-top:10px; padding:7px 14px; width:30%; display:none; float:right" type="submit" value="Submit" id="btnAddInsurer" asp-action="SaveInsurer" asp-controller="Insurer" class="btn btn-fill btn-primary btn-round" />
+                <input style="margin-top:10px; padding:7px 14px; width:70px !important;  float:right" type="button" value="Save" class="btn btn-fill btn-primary btn-round" onclick="validateInsurerData('new')" id="btnValidateInsurer" />&nbsp;
+
+            </div>
+        </div>
+    </form>
+</div>

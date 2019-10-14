@@ -1,0 +1,356 @@
+﻿@model E4S.ViewModel.EndorsementCreditNoteVM
+
+<style>
+    .table td, .table th {
+        padding: .75rem;
+        vertical-align: top;
+        padding: 3px !important;
+        border-top: none !important;
+    }
+
+    .labelHeader {
+        font-size: 9px !important;
+        font-weight: bold;
+    }
+
+    .labelValue {
+        font-size: 9px !important;
+    }
+
+    .tdValWidth {
+        width: 200px;
+    }
+</style>
+<script src="~/assets/js/lead.js"></script>
+<script src="~/js/LeadCustom.js"></script>
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/0.9.0rc1/jspdf.min.js"></script>
+
+@*<script src="https://kendo.cdn.telerik.com/2017.2.621/js/jquery.min.js"></script> // dependency for Kendo UI API*@
+<script src="https://kendo.cdn.telerik.com/2017.2.621/js/jszip.min.js"></script>
+<script src="https://kendo.cdn.telerik.com/2017.2.621/js/kendo.all.min.js"></script>
+
+
+<div class="modal-content" style="width:700px;">
+
+    <div class="row" id="print">
+        <table style="width:90%; margin:auto" class="table">
+            <tr>
+                <td style="width:30%">
+                    @if (@Model.imageUrl != null && @Model.imageUrl != "")
+                    {
+
+                        <img style="height:50px;width:50px" src="@Model.imageUrl" />
+
+                    }
+                    else
+                    {
+                        <img src="../../assets/img/image_placeholder.jpg" style="height:50px;width:50px" id="imageUploadForm" name="image" multiple="multiple" alt="...">
+                    }
+
+
+                </td>
+                <td>
+                    <table>
+                        <tr>
+                            <td class="labelHeader">@Model.organisationName</td>
+                        </tr>
+                        <tr>
+                            <td class="labelHeader">@Model.addresss</td>
+                        </tr>
+                        <tr>
+                            <td class="labelHeader">@Model.city</td>
+                        </tr>
+                        <tr>
+                            <td class="labelHeader">@Model.phone  @Model.email</td>
+                        </tr>
+                    </table>
+                </td>
+            </tr>
+
+        </table>
+        <table style="width:90%; margin:auto" class="table">
+            <tr>
+                <td>
+                    <h6 style="width:30%; margin:0px auto" class="text-center">CREDIT NOTE</h6>
+                </td>
+            </tr>
+        </table>
+
+
+        <table style="width:90%; margin:auto; line-height:5px;" class="table">
+            <thead>
+                <tr>
+                    <td class="text-right"><span class="labelHeader"><b>CREDIT NOTE NO:</b></span></td>
+                    <td style="margin-bottom:80px"><span class="labelValue">@Model.endorsementCreditNote.CreditNote_No</span></td>
+                    <td>|</td>
+                    <td class="text-right" style="width:120px;"><span class="labelHeader">DATE OF GENERATION</span></td>
+                    <td class="text-left labelValue">@Model.endorsementCreditNote.DateCreated.ToShortDateString()</td>
+                    <td>|</td>
+                    <td class="text-right"><span class="labelHeader"><b>BRANCH:</b></span></td>
+                    <td class="text-left labelValue">@Model.branchName</td>
+
+                </tr>
+                <tr><td colspan="8">&nbsp;<br /><br /><br /></td></tr>
+                <tr>
+                    <td colspan="8">
+                        <div class="row  col-md-12" style="width:100%">
+                            <div class=" col-md-3 labelHeader"><b>CUSTOMER NO:</b></div>
+                            <div class=" col-md-6 labelValue">@Model.Client.ClientCode</div>
+                            <div class=" col-md-3 labelValue"></div>
+                        </div>
+                    </td>
+
+                </tr>
+                <tr>
+                    <td colspan="8">
+                        <div class="row  col-md-12" style="width:100%">
+
+                            <div class=" col-md-3 labelHeader"><b>POLICY NO:</b></div>
+                            <div class=" col-md-6 labelValue"><span class="pull-left">@Model.endorsement.PolicyNo</span></div>
+                            <div class=" col-md-3 labelValue"></div>
+                        </div>
+                    </td>
+
+                </tr>
+                <tr><td colspan="8" style="line-height:0px;">&nbsp;</td></tr>
+                <tr>
+                    <td colspan="8">
+                        <div class="row  col-md-12">
+                            <div class=" col-md-3 labelHeader"><b>CUSTOMER NAME:</b></div>
+                            <div class=" col-md-6 labelValue">
+                                @if (@Model.Client.Type == "Individual")
+                                {
+                                    <label class="labelValue" style="margin-top:0px !important">
+                                        @Model.Client.Title @Model.Client.Name  @Model.Client.Surname
+                                    </label>
+                                }
+                                else
+                                {
+                                    <label class="labelValue" style="margin-top:0px !important">
+                                        @Model.Client.Name
+                                    </label>
+                                }
+                            </div>
+                            <div class=" col-md-3 labelValue"></div>
+                        </div>
+                    </td>
+
+                </tr>
+                <tr>
+                    <td colspan="8">
+                        <div class="row  col-md-12">
+                            <div class=" col-md-3 labelHeader" style="width:100px !important;"><b>ENDORSEMENT NO:</b></div><div class=" col-md-6 labelValue">
+                                NIL
+                            </div>
+                            <div class=" col-md-3 labelValue"></div>
+                        </div>
+                    </td>
+
+                </tr>
+
+                <tr><td colspan="8" style="line-height:0px;">&nbsp;</td></tr>
+                <tr>
+                    <td colspan="8">
+                        <div class="row  col-md-12">
+                            <div class=" col-md-3 labelHeader"><b>CUSTOMER ADDRESS:</b></div>
+                            <div class=" col-md-6 labelValue" style="line-height:1.2">@Model.Client.Address</div>
+                            <div class=" col-md-3 labelValue"></div>
+                        </div>
+                    </td>
+
+                </tr>
+                <tr>
+                    <td colspan="8">
+                        <div class="row  col-md-12">
+                            <div class=" col-md-3 labelHeader"><b>RISK NO:</b></div><div class=" col-md-9"></div>
+                        </div>
+                    </td>
+
+                </tr>
+                <tr><td colspan="8">&nbsp;<br /><br /><br /></td></tr>
+                <tr>
+                    <td colspan="8">
+                        <div class="row  col-md-12">
+                            <div class=" col-md-3 labelHeader"><b>SUM INSURED:</b></div><div class=" col-md-3 labelValue">@Model.endorsement.SumInsured</div><div class=" col-md-3 labelHeader"></div>
+                            <div class=" col-md-3"></div>
+                        </div>
+                    </td>
+                   
+                </tr>
+                <tr><td colspan="8" style="line-height:0px;">&nbsp;</td></tr>
+                <tr>
+                    <td colspan="8">
+                        <div class="row  col-md-12">
+                            <div class=" col-md-3 labelHeader"><b>INSURER:</b></div><div class=" col-md-3 labelValue">@Model.insurerName</div><div class=" col-md-3 labelHeader"></div><div class=" col-md-3"></div>
+                        </div>
+                    </td>
+
+                </tr>
+                <tr><td colspan="8" style="line-height:0px;">&nbsp;</td></tr>
+                <tr>
+                    <td colspan="8">
+                        <div class="row  col-md-12">
+                            <div class=" col-md-3 labelHeader"><b>Policy CLASS:</b></div><div class=" col-md-3 labelValue">@Model.policyName</div><div class=" col-md-3 labelHeader"></div>
+                            <div class=" col-md-3"></div>
+                        </div>
+                    </td>
+                   
+                </tr>
+                <tr><td colspan="8" style="line-height:0px;">&nbsp;</td></tr>
+                <tr>
+                    <td colspan="8">
+                        <div class="row  col-md-12">
+                            <div class=" col-md-3 labelHeader"><b>TRANSACTION TYPE:</b></div><div class=" col-md-3 labelValue">@Model.endorsement.TranscationType</div><div class=" col-md-3 labelHeader"></div>
+                            <div class=" col-md-3"></div>
+                        </div>
+                    </td>
+                    
+                </tr>
+                <tr><td colspan="8" style="line-height:0px;">&nbsp;</td></tr>
+                <tr>
+                    <td colspan="8">
+                        <div class="row  col-md-12">
+                            <div class=" col-md-3 labelHeader"><b>GROSS PREMIUM:</b></div>
+                            <div class=" col-md-3 labelValue"><label class="labelValue" id="lblGP">@Model.endorsement.GrossPremium</label></div>
+                            <div class=" col-md-3 labelHeader"></div><div class=" col-md-3"></div>
+                        </div>
+                    </td>
+
+                </tr>
+                <tr><td colspan="8" style="line-height:0px;">&nbsp;</td></tr>
+                <tr>
+                    <td colspan="8">
+                        <div class="row  col-md-12">
+                            <div class=" col-md-3 labelHeader"><b>COMMISSION:</b></div>
+                            <div class=" col-md-3 labelValue"><label class="labelValue">@Model.endorsement.Commission</label></div>
+                            <div class=" col-md-3 labelHeader"></div><div class=" col-md-3"></div>
+                        </div>
+                    </td>
+
+                </tr>
+                <tr><td colspan="8" style="line-height:0px;">&nbsp;</td></tr>
+                <tr>
+                    <td colspan="8">
+                        <div class="row  col-md-12">
+                            <div class=" col-md-3 labelHeader"><b>VAT AMOUNT:</b></div>
+                            <div class=" col-md-3 labelValue"><label class="labelValue" id="lblVatAmount"></label></div>
+                            <div class=" col-md-3 labelHeader"></div><div class=" col-md-3"></div>
+                        </div>
+                    </td>
+
+                </tr>
+                <tr><td colspan="8" style="line-height:0px;">&nbsp;</td></tr>
+                <tr>
+                    <td colspan="8">
+                        <div class="row  col-md-12">
+                            <div class=" col-md-3 labelHeader"><b>NET PREMIUM:</b></div>
+                            <div class=" col-md-3 labelValue"><label class="labelValue" id="lblNetPremimumAmount">@Model.endorsement.NetPremium</label></div>
+                            <div class=" col-md-3 labelHeader"></div><div class=" col-md-3"></div>
+                        </div>
+                    </td>
+
+                </tr>
+                <tr><td colspan="8" style="line-height:0px;">&nbsp;</td></tr>
+                <tr>
+                    <td colspan="8">
+                        <div class="row  col-md-12">
+                            <div class=" col-md-3 labelHeader"><b>CURRENCY:</b></div><div class=" col-md-3"><label class="labelValue" id="lblCreditNoteAmountCurrency">@Model.endorsement.Currency</label></div><div class=" col-md-3 labelHeader"></div>
+                            <div class=" col-md-3"></div>
+                        </div>
+                    </td>
+
+                </tr>
+                <tr><td colspan="8" style="line-height:0px;">&nbsp;</td></tr>
+                <tr>
+                    <td colspan="8">
+                        <div class="row  col-md-12">
+                            <div class=" col-md-3 labelHeader"><b>AMOUNT IN WORDS:</b></div>
+                            <div class=" col-md-9 labelValue"><label class="labelHeader" id="lblAmountwords"></label></div>
+                            <div class=" col-md-3 labelHeader"></div><div class=" col-md-3"></div>
+                        </div>
+                    </td>
+
+                </tr>
+                <tr><td colspan="8" style="line-height:0px;">&nbsp;</td></tr>
+
+
+
+                <tr><td colspan="8" style="line-height:0px;">&nbsp;</td></tr>
+
+
+
+
+            </thead>
+        </table>
+
+        <div class="row" style="width:80%; margin:5px 50px; border-top:1px solid #cccc">
+          
+            <table>
+                <tr>
+                    <td><label class="labelHeader"><b>PREPARED BY:</b></label></td>
+                    <td colspan="3"><label class="labelValue">@Model.preparedBy</label></td>
+
+                    <td colspan="4"><label><hr /></label></td>
+                </tr>
+            </table>
+
+
+        </div>
+
+    </div>
+    <div class="row" style="margin:-7px;">
+        <div class="pull-right col-md-12">
+            <div class="col-md-8"></div>
+            <div class="col-md-4 pull-right">
+                <button style="margin-right:66px;top:-1px" id="btnDownload" class="btn btn-fill btn-primary btn-round" onclick="ExportPdf()"><i class="fa fa-download" aria-hidden="true"></i></button>
+                <input style="margin-top:10px; padding:7px 14px; width:70px !important;height:36px!important;float:right" type="button" value="Close" class="btn btn-info btn-round" onclick="closeEndorseDebitNote()" />
+            </div>
+        </div>
+    </div>
+
+</div>
+<script>
+    $(document).ready(function () {
+
+        var wordAmount = convertNumberToWords(parseInt(document.getElementById('lblNetPremimumAmount').innerHTML));
+        if ($('#lblCreditNoteAmountCurrency').text() == 'NGN') {
+            wordAmount = wordAmount + ' Naira Only';
+        } else {
+            wordAmount = wordAmount + ' Only';
+        }
+
+        document.getElementById('lblAmountwords').innerHTML = wordAmount;
+
+
+        try {
+            var gp_val = $('#lblGP').text();
+            gp_val = parseFloat(gp_val);
+            var vat_val = (gp_val * 5) / 100;
+            $('#lblVatAmount').text(vat_val.toFixed(2));
+
+        } catch (err) {}
+    });
+
+    var specialElementHandlers = {
+        '#print-btn': function (element, renderer) {
+            return true;
+        }
+    };
+
+
+    function ExportPdf() {
+        kendo.drawing.drawDOM("#print",
+            {
+                paperSize: "A4",
+
+                margin: { top: "1cm", bottom: "1cm" },
+                scale: 0.8,
+                height: 500
+            })
+            .then(function (group) {
+                kendo.drawing.pdf.saveAs(group, "creditnote.pdf")
+            });
+    }
+
+
+</script>

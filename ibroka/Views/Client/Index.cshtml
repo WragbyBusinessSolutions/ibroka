@@ -1,0 +1,216 @@
+﻿@model E4S.ViewModel.ClientViewModel
+
+@{
+    ViewData["Title"] = "Business Operations";
+
+    Layout = "~/Views/Shared/_LayoutLeadManagement.cshtml";
+}
+
+<script src="~/assets/assets/js/core/jquery.min.js"></script>
+<link href="~/css/custom.css" rel="stylesheet" />
+<div class="content">
+    
+    <div class="col-md-12">
+        <div class="card-stats card-raised">
+            @Html.Partial("~/Views/Manage/_LeadStatusMessage.cshtml", ViewData["StatusMessage"])
+            <div class="card-body">
+                <div class="row">
+
+
+                    <div class="box-width">
+                        <div class="statistics">
+                            <div class="info">
+                                <div class="icon icon-primary">
+                                    <img src="~/images/sign.png" />
+                                </div>
+                                <h3 class="info-title">@Model.Last30Days</h3>
+                                <h6 class="stats-title">Added Last 30 Days</h6>
+                            </div>
+                        </div>
+                    </div>
+                    @*<div class="bg-2">
+                            <div class="statistics">
+                                <div class="info">
+                                    <div class="icon icon-primary">
+                                        <img src="~/images/sign.png" />
+                                    </div>
+                                    <h3 class="info-title">@Model.Last30Days</h3>
+                                    <h6 class="stats-title">Added Last 30 Days</h6>
+                                </div>
+                            </div>
+                        </div>*@
+                    <div class="bg-3">
+                        <div class="statistics">
+                            <div class="info">
+                                <div class="icon icon-primary">
+                                    <img src="~/images/sign.png" />
+                                </div>
+                                <h3 class="info-title">@Model.Last7Days</h3>
+                                <h6 class="stats-title">Added Last 7 Days</h6>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="bg-4">
+                        <div class="statistics">
+                            <div class="info">
+                                <div class="icon icon-primary">
+                                    <img src="~/images/sign.png" />
+                                </div>
+                                <h3 class="info-title">@Model.Yesterday</h3>
+                                <h6 class="stats-title">Added Yesterday</h6>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="bg-5">
+                        <div class="statistics">
+                            <div class="info">
+                                <div class="icon icon-primary">
+                                    <img src="~/images/sign.png" />
+                                </div>
+                                <h3 class="info-title">@Model.Today</h3>
+                                <h6 class="stats-title">Added Today</h6>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="bg-5">
+                        <div class="statistics">
+                            <div class="info">
+                                <div class="icon icon-primary">
+                                    <img src="~/images/sign.png" />
+                                </div>
+                                <h3 class="info-title">@Model.AllClients</h3>
+                                <h6 class="stats-title">Total Leads</h6>
+                            </div>
+                        </div>
+                    </div>
+
+
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+
+    <div class="col-md-12">
+        <div class="card card-stats card-raised">
+            <div class="card-body">
+                <div class="row">
+                    <div class="col-md-7">
+                        <div class="card-header">
+                            <h4 class="card-title">Leads</h4>
+
+                        </div>
+                    </div>
+
+                    <div class="col-md-5">
+                        <a class="btn btn-info btn-round pull-right" asp-action="Create"><i class="now-ui-icons ui-1_simple-add"></i> &nbsp;ADD</a>
+
+                        <a class="btn btn-success" href="#" style="display:none"><i class="now-ui-icons arrows-1_cloud-upload-94"></i>&nbsp;UPLOAD</a>
+
+                        <a class="btn btn-danger" href="#" style="display:none"><i class="now-ui-icons arrows-1_refresh-69"></i> &nbsp;RESET</a>
+                    </div>
+
+                    <div style="height:1px; clear:both; width:100%; border-bottom:1px solid #ccc;"></div>
+                </div>
+                <div class="row col-md-12">
+                    <div class="card-header col-md-12">
+                       
+                        <div id="grid"><span id="spnLoading">Loading...</span></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    $(document).ready(function () {
+   
+
+        $("#grid").kendoGrid({
+            dataSource: {
+
+                transport: {
+                    read: {
+                        url: "/client/getclients",
+                        type: "get",
+
+                        // the data type of the returned result.
+                        datatype: "json"
+                    }
+                },
+                schema: {
+                    model: {
+                        fields: {
+                            name: { type: "string" },
+                            age: { type: "number" },
+                            phoneNo: { type: "string" },
+                            email: { type: "string" },
+                            type: { type: "string" },
+                            dateCreated: { type: "date" },
+                            id: { type: "guid" }
+                        }
+                    }
+                },
+                pageSize: 10
+
+            },
+
+            
+            filterable: true,
+            sortable: true,
+            pageable: true,
+            columns: [
+
+                {
+                    field: "name",
+                    title: "Name"
+                },
+
+                {
+                    field: "age",
+                    title: "Age(Yrs)",
+                    width: 120
+                },
+
+                {
+                    field: "phoneNo",
+                    title: "PhoneNo"
+                },
+
+                {
+                    field: "email",
+                    title: "Email",
+                    sortable: false
+                },
+                {
+                    field: "type",
+                    title: "Type"
+                },
+                {
+                    field: "dateCreated",
+                    title: "Date",
+                    template: "#= kendo.toString(dateCreated, 'dd/MM/yyyy') #",
+                    width: 120
+
+                },
+
+                {
+                    title: " ",
+                    field: "id",
+                    template: "<a  class=\"btn btn-sm btn-info btn-icon btn-round\" title=\" View Details\" data-toggle=\"tooltip\" href=\"/Client/Details/#= id # \"data-placement=\"top\"><i class=\"fa fa-eye\"></i></a>",
+                    width: 50,
+                    sortable: false,
+                    filterable: false
+                },
+
+            ]
+            
+        });
+        $('#spnLoading').hide();
+    });
+
+
+</script>
+

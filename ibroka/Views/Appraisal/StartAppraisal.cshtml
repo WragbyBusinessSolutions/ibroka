@@ -1,0 +1,194 @@
+﻿@model  E4S.Models.HumanResource.Appraisal
+
+@{
+    ViewData["Title"] = "Start Appraisal";
+    Layout = "~/Views/Shared/_LayoutHumanResouces.cshtml";
+}
+
+    <div class="content">
+        <div class="row">
+            <div class="col-md-1"></div>
+            <div class="col-md-10">
+                <div class="card">
+                    <div class="card-header body-card">
+                        <h5>Start Appraisal</h5>
+
+                    </div>
+
+                    <div class="card-body body-card">
+                        <div>
+                          <form class="form" asp-action="StartAppraisal" method="post">
+                            <div class="form-inline">
+                              <label class="labeltext col-sm-3">Appraisal Title</label>
+                              <input asp-for="AppraisalTitle" type="text" class="form-control col-sm-4" placeholder="End of the year appraisal" required/>
+                            </div>
+                            <br />
+
+                            <div class="form-inline">
+                              <label class="labeltext col-sm-3" style="text-align:left;">Description</label>
+                              <textarea asp-for="Description" placeholder="Enter a description" class="form-control col-sm-4"></textarea>
+
+                            </div>
+
+                            <br />
+
+                            <div class="form-inline">
+                              <label class="labeltext col-sm-3" style="text-align:left;">Start Date</label>
+                              <input asp-for="StartDate" type="date" class="form-control col-sm-4" />
+
+                            </div>
+                            <br />
+
+                            <div class="form-inline">
+                              <label class="labeltext col-sm-3">End Date</label>
+                              <input asp-for="EndDate" type="date" class="form-control col-sm-4" />
+                            </div>
+                            <hr />
+
+                            <div class="row">
+                              <div class="col-md-4 text-right">
+                                <button type="submit" class="btn btn-info">
+                                  Start Appraisal
+                                </button>
+
+                              </div>
+                              <div class="col-md 4">
+
+                              </div>
+                            </div>
+
+
+                          </form>
+                        </div>
+
+
+
+
+                    </div>
+
+
+                </div>
+
+                @*<div class="card">
+                    <div class="card-body">
+                        <div class="table-responsive" style="overflow:auto;">
+                            <table class="table">
+                                <thead class="text-primary">
+                                  <tr>
+                                    <th>
+                                      Name
+                                    </th>
+                                    <th>
+                                      Department
+                                    </th>
+                                    <th class="text-center">
+                                      Supervisor
+                                    </th>
+                                    <th class="text-center">
+                                      Template
+                                    </th>
+                                    <th class="text-right">
+                                      Action
+                                    </th>
+
+                                  </tr>
+                               
+                                </thead>
+                                <tbody>
+                                  <tr>
+
+                                    <td>
+                                      Moleskine Agenda
+                                    </td>
+                                    <td>
+                                      Office
+                                    </td>
+                                    <td class="text-center">
+                                      25
+                                    </td>
+                                    <td class="text-center">
+                                      25
+                                    </td>
+                                    <td class="text-right">
+                                      
+                                    </td>
+
+                                  </tr>
+                                  <tr>
+
+                                    <td>
+                                      Stabilo Pen
+                                    </td>
+                                    <td>
+                                      Office
+                                    </td>
+                                    <td class="text-center">
+                                      30
+                                    </td>
+                                    <td class="text-center">
+                                      25
+                                    </td>
+                                    <td class="text-right"></td>
+
+                                  </tr>
+                                  <tr>
+
+                                    <td>
+                                      A4 Paper Pack
+                                    </td>
+                                    <td>
+                                      Office
+                                    </td>
+                                    <td class="text-center">
+                                      50
+                                    </td>
+                                    <td class="text-center">
+                                      25
+                                    </td>
+                                    <td class="text-right"></td>
+
+                                  </tr>
+                                  <tr>
+
+                                    <td>
+                                      Apple iPad
+                                    </td>
+                                    <td>
+                                      Meeting
+                                    </td>
+                                    <td class="text-center">
+                                      10
+                                    </td>
+                                    <td class="text-center">
+                                      25
+                                    </td>
+                                    <td class="text-right"></td>
+
+                                  </tr>
+                                  <tr>
+
+                                    <td>
+                                      Apple iPhone
+                                    </td>
+                                    <td>
+                                      Communication
+                                    </td>
+                                    <td class="text-center">
+                                      10
+                                    </td>
+                                    <td class="text-center">
+                                      25
+                                    </td>
+                                    <td class="text-right"></td>
+
+                                  </tr>
+                                   
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>*@
+
+            </div>
+         </div>
+    </div>

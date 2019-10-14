@@ -1,11 +1,11 @@
-﻿using E4S.Data;
+﻿using ibroka.Data;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace E4S.Models.LeadManagement
+namespace ibroka.Models.LeadManagement
 {
     
     public class LeadPolicyDebitNote:BaseClass

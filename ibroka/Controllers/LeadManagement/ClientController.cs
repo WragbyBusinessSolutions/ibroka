@@ -5,20 +5,20 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
-using E4S.Data;
-using E4S.Models.LeadManagement;
+using ibroka.Data;
+using ibroka.Models.LeadManagement;
 using System.Security.Claims;
 using Microsoft.AspNetCore.Http;
 using System.IO;
-using E4S.Helpers;
-using E4S.ViewModel;
+using ibroka.Helpers;
+using ibroka.ViewModel;
 using System.Dynamic;
 using System.Text.RegularExpressions;
 using Microsoft.AspNetCore.Routing;
-using E4S.Models;
-using E4S.Services;
+using ibroka.Models;
+using ibroka.Services;
 
-namespace E4S.Controllers.LeadManagement
+namespace ibroka.Controllers.LeadManagement
 {
     public class ClientController : Controller
     {

@@ -1,11 +1,11 @@
-﻿using E4S.Models;
-using E4S.Models.HumanResource;
+﻿using ibroka.Models;
+using ibroka.Models.HumanResource;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace E4S.ViewModel
+namespace ibroka.ViewModel
 {
   public class ReportViewModel
   {

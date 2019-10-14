@@ -5,10 +5,10 @@ using System.Linq;
 using System.Net.Http.Headers;
 using System.Security.Claims;
 using System.Threading.Tasks;
-using E4S.Data;
-using E4S.Models;
-using E4S.Models.HumanResource;
-using E4S.ViewModel;
+using ibroka.Data;
+using ibroka.Models;
+using ibroka.Models.HumanResource;
+using ibroka.ViewModel;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
@@ -16,7 +16,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 
-namespace E4S.Controllers.Employee
+namespace ibroka.Controllers.Employee
 {
   [Authorize]
     public class EmployeeProfileController : Controller

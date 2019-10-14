@@ -6,8 +6,8 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using E4S.Models.LeadManagement;
-namespace E4S.ViewModel
+using ibroka.Models.LeadManagement;
+namespace ibroka.ViewModel
 {
     public class LeadDocumentVM
     {

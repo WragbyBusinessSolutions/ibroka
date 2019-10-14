@@ -3,15 +3,15 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Security.Claims;
 using System.Threading.Tasks;
-using E4S.Data;
-using E4S.Models;
-using E4S.Services;
-using E4S.ViewModel;
+using ibroka.Data;
+using ibroka.Models;
+using ibroka.Services;
+using ibroka.ViewModel;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 
-namespace E4S.Controllers
+namespace ibroka.Controllers
 {
   [Authorize]
   public class UsersController : Controller

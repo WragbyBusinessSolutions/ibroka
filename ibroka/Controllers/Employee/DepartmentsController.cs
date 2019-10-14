@@ -5,10 +5,10 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
-using E4S.Data;
-using E4S.Models;
+using ibroka.Data;
+using ibroka.Models;
 
-namespace E4S.Controllers.Employee
+namespace ibroka.Controllers.Employee
 {
     public class DepartmentsController : Controller
     {

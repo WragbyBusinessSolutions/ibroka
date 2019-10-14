@@ -3,15 +3,15 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Security.Claims;
 using System.Threading.Tasks;
-using E4S.Data;
-using E4S.Models;
-using E4S.Models.HumanResource;
-using E4S.ViewModel;
+using ibroka.Data;
+using ibroka.Models;
+using ibroka.Models.HumanResource;
+using ibroka.ViewModel;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 
-namespace E4S.Controllers.HumanResource
+namespace ibroka.Controllers.HumanResource
 {
   public class CompanyAssetsController : Controller
   {

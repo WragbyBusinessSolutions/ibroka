@@ -2,11 +2,11 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using E4S.Data;
-using E4S.Models.LeadManagement;
+using ibroka.Data;
+using ibroka.Models.LeadManagement;
 using Microsoft.AspNetCore.Mvc;
 
-namespace E4S.Controllers.WragbyAdmin
+namespace ibroka.Controllers.WragbyAdmin
 {
     public class AdminController : Controller
     {

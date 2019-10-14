@@ -1,5 +1,5 @@
-﻿using E4S.Data;
-using E4S.Models.LeadManagement;
+﻿using ibroka.Data;
+using ibroka.Models.LeadManagement;
 using Microsoft.AspNetCore.Http;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
@@ -8,7 +8,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace E4S.Helpers
+namespace ibroka.Helpers
 {
     public class Util
     {

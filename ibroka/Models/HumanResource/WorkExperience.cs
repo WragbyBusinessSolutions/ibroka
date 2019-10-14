@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace E4S.Models.HumanResource
+namespace ibroka.Models.HumanResource
 {
   public class WorkExperience : BaseClass
   {

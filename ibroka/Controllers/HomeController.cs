@@ -4,15 +4,15 @@ using System.Diagnostics;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
-using E4S.Models;
+using ibroka.Models;
 using Microsoft.AspNetCore.Authorization;
 using System.Security.Claims;
-using E4S.Data;
+using ibroka.Data;
 using Microsoft.AspNetCore.Identity;
-using E4S.Services;
-using E4S.ViewModel;
+using ibroka.Services;
+using ibroka.ViewModel;
 
-namespace E4S.Controllers
+namespace ibroka.Controllers
 {
   [Authorize]
   public class HomeController : Controller

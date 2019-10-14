@@ -1,6 +1,6 @@
-﻿using E4S.Data;
-using E4S.Models;
-using E4S.ViewModel;
+﻿using ibroka.Data;
+using ibroka.Models;
+using ibroka.ViewModel;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -12,7 +12,7 @@ using System.Linq;
 using System.Security.Claims;
 using System.Threading.Tasks;
 
-namespace E4S.Controllers
+namespace ibroka.Controllers
 {
   [Authorize]
   public class OrganisationController : Controller

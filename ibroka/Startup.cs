@@ -8,11 +8,11 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using E4S.Data;
-using E4S.Models;
-using E4S.Services;
+using ibroka.Data;
+using ibroka.Models;
+using ibroka.Services;
 
-namespace E4S
+namespace ibroka
 {
     public class Startup
     {

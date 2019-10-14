@@ -3,9 +3,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text.Encodings.Web;
 using System.Threading.Tasks;
-using E4S.Services;
+using ibroka.Services;
 
-namespace E4S.Services
+namespace ibroka.Services
 {
   public static class EmailSenderExtensions
   {

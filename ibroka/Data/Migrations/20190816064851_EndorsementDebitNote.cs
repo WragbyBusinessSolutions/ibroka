@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 using System;
 using System.Collections.Generic;
 
-namespace E4S.Data.Migrations
+namespace ibroka.Data.Migrations
 {
     public partial class EndorsementDebitNote : Migration
     {

@@ -2,7 +2,7 @@
 using System;
 using System.Collections.Generic;
 
-namespace E4S.Data.Migrations
+namespace ibroka.Data.Migrations
 {
     public partial class Vacancy : Migration
     {

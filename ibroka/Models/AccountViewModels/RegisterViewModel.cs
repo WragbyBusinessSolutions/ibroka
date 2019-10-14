@@ -4,7 +4,7 @@ using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace E4S.Models.AccountViewModels
+namespace ibroka.Models.AccountViewModels
 {
   public class RegisterViewModel
   {

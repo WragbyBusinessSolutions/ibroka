@@ -6,7 +6,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc.ModelBinding;
 
-namespace E4S.Models.ManageViewModels
+namespace ibroka.Models.ManageViewModels
 {
   public class EnableAuthenticatorViewModel
   {

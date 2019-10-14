@@ -5,7 +5,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
 
-namespace E4S.Models.LeadManagement
+namespace ibroka.Models.LeadManagement
 {
     public class InsurerMaster:BaseClass
     {

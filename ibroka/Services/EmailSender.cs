@@ -1,4 +1,4 @@
-﻿using E4S.Helpers;
+﻿using ibroka.Helpers;
 using SendGrid;
 using SendGrid.Helpers.Mail;
 using System;
@@ -7,7 +7,7 @@ using System.Linq;
 using System.Net.Mail;
 using System.Threading.Tasks;
 
-namespace E4S.Services
+namespace ibroka.Services
 {
     // This class is used by the application to send email for account confirmation and password reset.
     // For more details see https://go.microsoft.com/fwlink/?LinkID=532713

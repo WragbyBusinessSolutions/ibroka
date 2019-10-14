@@ -1,6 +1,6 @@
 using System;
 
-namespace E4S.Models
+namespace ibroka.Models
 {
   public class ErrorViewModel
   {

@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace E4S.Models.AccountInventory
+namespace ibroka.Models.AccountInventory
 {
   public class Customer : BaseClass
   {

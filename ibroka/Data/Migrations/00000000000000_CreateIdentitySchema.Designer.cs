@@ -7,7 +7,7 @@ using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
 using Microsoft.EntityFrameworkCore.Migrations;
 
-namespace E4S.Data.Migrations
+namespace ibroka.Data.Migrations
 {
   [DbContext(typeof(ApplicationDbContext))]
   [Migration("00000000000000_CreateIdentitySchema")]
@@ -126,7 +126,7 @@ namespace E4S.Data.Migrations
             b.ToTable("AspNetUserTokens");
           });
 
-      modelBuilder.Entity("E4S.Models.ApplicationUser", b =>
+      modelBuilder.Entity("ibroka.Models.ApplicationUser", b =>
           {
             b.Property<string>("Id");
 
@@ -185,7 +185,7 @@ namespace E4S.Data.Migrations
 
       modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserClaim<string>", b =>
           {
-            b.HasOne("E4S.Models.ApplicationUser")
+            b.HasOne("ibroka.Models.ApplicationUser")
                       .WithMany("Claims")
                       .HasForeignKey("UserId")
                       .OnDelete(DeleteBehavior.Cascade);
@@ -193,7 +193,7 @@ namespace E4S.Data.Migrations
 
       modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserLogin<string>", b =>
           {
-            b.HasOne("E4S.Models.ApplicationUser")
+            b.HasOne("ibroka.Models.ApplicationUser")
                       .WithMany("Logins")
                       .HasForeignKey("UserId")
                       .OnDelete(DeleteBehavior.Cascade);
@@ -206,7 +206,7 @@ namespace E4S.Data.Migrations
                       .HasForeignKey("RoleId")
                       .OnDelete(DeleteBehavior.Cascade);
 
-            b.HasOne("E4S.Models.ApplicationUser")
+            b.HasOne("ibroka.Models.ApplicationUser")
                       .WithMany("Roles")
                       .HasForeignKey("UserId")
                       .OnDelete(DeleteBehavior.Cascade);

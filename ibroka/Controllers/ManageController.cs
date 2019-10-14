@@ -10,11 +10,11 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
-using E4S.Models;
-using E4S.Models.ManageViewModels;
-using E4S.Services;
+using ibroka.Models;
+using ibroka.Models.ManageViewModels;
+using ibroka.Services;
 
-namespace E4S.Controllers
+namespace ibroka.Controllers
 {
   [Authorize]
   [Route("[controller]/[action]")]
@@ -522,7 +522,7 @@ namespace E4S.Controllers
     {
       return string.Format(
           AuthenticatorUriFormat,
-          _urlEncoder.Encode("E4S"),
+          _urlEncoder.Encode("ibroka"),
           _urlEncoder.Encode(email),
           unformattedKey);
     }

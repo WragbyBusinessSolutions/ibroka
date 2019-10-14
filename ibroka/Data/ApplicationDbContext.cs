@@ -4,11 +4,11 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
-using E4S.Models;
-using E4S.Models.HumanResource;
-using E4S.Models.LeadManagement;
+using ibroka.Models;
+using ibroka.Models.HumanResource;
+using ibroka.Models.LeadManagement;
 
-namespace E4S.Data
+namespace ibroka.Data
 {
   public class ApplicationDbContext : IdentityDbContext<ApplicationUser>
   {

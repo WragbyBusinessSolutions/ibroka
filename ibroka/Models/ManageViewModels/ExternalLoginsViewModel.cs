@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Identity;
 
-namespace E4S.Models.ManageViewModels
+namespace ibroka.Models.ManageViewModels
 {
   public class ExternalLoginsViewModel
   {

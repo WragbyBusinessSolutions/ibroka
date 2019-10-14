@@ -5,7 +5,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace E4S.Models.LeadManagement
+namespace ibroka.Models.LeadManagement
 {
     public class CorporateDirector : BaseClass
     {

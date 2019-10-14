@@ -39,7 +39,8 @@ namespace ibroka.Controllers.HumanResource
 
       return orgId;
     }
-    public IActionResult Index()
+
+        public IActionResult Index()
     {
       return View();
     }

@@ -1,0 +1,133 @@
+﻿
+@{
+    ViewData["Title"] = "Details";
+     Layout = "~/Views/Shared/_LayoutLeadManagement.cshtml";
+}
+
+<div class="content">
+    <div class="row">
+        <div class="col-md-12">
+            <div class="card">
+                <div class="card-header">
+                    <h4 class="card-title"> Claims Request Details</h4>
+                    <h5 class="card-category">Selected Customer Details</h5>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-lg-6 col-md-6">
+            <div class="card card-chart">
+                <div class="card-header">
+                    <h5 class="card-category">Policy Details</h5>
+                    <h6 class="card-title">Adeleke Matthew Abel</h6>
+                    <div class="dropdown">
+                        <button type="button" class="btn btn-round btn-default dropdown-toggle btn-simple btn-icon no-caret" data-toggle="dropdown">
+                            <i class="now-ui-icons loader_gear"></i>
+                           
+                        </button>
+                        <div class="dropdown-menu dropdown-menu-right">
+                            <a class="dropdown-item" href="#">Action</a>
+                            <a class="dropdown-item" href="#">Another action</a>
+                            <a class="dropdown-item" href="#">Something else here</a>
+                            <a class="dropdown-item text-danger" href="#">Remove Data</a>
+                        </div>
+                    </div>
+                </div>
+                <div class="card-body">
+                    <div class="chart-area">
+                        <canvas id="activeUsers"></canvas>
+                    </div>
+                    <div class="table">
+                        <table class="table table-striped " cellspacing="0" width="100%">
+                            <tbody>
+                                <tr>
+                                    <td>Insurer</td>
+                                    <td class="text-left">
+                                        2.920
+                                    </td>                                   
+                                </tr>
+                                <tr>
+                                    <td>Type</td>
+                                    <td class="text-left">
+                                        Individual
+                                    </td>                                
+                                </tr>
+                                <tr>
+                                    <td>Lead Type</td>
+                                    <td class="text-left">
+                                        760
+                                    </td>                                   
+                                </tr>
+                                <tr>
+                                    <td>Emails</td>
+                                    <td class="text-left">
+                                        anenetemocu@gmail.com
+                                    </td>                                   
+                                </tr>
+                                <tr>
+                                    <td>Age</td>
+                                    <td class="text-left">
+                                        60
+                                    </td>                                   
+                                </tr>
+                                <tr>
+                                    <td>Phone Number</td>
+                                    <td class="text-left">
+                                        08068969546
+                                    </td>                                    
+                                </tr>
+                                <tr>
+                                    <td>Class</td>
+                                    <td class="text-left">
+                                        Third Party
+                                    </td>                                   
+                                </tr>
+                                <tr>
+                                    <td>Date</td>
+                                    <td class="text-left">
+                                        55 Jan 2019
+                                    </td>                                   
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+                
+            </div>
+        </div>
+        
+        <div class="col-lg-6 col-md-6">
+            <div class="card card-chart">
+                <div class="card-header">
+                    <h5 class="card-category">Claims History</h5>
+                    <h2 class="card-title">34,252</h2>
+                    <div class="dropdown">
+                        <button type="button" class="btn btn-round btn-info " >
+                            <i class="now-ui-icons loader_gear"></i>
+                            Request Claims
+                        </button>
+                        <div class="dropdown-menu dropdown-menu-right">
+                            <a class="dropdown-item" href="#">Action</a>
+                            <a class="dropdown-item" href="#">Another action</a>
+                            <a class="dropdown-item" href="#">Something else here</a>
+                            <a class="dropdown-item text-danger" href="#">Remove Data</a>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="card-body">
+                    <div class="chart-area">
+                        <canvas id="activeCountries"></canvas>
+                    </div>
+                    <div id="worldMap" class="map"></div>
+                </div>
+                @*<div class="card-footer">
+                    <div class="stats">
+                        <i class="now-ui-icons ui-2_time-alarm"></i> Last 7 days
+                    </div>
+                </div>*@
+            </div>
+        </div>
+    </div>      
+</div>

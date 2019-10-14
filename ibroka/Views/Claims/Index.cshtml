@@ -1,0 +1,190 @@
+﻿
+
+@{
+    ViewData["Title"] = "Claims";
+     Layout = "~/Views/Shared/_LayoutLeadManagement.cshtml";
+}
+
+
+<div class="content">
+    <div class="row">
+        <div class="col-md-12">                                                                     
+            <div class="card card-stats card-raised">
+                <div class="card-body">
+                    <div class="row">
+                        <div class="col-md-3">
+                            <div class="statistics">
+                                <div class="info">
+                                    <div class="icon icon-primary">
+                                        <i class="now-ui-icons ui-2_chat-round"></i>
+                                    </div>
+                                    <h3 class="info-title">859</h3>
+                                    <h6 class="stats-title">Pending Monthly Claims</h6>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-3">
+                            <div class="statistics">
+                                <div class="info">
+                                    <div class="icon icon-success">
+                                        <i class="now-ui-icons business_money-coins"></i>
+                                    </div>
+                                    <h3 class="info-title">
+                                       321
+                                    </h3>
+                                    <h6 class="stats-title">Completed Claims </h6>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-3">
+                            <div class="statistics">
+                                <div class="info">
+                                    <div class="icon icon-info">
+                                        <i class="now-ui-icons users_single-02"></i>
+                                    </div>
+                                    <h3 class="info-title">562</h3>
+                                    <h6 class="stats-title">Total Claims Monthly</h6>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-3">
+                            <div class="statistics">
+                                <div class="info">
+                                    <div class="icon icon-danger">
+                                        <i class="now-ui-icons objects_support-17"></i>
+                                    </div>
+                                    <h3 class="info-title">353</h3>
+                                    <h6 class="stats-title">Yearly Completed Claims</h6>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <div class="row">
+        <div class="col-md-12">
+            <div class="card">
+                <div class="card-header">
+                    <h4 class="card-title"> Customers List</h4>
+                </div>
+                <div class="card-body">
+                    <div class="table">
+                        <table id="datatable" class="table table-striped " cellspacing="0" width="100%">
+                            <thead class="">
+                            <th class="text-center">
+                                #
+                            </th>
+                            <th>
+                                Name
+                            </th>
+                            <th>
+                                Phone No
+                            </th>
+                            <th>
+                                Email
+                            </th>
+                            <th>
+                                Type
+                            </th>
+                            <th>
+                                Date
+                            </th>
+                            <th>
+                                Action
+                            </th>
+
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td class="text-center">
+                                       1
+                                    </td>
+                                    <td class="td-name">
+                                        <a href="#jacket">Suede Biker Jacket</a>
+                                        <br />
+                                        <small>by Saint Laurent</small>
+                                    </td>
+                                    <td>
+                                        Black
+                                    </td>
+                                    <td>
+                                        M
+                                    </td>
+                                    <td class="td-number">
+                                        <small>€</small>3,390
+                                    </td>
+                                    <td class="td-number">
+                                        1
+                                    </td>
+                                    <td class="td-number">
+                                        <a asp-action="Details" class="btn btn-md btn-info"  title=" Customers Details" data-toggle="tooltip" data-placement="top"><i class="fa fa-eye"></i></a>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td class="text-center">
+                                        2
+                                    </td>
+                                    <td class="td-name">
+                                        <a href="#pants">Jersey T-Shirt</a>
+                                        <br />
+                                        <small>by Balmain</small>
+                                    </td>
+                                    <td>
+                                        Black
+                                    </td>
+                                    <td>
+                                        M
+                                    </td>
+                                    <td class="td-number">
+                                        <small>€</small>499
+                                    </td>
+                                    <td class="td-number">
+                                        2
+                                    </td>
+                                    <td class="td-number">
+                                        <a asp-action="Details" class="btn btn-md btn-info" title=" Customers Details" data-toggle="tooltip" data-placement="top"><i class="fa fa-eye"></i></a>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td class="text-center">
+                                      3
+                                    </td>
+                                    <td class="td-name">
+                                        <a href="#nothing">Slim-Fit Swim Short</a>
+                                        <br />
+                                        <small>by Prada</small>
+                                    </td>
+                                    <td>
+                                        Red
+                                    </td>
+                                    <td>
+                                        M
+                                    </td>
+                                    <td class="td-number">
+                                        <small>€</small>200
+                                    </td>
+                                    <td class="td-number">
+                                        1
+                                    </td>
+                                    <td class="td-number">
+                                        <a asp-action="Details" class="btn btn-md btn-info" title=" Customers Details" data-toggle="tooltip" data-placement="top"><i class="fa fa-eye"></i></a>
+                                    </td>
+                                </tr>
+                                
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+
+
+

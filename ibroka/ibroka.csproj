@@ -87,6 +87,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Folder Include="Views\NewFolder\" />
     <Folder Include="Views\PolicyLead\" />
     <Folder Include="wwwroot\Endorsement\Receipts\" />
     <Folder Include="wwwroot\images\employeeImage\" />

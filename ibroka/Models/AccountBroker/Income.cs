@@ -9,6 +9,7 @@ namespace ibroka.Models.AccountBroker
   {
     public Guid Id { get; set; }
     public Guid IncomeTypeId { get; set; }
+    public virtual IncomeType IncomeType { get; set; }
 
     public string Description { get; set; }
     public float Amount { get; set; }

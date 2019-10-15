@@ -186,7 +186,57 @@ namespace ibroka.Controllers.AccountBroker
 
         public IActionResult ExpenseType()
         {
-            return View();
+            var expenseTpye = _context.ExpenseTypes.ToList();
+
+            return View(expenseTpye);
+        }
+
+
+        // Post Method of income type
+        [HttpPost]
+        public async Task<IActionResult> PostExpenseType([FromBody]ExpenseType expenseType)
+        {
+            if (expenseType == null)
+            {
+                return Json(new
+                {
+                    msg = "No Data"
+                }
+               );
+            }
+
+            var orgId = getOrg();
+
+            try
+            {
+                ExpenseType newExpense = new ExpenseType()
+                {
+                    Id = Guid.NewGuid(),
+                    ExpenseName = expenseType.ExpenseName,
+                    Description = expenseType.Description,
+                    OrganisationId = orgId
+                };
+
+                _context.Add(newExpense);
+                _context.SaveChanges();
+
+
+                return Json(new
+                {
+                    msg = "Success"
+                }
+             );
+            }
+            catch (Exception ee)
+            {
+
+            }
+
+            return Json(
+            new
+            {
+                msg = "Fail"
+            });
         }
 
       public IActionResult PaymentType()

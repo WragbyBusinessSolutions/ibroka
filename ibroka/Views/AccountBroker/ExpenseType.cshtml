@@ -55,8 +55,8 @@
                                             <div class="row">
                                                 <div class="col-md-12">
                                                     <div class="form-group">
-                                                        <label> Name</label>
-                                                        <input type="text" class="form-control" placeholder=" Name" id="Name" name="Name" required>
+                                                        <label>Expense Name</label>
+                                                        <input type="text" class="form-control" placeholder=" Expense Name" id="ExpenseName" name="ExpenseName" required>
                                                     </div>
                                                 </div>
                                             </div>
@@ -72,7 +72,7 @@
                                             </div>
 
                                             <div class="card-footer">
-                                                <button type="button" class="btn btn-fill btn-primary btn-round" id="SubmitNewAddition">Submit</button>
+                                                <button type="button" class="btn btn-fill btn-primary btn-round" id="SubmitExpenseType">Submit</button>
                                                 <button type="button" class="btn btn-info btn-round" data-dismiss="modal">Close</button>
                                             </div>
                                         </form>
@@ -100,7 +100,7 @@
                                                 <div class="col-md-12">
                                                     <div class="form-group">
                                                         <label> Name</label>
-                                                        <input type="text" class="form-control" placeholder=" Name" id="Name" name="Name" required>
+                                                        <input type="text" class="form-control" placeholder="Expense Name" id="ExpenseName" name="ExpenseName" required>
                                                     </div>
                                                 </div>
                                             </div>
@@ -116,7 +116,7 @@
                                             </div>
                                             <hr />
                                             <div class="card-footer">
-                                                <button type="button" class="btn btn-fill btn-primary btn-round" id="SubmitNewAddition">Submit</button>
+                                                <button type="button" class="btn btn-fill btn-primary btn-round" id="SubmitExpenseType">Submit</button>
                                                 <button type="button" class="btn btn-info btn-round" data-dismiss="modal">Close</button>
                                             </div>
                                         </form>
@@ -153,21 +153,20 @@
                             </thead>
 
 
-                            @*<tbody>
+                            <tbody>
 
                                 @{
                                     int i = 1;
 
                                     @if (Model.Count() < 1)
                                     {
-                                    <td></td>
+                                    
                                     <td></td>
                                     <td></td>
                                     <td>No Data to Display</td>
                                     <td></td>
                                     <td></td>
-                                    <td></td>
-                                    <td></td>
+                                   
 
                                 }
 
@@ -182,14 +181,14 @@
 
 
                                             <td>
-                                                @item.Addition.AdditionType
+                                                @item.ExpenseName
                                             </td>
                                             <td>
                                                 @item.Description
                                             </td>
 
                                             <td>
-                                                <span data-toggle="modal" data-target="#noticeModal1"><a href="#" class="btn btn-round btn-warning btn-icon btn-sm" title="Click to Edit" id="Editbtn" data-toggle="tooltip" data-placement="top" EditAddId="@item.Id" select-EmployeeDetailsId="@item.EmployeeDetailId" Selected-AdditonId="@item.AdditionId" Selected-Amount="@item.Amount" Selected-Description="@item.Description"><i class="far fa-calendar-alt"></i></a></span>
+                                                <span data-toggle="modal" data-target="#noticeModal1"><a href="#" class="btn btn-round btn-warning btn-icon btn-sm" title="Click to Edit" id="Editbtn" data-toggle="tooltip" data-placement="top" EditAddId="@item.Id" Selected-ExpenseName="@item.ExpenseName" Selected-Description="@item.Description"><i class="far fa-calendar-alt"></i></a></span>
                                                 <a href="#" class="btn btn-round btn-danger btn-icon btn-sm remove" title="Click to Delete"><i class="fas fa-times"></i></a>
 
                                             </td>
@@ -197,7 +196,7 @@
 
                                         { i = i + 1; }
                                     }
-                                }*@
+                                }
 
                             </tbody>
                         </table>
@@ -267,25 +266,21 @@
 
             $(document).ready(function () {
 
-                $("#submitDeductions").click(function (event) {
+                $("#SubmitExpenseType").click(function (event) {
 
                     event.preventDefault();
 
-                    var SalaryDeductions = {
-                        EmployeeDetailsId: $("#employeeId").val(),
-                        DeductionId: $("#DeductionType").val(),
-                        Amount: $("#Amount").val(),
+                    var SubmitExpenseType = {                      
+                        ExpenseName: $("#ExpenseName").val(),
                         Description: $("#Description").val(),
                     };
 
-
-                    // console.log(Items);
-                    console.log(SalaryDeductions);
+                    console.log(SubmitExpenseType);
 
                     $.ajax({
                         type: "POST",
-                        url: "/Payroll/postSalaryDeductions",
-                        data: JSON.stringify(SalaryDeductions),
+                        url: "/AccountBroker/PostExpenseType",
+                        data: JSON.stringify(SubmitExpenseType),
                         dataType: "json",
                         contentType: 'application/json; charset=utf-8',
                         headers: {
@@ -327,10 +322,8 @@
                 'click',
                 function (e) {
 
-                    aEditDedId = $(this).attr('EditDedId');
-                    employeeDetailsId = $(this).attr('select-EmployeeDetailsId');
-                    deductionId = $(this).attr('Selected-DeductonId');
-                    amount = $(this).attr('Selected-Amount');
+                    aEditDedId = $(this).attr('EditDedId');                   
+                    ExpenseName = $(this).attr('Selected-ExpenseName');
                     description = $(this).attr('Selected-Description');
 
 
@@ -338,9 +331,7 @@
                     //  console.log(aEditAssetId);
 
                     $('input[name=DedSalId]').val(aEditDedId);
-                    $('select[name=eemployeeId]').val(employeeDetailsId);
-                    $('select[name=eDeductionType]').val(deductionId);
-                    $('input[name=eAmount]').val(amount);
+                    $('input[name=eexpenseName]').val(expenseName);
                     $('textarea[name=eDescription]').val(description);
 
                 });

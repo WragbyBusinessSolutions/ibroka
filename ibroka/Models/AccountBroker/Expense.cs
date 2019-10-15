@@ -9,6 +9,7 @@ namespace ibroka.Models.AccountBroker
   {
     public Guid Id { get; set; }
     public Guid ExpenseTypeId { get; set; }
+    public virtual ExpenseType ExpenseType { get; set; }
     public string Description { get; set; }
     public float Amount { get; set; }
   }

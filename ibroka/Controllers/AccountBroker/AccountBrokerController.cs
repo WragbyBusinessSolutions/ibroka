@@ -103,6 +103,102 @@ namespace ibroka.Controllers.AccountBroker
             });
         }
 
+        // Edit Income Type
+
+        [HttpPost]
+        public async Task<IActionResult> EditIncome([FromBody]PostIncome income)
+        {
+            if (income == null)
+            {
+                return Json(new
+                {
+                    msg = "No Data"
+                }
+               );
+            }
+
+            var orgId = getOrg();
+            var organisationDetails = await _context.Organisations.Where(x => x.Id == orgId).FirstOrDefaultAsync();
+
+            try
+            {
+
+                var Inc = _context.Incomes.Where(x => x.Id == Guid.Parse(income.AId)).FirstOrDefault();
+                Inc.IncomeTypeId = income.IncomeTypeId;
+                Inc.Amount = income.Amount;
+                Inc.Description = income.Description;
+
+
+                _context.Update(Inc);
+                _context.SaveChanges();
+
+
+                return Json(new
+                {
+                    msg = "Success"
+                }
+             );
+            }
+            catch (Exception ee)
+            {
+
+            }
+
+            return Json(
+            new
+            {
+                msg = "Fail"
+            });
+        }
+
+        // Edit income Type Ended
+
+        // Delete for Income
+
+        private bool IncomeExists(Guid id)
+        {
+            return _context.Incomes.Any(e => e.Id == id);
+        }
+
+
+        [HttpPost]
+        public IActionResult DeleteIncome([FromBody]string incomeId)
+        {
+            if (incomeId == null)
+            {
+                return Json(new
+                {
+                    msg = "No Data"
+                }
+               );
+            }
+
+            try
+            {
+                var Incum = _context.Incomes.SingleOrDefault(m => m.Id == Guid.Parse(incomeId));
+                _context.Incomes.Remove(Incum);
+                _context.SaveChanges();
+
+                return Json(new
+                {
+                    msg = "Success"
+                });
+
+            }
+            catch
+            {
+
+            }
+
+            return Json(new
+            {
+                msg = "Fail"
+            });
+
+
+        }
+
+        // End of income delete
 
         public IActionResult Expenses()
         {

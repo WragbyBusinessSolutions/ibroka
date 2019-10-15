@@ -159,7 +159,7 @@
                             <div class="modal-dialog" role="document">
                                 <div class="modal-content">
                                     <div class="modal-header">
-                                        <h5 class="modal-title" id="exampleModalLongTitle">Add New Income</h5>
+                                        <h5 class="modal-title" id="exampleModalLongTitle">Add Edit Income</h5>
                                         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                                             <span aria-hidden="true">&times;</span>
                                         </button>
@@ -168,24 +168,25 @@
                                     <div class="modal-body">
                                         <form>
                                             <label class="pull-left">Income Type</label>
-                                            <select class="selectpicker" data-style="btn btn-default btn-round" title="Select Income Type" data-size="7" type="text" asp-items="ViewBag.IncomeType" id="IncomeTypeId" name="IncomeTypeId" placeholder="Expense Type">
+                                            <select class="selectpicker" data-style="btn btn-default btn-round" title="Select Income Type" data-size="7" type="text" asp-items="ViewBag.IncomeType" id="eIncomeTypeId" name="eIncomeTypeId" placeholder="Expense Type">
                                                 <option> -- Select Income Type -- </option>
                                             </select>
                                             <br />
                                             <br />
                                             <label class="pull-left">Amount</label>
-                                            <input type="number" class="form-control" id="Amount" name="Amount" />
+                                            <input type="number" class="form-control" id="eAmount" name="eAmount" />
+                                            <input type="hidden" class="form-control" id="AddSalId" name="AddSalId" />
                                             <br />
 
                                             <label class="pull-left">Description</label>
-                                            <textarea type="text" name="Description" id="Description" class="form-control"></textarea>
+                                            <textarea type="text" name="eDescription" id="eDescription" class="form-control"></textarea>
                                             <br />
                                         </form>
 
                                     </div>
                                     <div class="modal-footer">
                                         <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                                        <button type="button" class="btn btn-info" id="SubmitNewIncome">Add</button>
+                                        <button type="button" class="btn btn-info" id="SubmitEditIncome">Add</button>
                                     </div>
                                 </div>
                             </div>
@@ -197,10 +198,10 @@
                 <div class="card-body body-card">
                     <div class="col-md-12">
                         <div class="table-responsive" style="overflow: auto;">
-                            <table id="datatable" class="table table-hover">
+                            <table id="datatable2" class="table table-hover">
                                 <thead>
                                     <tr>
-                                        <th><strong>S/N </strong></th>
+                                        <th scope="col"><strong>S/N </strong></th>
                                         <th scope="col"><strong>Income Name</strong></th>
                                         <th scope="col"><strong>Description</strong></th>
                                         <th scope="col"><strong>Amount</strong></th>
@@ -219,7 +220,7 @@
                                         <td></td>
                                         <td>No Data to Display</td>
                                         <td></td>
-
+                                        <td></td>
 
 
                                     }
@@ -235,7 +236,7 @@
 
 
                                                 <td>
-                                                    @item.IncomeTypeId
+                                                    @item.IncomeType.IncomeName
                                                 </td>
 
                                                 <td>
@@ -245,8 +246,8 @@
                                                     ₦@item.Amount
                                                 </td>
                                                 <td>
-                                                    <span data-toggle="modal" data-target="#exampleModalLong1"><a href="#" class="btn btn-round btn-warning btn-icon btn-sm" title="Click to Edit" id="Editbtn" data-toggle="tooltip" data-placement="top" EditAddId="@item.Id" Selected-IncomeName="@item.IncomeTypeId" Selected-Description="@item.Description"><i class="far fa-edit"></i></a></span>
-                                                    <a href="#" class="btn btn-round btn-danger btn-icon btn-sm remove" title="Click to Delete" data-toggle="tooltip" data-placement="top" IncomeTypeId="@item.Id" IncomeTypeTitle="@item.IncomeTypeId"><i class="fas fa-times"></i></a>
+                                                    <span data-toggle="modal" data-target="#exampleModalLong1"><a href="#" class="btn btn-round btn-warning btn-icon btn-sm" title="Click to Edit" id="Editbtn" data-toggle="tooltip" data-placement="top" EditAddId="@item.Id" Selected-IncomeType="@item.IncomeTypeId" Selected-Amount="@item.Amount" Selected-Description="@item.Description"><i class="far fa-edit"></i></a></span>
+                                                    <a href="#" class="btn btn-round btn-danger btn-icon btn-sm remove" title="Click to Delete" data-toggle="tooltip" data-placement="top" IncomeId="@item.Id" IncomeTitle="@item.IncomeType.IncomeName" IncomeTypeId="@item.IncomeTypeId"><i class="fas fa-times"></i></a>
 
                                                 </td>
                                             </tr>
@@ -257,8 +258,8 @@
 
                                     </tbody>
 
-                                    
-                            </table>
+
+                                </table>
                         </div>
                     </div>
 
@@ -313,13 +314,14 @@
             table.on('click', '.remove', function (e) {
                 $tr = $(this).closest('tr');
 
+                incomeId = $(this).attr('IncomeId');
                 incomeTypeId = $(this).attr('IncomeTypeId');
-                incomeTypeTitle = $(this).attr('IncomeTypeTitle');
+                incomeTitle = $(this).attr('IncomeTitle');
 
 
                 swal({
                     title: 'Are you sure?',
-                    text: "You are about to delete '" + incomeTypeTitle + "'",
+                    text: "You are about to delete '" + incomeTitle + "'",
                     type: 'warning',
                     showCancelButton: true,
                     confirmButtonClass: 'btn btn-success',
@@ -330,8 +332,8 @@
 
                     $.ajax({
                         type: "POST",
-                        url: "/AccountBroker/DeleteIncomeType",
-                        data: JSON.stringify(incomeTypeId),
+                        url: "/AccountBroker/DeleteIncome",
+                        data: JSON.stringify(incomeId),
                         dataType: "json",
                         contentType: 'application/json; charset=utf-8',
                         headers: {
@@ -385,10 +387,6 @@
             });
         });
     </script>
-
-
-
-
 
 
     <script type="text/javascript">
@@ -454,13 +452,15 @@
             function (e) {
 
                 aEditAddId = $(this).attr('EditAddId');
-                incomeName = $(this).attr('Selected-IncomeName');
+                incomeTypeId = $(this).attr('Selected-IncomeType');
+                amount = $(this).attr('Selected-Amount');
                 description = $(this).attr('Selected-Description');
 
                 //  console.log(aEditAssetId);
 
                 $('input[name=AddSalId]').val(aEditAddId);
-                $('input[name=eIncomeName]').val(incomeName);
+                $('input[name=eIncomeTypeId]').val(incomeTypeId);
+                $('input[name=eAmount]').val(amount);
                 $('textarea[name=eDescription]').val(description);
 
             });
@@ -469,24 +469,25 @@
 
         $(document).ready(function () {
 
-            $("#SubmitEditIncomeType").click(function (event) {
+            $("#SubmitEditIncome").click(function (event) {
 
                 event.preventDefault();
 
-                var PostIncomeType = {
+                var PostIncome = {
                     AId: $("#AddSalId").val(),
-                    IncomeName: $("#eIncomeName").val(),
+                    IncomeTypeId: $("#eIncomeTypeId").val(),
+                    Amount: $("#eAmount").val(),
                     Description: $("#eDescription").val(),
                 };
 
 
                 // console.log(Items);
-                console.log(PostIncomeType);
+                console.log(PostIncome);
 
                 $.ajax({
                     type: "POST",
-                    url: "/AccountBroker/EditIncomeType",
-                    data: JSON.stringify(PostIncomeType),
+                    url: "/AccountBroker/EditIncome",
+                    data: JSON.stringify(PostIncome),
                     dataType: "json",
                     contentType: 'application/json; charset=utf-8',
                     headers: {

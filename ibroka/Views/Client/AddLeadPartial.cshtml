@@ -98,7 +98,7 @@
 
 
                                     </div>
-                                    @*<div class="row">
+                                    <div class="row">
                                         <div class="col-md-4" style="padding-left:31px;">
                                             <div class="form-group">
                                                 <label class="control-label">Value Insured</label>
@@ -112,7 +112,7 @@
                                         <div class="col-md-4">
 
                                         </div>
-                                    </div>*@
+                                    </div>
 
                                 </div>
                                 <div id="dvlifePolicy" class="row" style="display:none">
@@ -241,7 +241,7 @@
                                     <div class="col-md-4">
                                         <div class="form-group">
                                             <label class="control-label">(%)Risk Owned By Broker</label>
-                                            <input asp-for="policy.RiskOwnedByBroker"  onchange="checkFloatNumber(this);" onkeypress="return validateFloatKeyPress(this,event);" class="form-control" step='0.01' placeholder='0.00' />
+                                            <input asp-for="policy.RiskOwnedByBroker" id="txtRiskOwnedPercent"  onchange="checkFloatNumber(this);" onkeypress="return validateFloatKeyPress(this,event);" class="form-control" step='0.01' placeholder='0.00' />
 
                                         </div>
                                     </div>
@@ -496,7 +496,7 @@
 
                         if (r.msg == "Success") {
 
-                          document.getElementById("txtCommission").value = r.commission;
+                          document.getElementById("txtRiskOwnedPercent").value = r.commission;
 
                           
 
@@ -528,7 +528,7 @@
 
                         if (r.msg == "Success") {
 
-                          document.getElementById("txtCommission").value = r.commission;
+                          document.getElementById("txtRiskOwnedPercent").value = r.commission;
 
                           
 

@@ -209,12 +209,12 @@ function validateLeadData() {
 
         grossP_val = parseFloat(grossP_val);
         sumInsured_val = parseFloat(sumInsured_val);
-        if (grossP_val > sumInsured_val) {
-            //alert('Gross premium cannot be more than sum insured');
-            kendo.alert('Gross premium cannot be more than sum insured');
-            leadDataValid = false;
-            return;
-        }
+        //if (grossP_val > sumInsured_val) {
+        //    //alert('Gross premium cannot be more than sum insured');
+        //    kendo.alert('Gross premium cannot be more than sum insured');
+        //    leadDataValid = false;
+        //    return;
+        //}
     }
 
     if ((grossP_val !== "" && grossP_val !== null && grossP_val !== undefined) && (comm_val !== "" && comm_val !== null && comm_val !== undefined)) {

@@ -46,12 +46,63 @@ namespace ibroka.Controllers.AccountBroker
 
         public IActionResult Income()
         {
-            //var orgId = getOrg();
-           // ViewData["Income"] = new SelectList(_context.IncomeTypes.Where(x => x.OrganisationId == ordId), "Id", "IncomeType");
-            
+            var orgId = getOrg();
+            ViewData["IncomeType"] = new SelectList(_context.IncomeTypes.Where(x => x.OrganisationId == orgId), "Id", "IncomeName");
 
-            return View();
+            var income = _context.Incomes.Where(x => x.OrganisationId == orgId).ToList();
+
+            return View(income);
         }
+
+
+        // Post Method of income 
+        [HttpPost]
+        public async Task<IActionResult> PostIncome([FromBody]Income income)
+        {
+            if (income == null)
+            {
+                return Json(new
+                {
+                    msg = "No Data"
+                }
+               );
+            }
+
+            var orgId = getOrg();
+
+            try
+            {
+                Income incom = new Income()
+                {
+                    Id = Guid.NewGuid(),
+                    IncomeTypeId = income.IncomeTypeId,
+                    Amount = income.Amount,
+                    Description = income.Description,
+                    OrganisationId = orgId
+                };
+
+                _context.Add(incom);
+                _context.SaveChanges();
+
+
+                return Json(new
+                {
+                    msg = "Success"
+                }
+             );
+            }
+            catch (Exception ee)
+            {
+
+            }
+
+            return Json(
+            new
+            {
+                msg = "Fail"
+            });
+        }
+
 
         public IActionResult Expenses()
         {
@@ -135,7 +186,8 @@ namespace ibroka.Controllers.AccountBroker
 
         public IActionResult IncomeType()
         {
-            var incomeTpye = _context.IncomeTypes.ToList();
+            var orgId = getOrg();
+            var incomeTpye = _context.IncomeTypes.Where(x => x.OrganisationId == orgId).ToList();
 
             return View(incomeTpye);
         }
@@ -287,7 +339,8 @@ namespace ibroka.Controllers.AccountBroker
 
         public IActionResult ExpenseType()
         {
-            var expenseTpye = _context.ExpenseTypes.ToList();
+            var orgId = getOrg();
+            var expenseTpye = _context.ExpenseTypes.Where(x => x.OrganisationId == orgId).ToList();
 
             return View(expenseTpye);
         }

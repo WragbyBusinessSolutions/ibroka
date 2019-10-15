@@ -9,6 +9,7 @@ using ibroka.Models.AccountBroker;
 using ibroka.ViewModel;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 
 namespace ibroka.Controllers.AccountBroker
@@ -45,6 +46,10 @@ namespace ibroka.Controllers.AccountBroker
 
         public IActionResult Income()
         {
+            //var orgId = getOrg();
+           // ViewData["Income"] = new SelectList(_context.IncomeTypes.Where(x => x.OrganisationId == ordId), "Id", "IncomeType");
+            
+
             return View();
         }
 

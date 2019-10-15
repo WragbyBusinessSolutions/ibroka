@@ -8,6 +8,8 @@ namespace ibroka.ViewModel
 {
     public class PostNewInsurer
     {
+        public string AId { get; set; }
+
         public Guid Id { get; set; }
 
         public Guid GlobalInsurerId { get; set; }

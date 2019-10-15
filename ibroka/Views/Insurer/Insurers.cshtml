@@ -20,7 +20,7 @@
 </style>
 
 <div class="content">
-    
+
     <div class="row">
         <div class="col-md-12">
             <div class="card">
@@ -36,28 +36,28 @@
                             </button>
 
                             @*<div class="btn-group col-md-4 pull-right">
-                        <a class="btn btn-info btn-md pull-right btn-responsive" data-toggle="modal" data-target="#noticeModal">
+                                    <a class="btn btn-info btn-md pull-right btn-responsive" data-toggle="modal" data-target="#noticeModal">
 
-                            <span class="btn-label">
-                                <i class="now-ui-icons travel_info"></i>
-                            </span>
+                                        <span class="btn-label">
+                                            <i class="now-ui-icons travel_info"></i>
+                                        </span>
 
-                            Add New
+                                        Add New
 
-                        </a>
+                                    </a>
 
-                        <button type="button" class="btn btn-success dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                            Export Data
-                        </button>
-                        <div class="dropdown-menu">
-                            <a class="dropdown-item" href="#">Copy</a>
-                            <a class="dropdown-item" href="#">CSV</a>
-                            <a class="dropdown-item" href="#">Excel</a>
-                            <a class="dropdown-item" href="#">PDF</a>
-                            <a class="dropdown-item" href="#">Print</a>
+                                    <button type="button" class="btn btn-success dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                        Export Data
+                                    </button>
+                                    <div class="dropdown-menu">
+                                        <a class="dropdown-item" href="#">Copy</a>
+                                        <a class="dropdown-item" href="#">CSV</a>
+                                        <a class="dropdown-item" href="#">Excel</a>
+                                        <a class="dropdown-item" href="#">PDF</a>
+                                        <a class="dropdown-item" href="#">Print</a>
 
-                        </div>
-                    </div>*@
+                                    </div>
+                                </div>*@
                         </div>
                     </div>
                 </div>
@@ -80,7 +80,7 @@
                                             <div class="col-md-12">
                                                 <div class="form-group">
                                                     <label>Name</label>
-                                                    <input type="text" class="form-control" placeholder="Enter Name" id="Name" required>
+                                                    <input type="text" class="form-control" placeholder="Enter Name" id="Name" name="Name" required>
                                                 </div>
                                             </div>
                                         </div>
@@ -88,7 +88,7 @@
                                             <div class="col-md-12">
                                                 <div class="form-group">
                                                     <label>User Name</label>
-                                                    <input type="text" class="form-control" placeholder="Enter UserName" id="DisplayName" required>
+                                                    <input type="text" class="form-control" placeholder="Enter UserName" id="DisplayName" name="DisplayName" required>
                                                 </div>
                                             </div>
                                         </div>
@@ -96,7 +96,7 @@
                                             <div class="col-md-12">
                                                 <div class="form-group">
                                                     <label>Phone Number</label>
-                                                    <input type="text" class="form-control" placeholder="Enter Phone Number" id="PhoneNo" required>
+                                                    <input type="text" class="form-control" placeholder="Enter Phone Number" id="PhoneNo" name="PhoneNo" required>
                                                 </div>
                                             </div>
                                         </div>
@@ -104,7 +104,7 @@
                                             <div class="col-md-12">
                                                 <div class="form-group">
                                                     <label>Email</label>
-                                                    <input type="email" class="form-control" placeholder="Enter E-Mail" id="Email" required>
+                                                    <input type="email" class="form-control" placeholder="Enter E-Mail" id="Email" name="Email" required>
                                                 </div>
                                             </div>
                                         </div>
@@ -112,7 +112,7 @@
                                             <div class="col-md-12">
                                                 <div class="form-group">
                                                     <label>Address</label>
-                                                    <input type="text" class="form-control" placeholder="Enter Address" id="Address" required>
+                                                    <input type="text" class="form-control" placeholder="Enter Address" id="Address" name="Address" required>
                                                 </div>
                                             </div>
                                         </div>
@@ -120,7 +120,7 @@
                                             <div class="col-md-12">
                                                 <div class="form-group">
                                                     <label>Website</label>
-                                                    <input type="text" class="form-control" placeholder="Enter Website" id="WebUrl" required>
+                                                    <input type="text" class="form-control" placeholder="Enter Website" id="WebUrl" name="WebUrl" required>
                                                 </div>
                                             </div>
                                         </div>
@@ -247,7 +247,7 @@
                 <div class="card-body body-card">
                     <div class="col-md-12">
                         <div class="table-responsive" style="overflow: auto;">
-                            <table id="datatable" class="table table-hover">
+                            <table id="datatable2" class="table table-hover">
                                 <thead>
                                     <tr>
                                         <th><strong>#</strong></th>
@@ -277,8 +277,8 @@
                                                 <td>@item.Name</td>
                                                 <td>@item.WebUrl</td>
                                                 <td>
-                                                    <span data-toggle="modal" data-target="#noticeModal1"><a href="#" class="btn btn-round btn-warning btn-icon btn-sm" data-toggle="tooltip" data-placement="top" title="Click to Edit" id="#Editbtn" InsurerId="@item.Id" Selected-Name="@item.Name" Selected-DisplayName="@item.DisplayName" Selected-PhoneNo="@item.PhoneNo" Selected-Email="@item.Email" Selected-Address="@item.Address" Selected-WebUrl="@item.WebUrl" Selected-Description="@item.Description"><i class="fa fa-edit"></i></a></span>
-                                                    <a href="#" class="btn btn-round btn-danger btn-icon btn-sm remove" data-toggle="tooltip" data-placement="top" title="Click to Delete"><i class="fas fa-times"></i></a>
+                                                    <span data-toggle="modal" data-target="#noticeModal1"><a href="#" class="btn btn-round btn-warning btn-icon btn-sm" data-toggle="tooltip" data-placement="top" title="Click to Edit" id="Editbtn" InsurerId="@item.Id" Selected-Name="@item.Name" Selected-DisplayName="@item.DisplayName" Selected-PhoneNo="@item.PhoneNo" Selected-Email="@item.Email" Selected-Address="@item.Address" Selected-WebUrl="@item.WebUrl" Selected-Description="@item.Description"><i class="fa fa-edit"></i></a></span>
+                                                    <a href="#" class="btn btn-round btn-danger btn-icon btn-sm remove" data-toggle="tooltip" data-placement="top" title="Click to Delete" id="DelInsurer" InsurerId="@item.Id" InsurerName="@item.Name"><i class="fas fa-times"></i></a>
                                                 </td>
                                             </tr>
 
@@ -299,7 +299,124 @@
 
     @section Scripts {
 
+        <script>
+            $(document).ready(function () {
+
+                $('#datatable2').DataTable({
+                    "pagingType": "full_numbers",
+                    dom: "Bfrtip",
+                    "lengthMenu": [
+                        [10, 25, 50, -1],
+                        [10, 25, 50, "All"]
+                    ],
+
+
+                    buttons: [
+                        'copy',
+                        'excel',
+                        'csv',
+                        'pdf',
+                        'print',
+                    ],
+
+
+                    responsive: true,
+                    language: {
+                        search: "_INPUT_",
+                        searchPlaceholder: "Search records",
+                    }
+
+                });
+
+                var table = $('#datatable2').DataTable();
+
+                // Edit record
+                table.on('click', '.edit', function () {
+                    $tr = $(this).closest('tr');
+
+                    var data = table.row($tr).data();
+                    alert('You press on Row: ' + data[0] + ' ' + data[1] + ' ' + data[2] + '\'s row.');
+                });
+
+                // Delete a record
+                table.on('click', '.remove', function (e) {
+                    $tr = $(this).closest('tr');
+
+                    insId = $(this).attr('InsurerId');
+                    insurerName = $(this).attr('InsurerName');
+
+                    swal({
+                        title: 'Are you sure?',
+                        text: "You are about to delete '" + insurerName + "'",
+                        type: 'warning',
+                        showCancelButton: true,
+                        confirmButtonClass: 'btn btn-success',
+                        cancelButtonClass: 'btn btn-danger',
+                        confirmButtonText: 'Yes, delete it!',
+                        buttonsStyling: false
+                    }).then(function () {
+
+                        $.ajax({
+                            type: "POST",
+                            url: "/Insurer/deleteInsurer",
+                            data: JSON.stringify(insId),
+                            dataType: "json",
+                            contentType: 'application/json; charset=utf-8',
+                            headers: {
+                                RequestVerificationToken:
+                                    $('input:hidden[name="__RequestVerificationToken"]').val()
+                            },
+                            success: function (r) {
+
+                                if (r.msg == "Success") {
+
+                                    swal({
+                                        title: 'Deleted!',
+                                        text: 'Your file has been deleted.',
+                                        type: 'success',
+                                        confirmButtonClass: "btn btn-success",
+                                        buttonsStyling: false
+                                    });
+
+
+                                } else if (r.msg == "Fail") {
+
+                                    alert(r.msg);
+
+                                } else if (r.msg == "No Data") {
+                                    alert(r.msg);
+
+                                } else {
+                                    alert(r.msg);
+                                }
+                                //alert(r.msg);
+                                // window.location.reload();
+
+                            },
+                            error: function () {
+                                alert(r.msg);
+                            }
+                        });
+
+
+                        table.row($tr).remove().draw();
+
+                    }).catch(swal.noop);
+
+
+                    e.preventDefault();
+                });
+
+                //Like record
+                table.on('click', '.like', function () {
+                    alert('You clicked on Like button');
+                });
+            });
+        </script>
+
         <script type="text/javascript">
+
+
 
 
             $(document).ready(function () {
@@ -356,48 +473,107 @@
                         }
                     });
                 });
+
             });
 
-            </script>
+            //Code for pulling the Records on the Table
+            var aEditInsId;
 
-<script type="text/javascript">
+            $(document).delegate('#Editbtn',
+                'click',
+                function (e) {
 
-    
-             //Code for pulling the Records on the Table
-      var aEditInsId;
+                    aEditInsId = $(this).attr('InsurerId');
+                    name = $(this).attr('Selected-Name');
+                    displayName = $(this).attr('Selected-DisplayName');
+                    phoneNo = $(this).attr('Selected-PhoneNo');
+                    email = $(this).attr('Selected-Email');
+                    address = $(this).attr('Selected-Address');
+                    webUrl = $(this).attr('Selected-WebUrl');
+                    description = $(this).attr('Selected-Description');
 
-      $(document).delegate('#Editbtn',
-        'click',
-        function (e) {
-
-          aEditInsId = $(this).attr('InsurerId');
-          name = $(this).attr('Selected-Name');
-          displayName = $(this).attr('Selected-DisplayName');
-          phoneNo = $(this).attr('Selected-PhoneNo');
-          email = $(this).attr('Selected-Email');
-          address = $(this).attr('Selected-Address');
-          webUrl = $(this).attr('Selected-WebUrl');
-          description = $(this).attr('Selected-Description');
-
-          //console.log(description, department);
+                    //console.log(description, department);
 
 
-          $('input[name=Insid]').val(aEditInsId);
-          $('input[name=eName]').val(name);
-          $('input[name=eDisplayName]').val(displayName);
-          $('input[name=ePhoneNo]').val(phoneNo);
-          $('input[name=eEmail]').val(email);
-          $('input[name=eAddress]').val(address);
-          $('input[name=eWebUrl]').val(webUrl);
-          $('textarea[name=eDescription]').val(description);
+                    $('input[name=Insid]').val(aEditInsId);
+                    $('input[name=eName]').val(name);
+                    $('input[name=eDisplayName]').val(displayName);
+                    $('input[name=ePhoneNo]').val(phoneNo);
+                    $('input[name=eEmail]').val(email);
+                    $('input[name=eAddress]').val(address);
+                    $('input[name=eWebUrl]').val(webUrl);
+                    $('textarea[name=eDescription]').val(description);
 
-        });
+                });
 
-      //End of the code
-
-
-</script>
+            //End of the code
 
 
+            $(document).ready(function () {
 
-        }
+
+                $("#editInsurer").click(function (event) {
+
+                    event.preventDefault();
+
+                    var PostInsurer = {
+                        AId: $("#Insid").val(),
+                        Name: $("#eName").val(),
+                        DisplayName: $("#eDisplayName").val(),
+                        PhoneNo: $("#ePhoneNo").val(),
+                        Email: $("#eEmail").val(),
+                        Address: $("#eAddress").val(),
+                        WebUrl: $("#eWebUrl").val(),
+                        Description: $("#eDescription").val(),
+                    };
+
+
+                    // console.log(Items);
+                    console.log(PostInsurer);
+
+                    $.ajax({
+                        type: "POST",
+                        url: "/Insurer/editInsurer",
+                        data: JSON.stringify(PostInsurer),
+                        dataType: "json",
+                        contentType: 'application/json; charset=utf-8',
+                        headers: {
+                            RequestVerificationToken:
+                                $('input:hidden[name="__RequestVerificationToken"]').val()
+                        },
+                        success: function (r) {
+
+                            if (r.msg == "Success") {
+
+                                demo.showSwal('success-message');
+
+                            } else if (r.msg == "Fail") {
+
+                                alert(r.msg);
+
+                            } else if (r.msg == "No Data") {
+                                alert(r.msg);
+
+                            } else {
+                                alert(r.msg);
+                            }
+                            //alert(r.msg);
+                            // window.location.reload();
+
+                        },
+                        error: function () {
+                            alert(r.msg);
+                        }
+                    });
+                });
+
+
+            });
+
+        </script>
+
+
+
+
+
+    }

@@ -248,8 +248,105 @@ namespace ibroka.Controllers.LeadManagement
         }
 
 
+        // Edit the Department
+
+        [HttpPost]
+        public async Task<IActionResult> editInsurer([FromBody]PostNewInsurer postNewInsurer)
+        {
+            if (postNewInsurer == null)
+            {
+                return Json(new
+                {
+                    msg = "No Data"
+                }
+               );
+            }
+
+            var orgId = getOrg();
+            var organisationDetails = await _context.Organisations.Where(x => x.Id == orgId).FirstOrDefaultAsync();
+
+            try
+            {
+
+                var Insure = _context.InsurerMasters.Where(x => x.Id == Guid.Parse(postNewInsurer.AId)).FirstOrDefault();
+                Insure.Name = postNewInsurer.Name;
+                Insure.DisplayName = postNewInsurer.DisplayName;
+                Insure.PhoneNo = postNewInsurer.PhoneNo;
+                Insure.Email = postNewInsurer.Email;
+                Insure.Address = postNewInsurer.Address;
+                Insure.WebUrl = postNewInsurer.WebUrl;
+                Insure.Description = postNewInsurer.Description;
 
 
+                _context.Update(Insure);
+                _context.SaveChanges();
 
+
+                return Json(new
+                {
+                    msg = "Success"
+                }
+             );
+            }
+            catch (Exception ee)
+            {
+
+            }
+
+            return Json(
+            new
+            {
+                msg = "Fail"
+            });
+        }
+
+        // Ednf of Edit for Department
+
+        // Delete of Edit for Category
+
+        private bool InsurerExists(Guid id)
+        {
+            return _context.InsurerMasters.Any(e => e.Id == id);
+        }
+
+
+        [HttpPost]
+        public IActionResult deleteInsurer([FromBody]string insId)
+        {
+            if (insId == null)
+            {
+                return Json(new
+                {
+                    msg = "No Data"
+                }
+               );
+            }
+
+            try
+            {
+                var Insurer = _context.InsurerMasters.SingleOrDefault(m => m.Id == Guid.Parse(insId));
+                _context.InsurerMasters.Remove(Insurer);
+                _context.SaveChanges();
+
+                return Json(new
+                {
+                    msg = "Success"
+                });
+
+            }
+            catch
+            {
+
+            }
+
+            return Json(new
+            {
+                msg = "Fail"
+            });
+
+
+        }
+
+        // Delete of Edit for Category
     }
 }

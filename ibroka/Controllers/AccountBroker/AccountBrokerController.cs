@@ -382,7 +382,56 @@ namespace ibroka.Controllers.AccountBroker
             });
         }
 
-      public IActionResult PaymentType()
+        // Edit expense Type Ended
+        private bool ExpenseTypeExists(Guid id)
+        {
+            return _context.ExpenseTypes.Any(e => e.Id == id);
+        }
+
+
+        [HttpPost]
+        public IActionResult DeleteExpenseType([FromBody]string expenseTypId)
+        {
+            if (expenseTypId == null)
+            {
+                return Json(new
+                {
+                    msg = "No Data"
+                }
+               );
+            }
+
+            try
+            {
+                var ExpenseTitle = _context.ExpenseTypes.SingleOrDefault(m => m.Id == Guid.Parse(expenseTypId));
+                _context.ExpenseTypes.Remove(ExpenseTitle);
+                _context.SaveChanges();
+
+                return Json(new
+                {
+                    msg = "Success"
+                });
+
+            }
+            catch
+            {
+
+            }
+
+            return Json(new
+            {
+                msg = "Fail"
+            });
+
+
+        }
+
+
+
+
+        // Delete for expense Type
+
+        public IActionResult PaymentType()
     {
       var orgId = getOrg();
 
@@ -438,51 +487,7 @@ namespace ibroka.Controllers.AccountBroker
     }
 
   }
-        // Edit expense Type Ended
 
-        // Delete for expense Type
-
-        private bool ExpenseTypeExists(Guid id)
-        {
-            return _context.ExpenseTypes.Any(e => e.Id == id);
-        }
-
-
-        [HttpPost]
-        public IActionResult DeleteExpenseType([FromBody]string expenseTypId)
-        {
-            if (expenseTypId == null)
-            {
-                return Json(new
-                {
-                    msg = "No Data"
-                }
-               );
-            }
-
-            try
-            {
-                var ExpenseTitle = _context.ExpenseTypes.SingleOrDefault(m => m.Id == Guid.Parse(expenseTypId));
-                _context.ExpenseTypes.Remove(ExpenseTitle);
-                _context.SaveChanges();
-
-                return Json(new
-                {
-                    msg = "Success"
-                });
-
-            }
-            catch
-            {
-
-            }
-
-            return Json(new
-            {
-                msg = "Fail"
-            });
-
-
-        }
-    }
+       
+    
 }

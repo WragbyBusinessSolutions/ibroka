@@ -5,8 +5,10 @@ using System.Security.Claims;
 using System.Threading.Tasks;
 using ibroka.Data;
 using ibroka.Helpers;
+using ibroka.Models;
 using ibroka.Models.LeadManagement;
 using ibroka.ViewModel;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 
@@ -18,11 +20,28 @@ namespace ibroka.Controllers.LeadManagement
     {
 
         private readonly ApplicationDbContext _context;
+        private readonly UserManager<ApplicationUser> _userManager;
 
-        public InsurerController(ApplicationDbContext context)
+
+        public InsurerController(ApplicationDbContext context, UserManager<ApplicationUser> userManager)
         {
             _context = context;
+            _userManager = userManager;
         }
+
+        private Guid getOrg()
+        {
+            var userId = User.FindFirst(ClaimTypes.NameIdentifier).Value;
+            var orgId = _context.Users.Where(x => x.Id == userId).FirstOrDefault().OrganisationId;
+
+
+            var orgdetails = _context.Organisations.Where(x => x.Id == orgId).FirstOrDefault();
+            ViewData["OrganisationName"] = orgdetails.OrganisationName;
+            ViewData["OrganisationImage"] = orgdetails.ImageUrl;
+
+            return orgId;
+        }
+
 
         [TempData]
         public string StatusMessage { get; set; }
@@ -161,5 +180,76 @@ namespace ibroka.Controllers.LeadManagement
 
             return Json("exist");
         }
+
+
+
+        public IActionResult Insurers()
+        {
+            var orgId = getOrg();
+            var Insure = _context.InsurerMasters.Where(x => x.OrganisationId == orgId).ToList();
+
+            return View(Insure);
+        }
+
+
+
+        [HttpPost]
+        public async Task<IActionResult> postNewInsurer([FromBody]PostNewInsurer postNewInsurer)
+        {
+            if (postNewInsurer == null)
+            {
+                return Json(new
+                {
+                    msg = "No Data"
+                }
+               );
+            }
+
+            var orgId = getOrg();
+            var organisationDetails = await _context.Organisations.Where(x => x.Id == orgId).FirstOrDefaultAsync();
+            int noOfEmployee = _context.Users.Where(x => x.OrganisationId == orgId).Count();
+
+            try
+            {
+                InsurerMaster newInsure = new InsurerMaster()
+                {
+                    Id = Guid.NewGuid(),
+                    GlobalInsurerId = Guid.NewGuid(),
+                    Name = postNewInsurer.Name,
+                    DisplayName = postNewInsurer.DisplayName,
+                    PhoneNo = postNewInsurer.PhoneNo,
+                    Email = postNewInsurer.Email,
+                    Address = postNewInsurer.Address,
+                    WebUrl = postNewInsurer.WebUrl,
+                    Description = postNewInsurer.Description,
+                    OrganisationId = orgId
+                };
+
+                _context.Add(newInsure);
+                _context.SaveChanges();
+
+
+                return Json(new
+                {
+                    msg = "Success"
+                }
+             );
+            }
+            catch (Exception ee)
+            {
+
+            }
+
+            return Json(
+            new
+            {
+                msg = "Fail"
+            });
+        }
+
+
+
+
+
     }
 }

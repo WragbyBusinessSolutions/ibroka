@@ -21,5 +21,7 @@ namespace ibroka.Models.LeadManagement
         public Int64 ReceiptNo { get; set; }
         [NotMapped]
         public Int64 debitNoteNo { get; set; }
+
+    public Guid PaymentType { get; set; }
     }
 }

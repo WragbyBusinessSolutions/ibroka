@@ -208,12 +208,12 @@ function validateEndorsementData(ltype) {
 
         grossP_val = parseFloat(grossP_val);
         sumInsured_val = parseFloat(sumInsured_val);
-        if (grossP_val > sumInsured_val) {
-            //alert('Gross premium cannot be more than sum insured');
-            kendo.alert("Gross premium cannot be more than sum insured");
-            isDataValid = false;
-            return;
-        }
+        //if (grossP_val > sumInsured_val) {
+        //    //alert('Gross premium cannot be more than sum insured');
+        //    kendo.alert("Gross premium cannot be more than sum insured");
+        //    isDataValid = false;
+        //    return;
+        //}
     }
 
     if ((grossP_val !== "" && grossP_val !== null && grossP_val !== undefined) && (comm_val !== "" && comm_val !== null && comm_val !== undefined)) {
@@ -255,25 +255,27 @@ function leadEndorsementCommOnChange(el) {
 }
 
 function calculateNetPerimumLeadEndorsememnt() {
-   
+  
     var gp_val = $('#txtGP').val();
-    var comm_val = $('#txtCommission').val();
-    var net_val = 0;
-
+  var comm_val = $('#txtRiskOwnedPercent').val();
+  var net_val = 0;
+  var com_amount = 0;
+  
     if (!isNaN(gp_val) && gp_val!=='') {
         net_val = parseFloat(gp_val);
     }
 
   if (!isNaN(comm_val) && comm_val !== '') {
 
-    var com_amount = parseFloat(gp_val) * parseFloat(comm_val) / 100;
+    com_amount = parseFloat(gp_val) * parseFloat(comm_val) / 100;
     var vat = com_amount * 5 / 100;
 
     net_val = parseFloat(net_val) - com_amount - vat;
     }
-    net_val = parseFloat(net_val);
+  net_val = parseFloat(net_val);
 
-    $('#txtNetPremium').val(net_val.toFixed(2));
+  $('#txtCommission').val(com_amount.toFixed(2));
+   $('#txtNetPremium').val(net_val.toFixed(2));
 }
 
 

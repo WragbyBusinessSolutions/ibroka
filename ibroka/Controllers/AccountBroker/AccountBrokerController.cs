@@ -128,7 +128,66 @@ namespace ibroka.Controllers.AccountBroker
             });
         }
 
+        public IActionResult IncomeType()
+        {
+            var incomeTpye = _context.IncomeTypes.ToList();
 
+            return View(incomeTpye);
+        }
+
+
+        // Post Method of income type
+        [HttpPost]
+        public async Task<IActionResult> PostIncomeType([FromBody]IncomeType incomeType)
+        {
+            if (incomeType == null)
+            {
+                return Json(new
+                {
+                    msg = "No Data"
+                }
+               );
+            }
+
+            var orgId = getOrg();
+
+            try
+            {
+                IncomeType newIncome = new IncomeType()
+                {
+                    Id = Guid.NewGuid(),
+                    IncomeName = incomeType.IncomeName,
+                    Description = incomeType.Description,
+                    OrganisationId = orgId
+                };
+
+                _context.Add(newIncome);
+                _context.SaveChanges();
+
+
+                return Json(new
+                {
+                    msg = "Success"
+                }
+             );
+            }
+            catch (Exception ee)
+            {
+
+            }
+
+            return Json(
+            new
+            {
+                msg = "Fail"
+            });
+        }
+
+
+        public IActionResult ExpenseType()
+        {
+            return View();
+        }
 
     }
 }

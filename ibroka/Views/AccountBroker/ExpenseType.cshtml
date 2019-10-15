@@ -78,7 +78,7 @@
                                         </form>
                                     </div>
                                 </div>
-                         
+
                             </div>
                         </div>
                     </div>
@@ -91,7 +91,7 @@
                                     <button type="button" class="close" data-dismiss="modal" aria-hidden="true">
                                         <i class="now-ui-icons ui-1_simple-remove"></i>
                                     </button>
-                                    <h5 class="modal-title" id="myModalLabel">Edit Asset Details</h5>
+                                    <h5 class="modal-title" id="myModalLabel">Edit Expense Type</h5>
                                 </div>
                                 <div class="modal-body">
                                     <div class="instruction">
@@ -99,8 +99,9 @@
                                             <div class="row">
                                                 <div class="col-md-12">
                                                     <div class="form-group">
-                                                        <label> Name</label>
-                                                        <input type="text" class="form-control" placeholder="Expense Name" id="ExpenseName" name="ExpenseName" required>
+                                                        <label>Expense Name</label>
+                                                        <input type="text" class="form-control" placeholder="Expense Name" id="eExpenseName" name="eExpenseName" required>
+                                                        <input type="hidden" class="form-control" placeholder="Expense Name" id="DedSalId" name="DedSalId" required>
                                                     </div>
                                                 </div>
                                             </div>
@@ -108,15 +109,14 @@
                                                 <div class="col-md-12">
                                                     <div class="form-group">
                                                         <label>Description</label>
-                                                        <textarea class="form-control" placeholder="Description" id="Description" required rows="3"></textarea>
+                                                        <textarea class="form-control" placeholder="Description" id="eDescription" name="eDescription" required rows="3"></textarea>
                                                         @*<input type="text" class="form-control" placeholder="Department Name" id="Description" name="Description" required>*@
 
                                                     </div>
                                                 </div>
                                             </div>
-                                            <hr />
                                             <div class="card-footer">
-                                                <button type="button" class="btn btn-fill btn-primary btn-round" id="SubmitExpenseType">Submit</button>
+                                                <button type="button" class="btn btn-fill btn-primary btn-round" id="SubmitEditExpenseType">Submit</button>
                                                 <button type="button" class="btn btn-info btn-round" data-dismiss="modal">Close</button>
                                             </div>
                                         </form>
@@ -127,13 +127,13 @@
                         </div>
                     </div>
                     <!-- end notice Edit modal -->
-                
+
                 </div>
 
 
                 <div class="card-body">
                     <div>
-                        <table class="table table-striped" id="datatable" cellspacing="10" width="100%">
+                        <table class="table table-striped" id="datatable2" cellspacing="10" width="100%">
                             <thead class="text-primary">
                             <th class="text-center">
                                 #
@@ -160,13 +160,13 @@
 
                                     @if (Model.Count() < 1)
                                     {
-                                    
+
                                     <td></td>
                                     <td></td>
                                     <td>No Data to Display</td>
                                     <td></td>
                                     <td></td>
-                                   
+
 
                                 }
 
@@ -188,8 +188,8 @@
                                             </td>
 
                                             <td>
-                                                <span data-toggle="modal" data-target="#noticeModal1"><a href="#" class="btn btn-round btn-warning btn-icon btn-sm" title="Click to Edit" id="Editbtn" data-toggle="tooltip" data-placement="top" EditAddId="@item.Id" Selected-ExpenseName="@item.ExpenseName" Selected-Description="@item.Description"><i class="far fa-calendar-alt"></i></a></span>
-                                                <a href="#" class="btn btn-round btn-danger btn-icon btn-sm remove" title="Click to Delete"><i class="fas fa-times"></i></a>
+                                                <span data-toggle="modal" data-target="#noticeModal1"><a href="#" class="btn btn-round btn-warning btn-icon btn-sm" title="Click to Edit" id="Editbtn" data-toggle="tooltip" data-placement="top" EditDedId="@item.Id" Selected-ExpenseName="@item.ExpenseName" Selected-Description="@item.Description"><i class="far fa-edit"></i></a></span>
+                                                <a href="#" class="btn btn-round btn-danger btn-icon btn-sm remove" title="Click to Delete" data-toggle="tooltip" data-placement="top" ExpenseTypId="@item.Id" expenseTypeTitle="@item.ExpenseName"><i class="fas fa-times"></i></a>
 
                                             </td>
                                         </tr>
@@ -198,69 +198,141 @@
                                     }
                                 }
 
-                            </tbody>
-                        </table>
+                                </tbody>
+                            </table>
+                        </div>
                     </div>
                 </div>
             </div>
+
         </div>
 
     </div>
 
-</div>
 
 
 
 
-    <script>
-        $(document).ready(function () {
-            $('#datatable').DataTable({
-                "pagingType": "full_numbers",
-                "lengthMenu": [
-                    [10, 25, 50, -1],
-                    [10, 25, 50, "All"]
-                ],
-                responsive: true,
-
-                language: {
-                    search: "_INPUT_",
-                    searchPlaceholder: "Search records",
-                }
-
-            });
-
-            var table = $('#datatable').DataTable();
-
-            // Edit record
-            table.on('click', '.edit', function () {
-                $tr = $(this).closest('tr');
-
-                var data = table.row($tr).data();
-                alert('You press on Row: ' + data[0] + ' ' + data[1] + ' ' + data[2] + '\'s row.');
-            });
-
-            // Delete a record
-            table.on('click', '.remove', function (e) {
-                $tr = $(this).closest('tr');
-                table.row($tr).remove().draw();
-                e.preventDefault();
-            });
-
-            //Like record
-            table.on('click', '.like', function () {
-                alert('You clicked on Like button');
-            });
-        });
-
-
-    </script>
 
 
 
     @section Scripts {
 
+
+        <link href="@Url.Content("~/css/ajaxoverlay.css")" rel="stylesheet" />
+
+        <script>
+            $(document).ready(function () {
+
+                $('#datatable2').DataTable({
+                    "pagingType": "full_numbers",
+                    dom: "Bfrtip",
+                    "lengthMenu": [
+                        [10, 25, 50, -1],
+                        [10, 25, 50, "All"]
+                    ],
+
+
+                    buttons: [
+                        'copy',
+                        'excel',
+                        'csv',
+                        'pdf',
+                        'print',
+                    ],
+
+
+                    responsive: true,
+                    language: {
+                        search: "_INPUT_",
+                        searchPlaceholder: "Search records",
+                    }
+
+                });
+
+                var table = $('#datatable2').DataTable();
+
+                // Delete a record
+                table.on('click', '.remove', function (e) {
+                    $tr = $(this).closest('tr');
+
+                    expenseTypId = $(this).attr('ExpenseTypId');
+                    expenseTypeTitle = $(this).attr('expenseTypeTitle');
+
+
+                    swal({
+                        title: 'Are you sure?',
+                        text: "You are about to delete '" + expenseTypeTitle + "'",
+                        type: 'warning',
+                        showCancelButton: true,
+                        confirmButtonClass: 'btn btn-success',
+                        cancelButtonClass: 'btn btn-danger',
+                        confirmButtonText: 'Yes, delete it!',
+                        buttonsStyling: false
+                    }).then(function () {
+
+                        $.ajax({
+                            type: "POST",
+                            url: "/AccountBroker/DeleteExpenseType",
+                            data: JSON.stringify(expenseTypId),
+                            dataType: "json",
+                            contentType: 'application/json; charset=utf-8',
+                            headers: {
+                                RequestVerificationToken:
+                                    $('input:hidden[name="__RequestVerificationToken"]').val()
+                            },
+                            success: function (r) {
+
+                                if (r.msg == "Success") {
+
+                                    swal({
+                                        title: 'Deleted!',
+                                        text: 'Your file has been deleted.',
+                                        type: 'success',
+                                        confirmButtonClass: "btn btn-success",
+                                        buttonsStyling: false
+                                    });
+
+
+                                } else if (r.msg == "Fail") {
+
+                                    alert(r.msg);
+
+                                } else if (r.msg == "No Data") {
+                                    alert(r.msg);
+
+                                } else {
+                                    alert(r.msg);
+                                }
+                                //alert(r.msg);
+                                // window.location.reload();
+
+                            },
+                            error: function () {
+                                alert(r.msg);
+                            }
+                        });
+
+
+                        table.row($tr).remove().draw();
+
+                    }).catch(swal.noop);
+
+
+                    e.preventDefault();
+                });
+
+                //Like record
+                table.on('click', '.like', function () {
+                    alert('You clicked on Like button');
+                });
+            });
+        </script>
+
+
+
         <!--  DataTables.net Plugin, full documentation here  -->
-        <script src="~/assets/js/plugins/jquery.dataTables.min.js"></script>
+        @*<script src="~/assets/js/plugins/jquery.dataTables.min.js"></script>*@
 
         <script type="text/javascript">
 
@@ -270,7 +342,7 @@
 
                     event.preventDefault();
 
-                    var SubmitExpenseType = {                      
+                    var SubmitExpenseType = {
                         ExpenseName: $("#ExpenseName").val(),
                         Description: $("#Description").val(),
                     };
@@ -322,8 +394,8 @@
                 'click',
                 function (e) {
 
-                    aEditDedId = $(this).attr('EditDedId');                   
-                    ExpenseName = $(this).attr('Selected-ExpenseName');
+                    aEditDedId = $(this).attr('EditDedId');
+                    expenseName = $(this).attr('Selected-ExpenseName');
                     description = $(this).attr('Selected-Description');
 
 
@@ -331,7 +403,7 @@
                     //  console.log(aEditAssetId);
 
                     $('input[name=DedSalId]').val(aEditDedId);
-                    $('input[name=eexpenseName]').val(expenseName);
+                    $('input[name=eExpenseName]').val(expenseName);
                     $('textarea[name=eDescription]').val(description);
 
                 });
@@ -340,26 +412,24 @@
 
             $(document).ready(function () {
 
-                $("#submitEditDeductions").click(function (event) {
+                $("#SubmitEditExpenseType").click(function (event) {
 
                     event.preventDefault();
 
-                    var PostSalaryDeduction = {
+                    var PostExpenseType = {
                         AId: $("#DedSalId").val(),
-                        EmployeeDetailsId: $("#eemployeeId").val(),
-                        DeductionId: $("#eDeductionType").val(),
-                        Amount: $("#eAmount").val(),
+                        ExpenseName: $("#eExpenseName").val(),
                         Description: $("#eDescription").val(),
                     };
 
 
                     // console.log(Items);
-                    console.log(PostSalaryDeduction);
+                    console.log(PostExpenseType);
 
                     $.ajax({
                         type: "POST",
-                        url: "/Payroll/editSalaryDeductions",
-                        data: JSON.stringify(PostSalaryDeduction),
+                        url: "/AccountBroker/EditExpenseType",
+                        data: JSON.stringify(PostExpenseType),
                         dataType: "json",
                         contentType: 'application/json; charset=utf-8',
                         headers: {

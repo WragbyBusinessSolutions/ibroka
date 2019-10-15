@@ -183,6 +183,102 @@ namespace ibroka.Controllers.AccountBroker
             });
         }
 
+        // Edit Income Type
+
+        [HttpPost]
+        public async Task<IActionResult> EditIncomeType([FromBody]PostIncomeType postIncomeType)
+        {
+            if (postIncomeType == null)
+            {
+                return Json(new
+                {
+                    msg = "No Data"
+                }
+               );
+            }
+
+            var orgId = getOrg();
+            var organisationDetails = await _context.Organisations.Where(x => x.Id == orgId).FirstOrDefaultAsync();
+           
+            try
+            {
+
+                var IncType = _context.IncomeTypes.Where(x => x.Id == Guid.Parse(postIncomeType.AId)).FirstOrDefault();
+                IncType.IncomeName = postIncomeType.IncomeName;
+                IncType.Description = postIncomeType.Description;
+
+
+                _context.Update(IncType);
+                _context.SaveChanges();
+
+
+                return Json(new
+                {
+                    msg = "Success"
+                }
+             );
+            }
+            catch (Exception ee)
+            {
+
+            }
+
+            return Json(
+            new
+            {
+                msg = "Fail"
+            });
+        }
+
+        // Edit income Type Ended
+
+        // Delete for Income Type
+
+        private bool IncomeTypeExists(Guid id)
+        {
+            return _context.IncomeTypes.Any(e => e.Id == id);
+        }
+
+
+        [HttpPost]
+        public IActionResult DeleteIncomeType([FromBody]string incomeTypeId)
+        {
+            if (incomeTypeId == null)
+            {
+                return Json(new
+                {
+                    msg = "No Data"
+                }
+               );
+            }
+
+            try
+            {
+                var IncomeTitle = _context.IncomeTypes.SingleOrDefault(m => m.Id == Guid.Parse(incomeTypeId));
+                _context.IncomeTypes.Remove(IncomeTitle);
+                _context.SaveChanges();
+
+                return Json(new
+                {
+                    msg = "Success"
+                });
+
+            }
+            catch
+            {
+
+            }
+
+            return Json(new
+            {
+                msg = "Fail"
+            });
+
+
+        }
+
+        // End of income delete
+
 
         public IActionResult ExpenseType()
         {
@@ -239,5 +335,98 @@ namespace ibroka.Controllers.AccountBroker
             });
         }
 
+        // Edit expense Type
+
+        [HttpPost]
+        public async Task<IActionResult> EditExpenseType([FromBody]PostExpenseType postExpenseType)
+        {
+            if (postExpenseType == null)
+            {
+                return Json(new
+                {
+                    msg = "No Data"
+                }
+               );
+            }
+
+            var orgId = getOrg();
+            var organisationDetails = await _context.Organisations.Where(x => x.Id == orgId).FirstOrDefaultAsync();
+
+            try
+            {
+
+                var ExType = _context.ExpenseTypes.Where(x => x.Id == Guid.Parse(postExpenseType.AId)).FirstOrDefault();
+                ExType.ExpenseName = postExpenseType.ExpenseName;
+                ExType.Description = postExpenseType.Description;
+
+
+                _context.Update(ExType);
+                _context.SaveChanges();
+
+
+                return Json(new
+                {
+                    msg = "Success"
+                }
+             );
+            }
+            catch (Exception ee)
+            {
+
+            }
+
+            return Json(
+            new
+            {
+                msg = "Fail"
+            });
+        }
+
+        // Edit expense Type Ended
+
+        // Delete for expense Type
+
+        private bool ExpenseTypeExists(Guid id)
+        {
+            return _context.ExpenseTypes.Any(e => e.Id == id);
+        }
+
+
+        [HttpPost]
+        public IActionResult DeleteExpenseType([FromBody]string expenseTypId)
+        {
+            if (expenseTypId == null)
+            {
+                return Json(new
+                {
+                    msg = "No Data"
+                }
+               );
+            }
+
+            try
+            {
+                var ExpenseTitle = _context.ExpenseTypes.SingleOrDefault(m => m.Id == Guid.Parse(expenseTypId));
+                _context.ExpenseTypes.Remove(ExpenseTitle);
+                _context.SaveChanges();
+
+                return Json(new
+                {
+                    msg = "Success"
+                });
+
+            }
+            catch
+            {
+
+            }
+
+            return Json(new
+            {
+                msg = "Fail"
+            });
+
+
+        }
     }
 }

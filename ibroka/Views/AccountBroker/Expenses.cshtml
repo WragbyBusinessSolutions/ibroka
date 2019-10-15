@@ -18,6 +18,68 @@
 </style>
 
 <div class="content">
+
+    <div class="row">
+        <div class="col-md-12">
+            <div class="card card-stats card-raised">
+                <div class="card-body">
+                    <div class="row">
+                        <div class="col-md-4">
+                            <div class="statistics">
+                                <div class="info">
+                                    <div class="icon icon-primary">
+                                        <i class="now-ui-icons users_single-02"></i>
+
+                                    </div>
+                                    <h3 class="info-title"> ₦40</h3>
+                                    <h6 class="stats-title">DAILY</h6>
+
+                                </div>
+                            </div>
+                        </div>
+                        @*<div class="col-md-3">
+                                <div class="statistics">
+                                    <div class="info">
+                                        <div class="icon icon-success">
+                                            <i class="now-ui-icons business_money-coins"></i>
+                                        </div>
+                                        <h3 class="info-title">
+                                            45
+                                        </h3>
+                                        <h6 class="stats-title">Today Revenue</h6>
+                                    </div>
+                                </div>
+                            </div>*@
+                        <div class="col-md-4">
+                            <div class="statistics">
+                                <div class="info">
+                                    <div class="icon icon-info">
+                                        <i class="now-ui-icons objects_support-17"></i>
+                                    </div>
+                                    <h3 class="info-title"> ₦500</h3>
+                                    <h6 class="stats-title">WEEKLY</h6>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="statistics">
+                                <div class="info">
+                                    <div class="icon icon-danger">
+                                        <i class="now-ui-icons ui-2_chat-round"></i>
+
+                                    </div>
+                                    <h3 class="info-title"> ₦4,000</h3>
+                                    <h6 class="stats-title">MONTHLY</h6>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
     <div class="row">
         <div class="col-md-12">
             <div class="card">
@@ -53,7 +115,7 @@
 
                             </button>
 
-                            <!-- Modal -->
+                            <!--Start Modal -->
                             <div class="modal fade" id="exampleModalLong" tabindex="-1" role="dialog" aria-labelledby="exampleModalLongTitle" aria-hidden="true">
                                 <div class="modal-dialog" role="document">
                                     <div class="modal-content">
@@ -66,14 +128,18 @@
 
                                         <div class="modal-body">
                                             <form>
-                                                <label class="pull-left">Date</label>
-                                                <input type="text" class="form-control" placeholder="mm/dd/yyyy" />
+                                                <label class="pull-left">Expense Type</label>
+                                                <select type="text" class="form-control" placeholder="Expense Type" >
+                                                    <option></option>
+                                                </select>
                                                 <br />
-                                                <label class="pull-left">Description</label>
-                                                <input type="text" class="form-control" />
-                                                <br />
+
                                                 <label class="pull-left">Amount</label>
                                                 <input type="text" class="form-control" />
+                                                <br />
+
+                                                <label class="pull-left">Description</label>
+                                                <textarea type="text" class="form-control"></textarea>
                                                 <br />
                                             </form>
 
@@ -85,12 +151,12 @@
                                     </div>
                                 </div>
                             </div>
-
+                            <!--End Modal -->
                         </div>
                     </div>
 
                 </div>
-                
+
                 <div class="card-body body-card">
 
                     <div class="table-responsive-sm">

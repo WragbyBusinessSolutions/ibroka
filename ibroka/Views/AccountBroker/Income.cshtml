@@ -17,6 +17,69 @@
 </style>
 
 <div class="content">
+
+    <div class="row">
+        <div class="col-md-12">
+            <div class="card card-stats card-raised">
+                <div class="card-body">
+                    <div class="row">
+                        <div class="col-md-4">
+                            <div class="statistics">
+                                <div class="info">
+                                    <div class="icon icon-primary">
+                                        <i class="now-ui-icons users_single-02"></i>
+
+                                    </div>
+                                    <h3 class="info-title"> ₦40</h3>
+                                    <h6 class="stats-title">DAILY</h6>
+
+                                </div>
+                            </div>
+                        </div>
+                        @*<div class="col-md-3">
+                                <div class="statistics">
+                                    <div class="info">
+                                        <div class="icon icon-success">
+                                            <i class="now-ui-icons business_money-coins"></i>
+                                        </div>
+                                        <h3 class="info-title">
+                                            45
+                                        </h3>
+                                        <h6 class="stats-title">Today Revenue</h6>
+                                    </div>
+                                </div>
+                            </div>*@
+                        <div class="col-md-4">
+                            <div class="statistics">
+                                <div class="info">
+                                    <div class="icon icon-info">
+                                        <i class="now-ui-icons objects_support-17"></i>
+                                    </div>
+                                    <h3 class="info-title"> ₦500</h3>
+                                    <h6 class="stats-title">WEEKLY</h6>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="statistics">
+                                <div class="info">
+                                    <div class="icon icon-danger">
+                                        <i class="now-ui-icons ui-2_chat-round"></i>
+
+                                    </div>
+                                    <h3 class="info-title"> ₦4,000</h3>
+                                    <h6 class="stats-title">MONTHLY</h6>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+
     <div class="row">
         <div class="col-md-12">
             <div class="card">
@@ -27,17 +90,17 @@
                                 <h4 class="card-title">Income</h4>
                             </div>
 
-                           
+
                             <div class="btn-group col-md-4 pull-right">
-                                @*<a asp-action="AddVendor" class="btn btn-info btn-md pull-right btn-responsive">
+                                <button class="btn btn-info btn-md pull-right btn-responsive" data-toggle="modal" data-target="#exampleModalLong">
 
                                     <span class="btn-label">
                                         <i class="now-ui-icons travel_info"></i>
                                     </span>
 
-                                    Add New Vendor
+                                    Add New Income
 
-                                </a>*@
+                                </button>
 
                                 <button type="button" class="btn btn-success dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                     Export Data
@@ -52,6 +115,44 @@
                                 </div>
                             </div>
                         </div>
+
+                        <!--Start Modal -->
+                        <div class="modal fade" id="exampleModalLong" tabindex="-1" role="dialog" aria-labelledby="exampleModalLongTitle" aria-hidden="true">
+                            <div class="modal-dialog" role="document">
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <h5 class="modal-title" id="exampleModalLongTitle">Add New Income</h5>
+                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                            <span aria-hidden="true">&times;</span>
+                                        </button>
+                                    </div>
+
+                                    <div class="modal-body">
+                                        <form>
+                                            <label class="pull-left">Income Type</label>
+                                            <select type="text" asp-items="ViewBag" class="form-control" placeholder="Expense Type">
+                                                <option> -- Select Income Type -- </option>
+                                            </select>
+                                            <br />
+
+                                            <label class="pull-left">Amount</label>
+                                            <input type="text" class="form-control" />
+                                            <br />
+
+                                            <label class="pull-left">Description</label>
+                                            <textarea type="text" class="form-control"></textarea>
+                                            <br />
+                                        </form>
+
+                                    </div>
+                                    <div class="modal-footer">
+                                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                                        <button type="button" class="btn btn-info">Add</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <!--End Modal -->
                     </div>
                 </div>
 
@@ -61,7 +162,7 @@
                             <table id="datatable" class="table table-hover">
                                 <thead>
                                     <tr>
-                                        <th><strong>S/N Name</strong></th>
+                                        <th><strong>S/N </strong></th>
                                         <th scope="col"><strong>Date</strong></th>
                                         <th scope="col"><strong>Title</strong></th>
                                         <th scope="col"><strong>State</strong></th>
@@ -90,7 +191,7 @@
                             </table>
                         </div>
                     </div>
-                    
+
                 </div>
             </div>
 

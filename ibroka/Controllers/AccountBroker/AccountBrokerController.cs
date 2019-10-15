@@ -189,5 +189,60 @@ namespace ibroka.Controllers.AccountBroker
             return View();
         }
 
+      public IActionResult PaymentType()
+    {
+      var orgId = getOrg();
+
+      var paymentTypes = _context.PaymentTypes.Where(x => x.OrganisationId == orgId).ToList();
+
+      return View(paymentTypes);
     }
+
+    [HttpPost]
+    public async Task<IActionResult> CreatePaymentType([FromBody]PaymentType paymentType)
+    {
+      if (paymentType == null)
+      {
+        return Json(new
+        {
+          msg = "No Data"
+        }
+       );
+      }
+
+      var orgId = getOrg();
+
+      try
+      {
+        PaymentType newPaymentType = new PaymentType()
+        {
+          Id = Guid.NewGuid(),
+          PaymentTypeName = paymentType.PaymentTypeName,
+          Description = paymentType.Description,
+          OrganisationId = orgId
+        };
+
+        _context.Add(newPaymentType);
+        _context.SaveChanges();
+
+
+        return Json(new
+        {
+          msg = "Success"
+        }
+     );
+      }
+      catch (Exception ee)
+      {
+
+      }
+
+      return Json(
+      new
+      {
+        msg = "Fail"
+      });
+    }
+
+  }
 }

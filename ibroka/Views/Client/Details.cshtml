@@ -1361,67 +1361,82 @@
                         </div>
                     </div>
                     <div class="modal-body" style="width:100% !important">
-                        <div class="instruction">
+                      <div class="instruction">
 
-                            <div class="row">
-                                <div class="col-md-3">
-                                    <div class="form-group">
-                                        <label>Debit Note No</label>
+                        <div class="row">
+                          <div class="col-md-3">
+                            <div class="form-group">
+                              <label>Debit Note No</label>
 
-                                    </div>
-                                </div>
-                                <div class="col-md-5">
-                                    <div class="form-group">
-                                        <input type="text" class="form-control" name="pDebitNoteNo" id="pDebitNoteNo" readonly>
-                                        <input type="text" class="form-control" name="pDebitNoteId" id="pDebitNoteId" readonly style="display:none">
-                                    </div>
-                                </div>
-                                <div class="col-md-4">
-                                    <div class="form-group">
-
-                                        <button style="padding:6px 10px" class="btn btn-fill btn-primary btn-round" id="btnGenPayment">
-                                            Generate
-                                        </button>&nbsp;
-                                        <input style="margin-top:10px; padding:7px 14px; width:70px !important;  float:right" type="button" value="Close" class="btn btn-info btn-round" data-dismiss="modal" aria-hidden="true" />
-                                    </div>
-                                </div>
                             </div>
-                            <div class="row">
-                                <div class="col-md-3">
-                                    <div class="form-group">
-                                        <label>Debit Amount</label>
-
-                                    </div>
-                                </div>
-                                <div class="col-md-5">
-                                    <div class="form-group">
-
-                                        <input type="text" class="form-control" id="pDebitAmount" readonly>
-                                    </div>
-                                </div>
-                                <div class="col-md-4">
-                                    <div class="form-group">
-
-
-                                    </div>
-                                </div>
+                          </div>
+                          <div class="col-md-5">
+                            <div class="form-group">
+                              <input type="text" class="form-control" name="pDebitNoteNo" id="pDebitNoteNo" readonly>
+                              <input type="text" class="form-control" name="pDebitNoteId" id="pDebitNoteId" readonly style="display:none">
                             </div>
-                            <div class="row">
-                                <div class="col-md-6">
-                                    <div class="form-group">
-                                        <label>Date Of Payment</label>
-                                        <input type="Date" class="form-control" id="txtPaymentDate" required>
-                                    </div>
-                                </div>
-                                <div class="col-md-6">
-                                    <div class="form-group">
-                                        <label>Amount</label>
-                                        <input type="text" class="form-control" id="txtPaymentAmount" required onchange="checkFloatNumber(this);" onkeypress="return validateFloatKeyPress(this,event);" step='0.01' placeholder='0.00' />
-                                    </div>
-                                </div>
-                            </div>
+                          </div>
+                          <div class="col-md-4">
+                            <div class="form-group">
 
+                              <button style="padding:6px 10px" class="btn btn-fill btn-primary btn-round" id="btnGenPayment">
+                                Generate
+                              </button>&nbsp;
+                              <input style="margin-top:10px; padding:7px 14px; width:70px !important;  float:right" type="button" value="Close" class="btn btn-info btn-round" data-dismiss="modal" aria-hidden="true" />
+                            </div>
+                          </div>
                         </div>
+                        <div class="row">
+                          <div class="col-md-3">
+                            <div class="form-group">
+                              <label>Debit Amount</label>
+
+                            </div>
+                          </div>
+                          <div class="col-md-5">
+                            <div class="form-group">
+
+                              <input type="text" class="form-control" id="pDebitAmount" readonly>
+                            </div>
+                          </div>
+                          <div class="col-md-4">
+                            <div class="form-group">
+
+
+                            </div>
+                          </div>
+                        </div>
+                        <div class="row">
+                          <div class="col-md-3">
+                            <div class="form-group">
+                              <label>Payment Type</label>
+
+                            </div>
+                          </div>
+                          <div class="col-md-7">
+                            <div class="form-group">
+                              <select class="form-control" asp-items="ViewBag.PaymentType" id="sltPaymentType">
+
+                              </select>
+                            </div>
+                          </div>
+                        </div>
+                        <div class="row">
+                          <div class="col-md-6">
+                            <div class="form-group">
+                              <label>Date Of Payment</label>
+                              <input type="Date" class="form-control" id="txtPaymentDate" required>
+                            </div>
+                          </div>
+                          <div class="col-md-6">
+                            <div class="form-group">
+                              <label>Amount</label>
+                              <input type="text" class="form-control" id="txtPaymentAmount" required onchange="checkFloatNumber(this);" onkeypress="return validateFloatKeyPress(this,event);" step='0.01' placeholder='0.00' />
+                            </div>
+                          </div>
+                        </div>
+
+                      </div>
                     </div>
 
                 </div>
@@ -2727,7 +2742,8 @@
                 DebitNoteId: $("#pDebitNoteId").val(),
                 LeadId: $("#pLeadtId").val(),
                 DateOfPayment: $("#txtPaymentDate").val(),
-                Amount: $("#txtPaymentAmount").val(),
+              Amount: $("#txtPaymentAmount").val(),
+                PaymentType: $("#sltPaymentType").val()
             };
 
             $.ajax({

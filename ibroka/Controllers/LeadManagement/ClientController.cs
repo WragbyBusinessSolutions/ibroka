@@ -500,6 +500,7 @@ namespace ibroka.Controllers.LeadManagement
 
         public async Task<IActionResult> Details(Guid? id, string IsOpen = "false")
         {
+      var orgId = getOrg();
             Lead LeadDetail = await leadDetail(id);
             if (IsOpen.ToLower() == "edit")
             {
@@ -511,6 +512,8 @@ namespace ibroka.Controllers.LeadManagement
             }
             ViewBag.LeadClientId = id;
             ViewData["StatusMessage"] = StatusMessage;
+      ViewData["PaymentType"] = new SelectList(_context.PaymentTypes.Where(s => s.OrganisationId == orgId), "Id", "PaymentTypeName");
+
             return View(LeadDetail);
         }
         // GET: ClientMasterDetails/Details/5
@@ -1944,6 +1947,7 @@ namespace ibroka.Controllers.LeadManagement
                 leadPaymentDetail.LeadId = lpd.LeadId;
                 leadPaymentDetail.ModifiedBy = Guid.Parse(userId);
                 leadPaymentDetail.OrganisationId = orgId;
+                leadPaymentDetail.PaymentType = lpd.PaymentType;
 
                 _context.Add(leadPaymentDetail);
 

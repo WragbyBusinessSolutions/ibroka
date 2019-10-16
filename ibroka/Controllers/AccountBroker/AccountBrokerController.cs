@@ -202,8 +202,160 @@ namespace ibroka.Controllers.AccountBroker
 
         public IActionResult Expenses()
         {
-            return View();
+            var orgId = getOrg();
+            ViewData["ExpenseType"] = new SelectList(_context.ExpenseTypes.Where(x => x.OrganisationId == orgId), "Id", "ExpenseName");
+
+            var expense = _context.Expenses.Where(x => x.OrganisationId == orgId).ToList();
+
+            return View(expense);
         }
+
+
+
+        // Post Method of income 
+        [HttpPost]
+        public async Task<IActionResult> PostExpense([FromBody]Expense expense)
+        {
+            if (expense == null)
+            {
+                return Json(new
+                {
+                    msg = "No Data"
+                }
+               );
+            }
+
+            var orgId = getOrg();
+
+            try
+            {
+                Expense expen = new Expense()
+                {
+                    Id = Guid.NewGuid(),
+                    ExpenseTypeId = expense.ExpenseTypeId,
+                    Amount = expense.Amount,
+                    Description = expense.Description,
+                    OrganisationId = orgId
+                };
+
+                _context.Add(expen);
+                _context.SaveChanges();
+
+
+                return Json(new
+                {
+                    msg = "Success"
+                }
+             );
+            }
+            catch (Exception ee)
+            {
+
+            }
+
+            return Json(
+            new
+            {
+                msg = "Fail"
+            });
+        }
+
+        // Edit Income Type
+
+        [HttpPost]
+        public async Task<IActionResult> EditExpense([FromBody]PostExpense postExpense)
+        {
+            if (postExpense == null)
+            {
+                return Json(new
+                {
+                    msg = "No Data"
+                }
+               );
+            }
+
+            var orgId = getOrg();
+            var organisationDetails = await _context.Organisations.Where(x => x.Id == orgId).FirstOrDefaultAsync();
+
+            try
+            {
+
+                var Exp = _context.Expenses.Where(x => x.Id == Guid.Parse(postExpense.AId)).FirstOrDefault();
+                Exp.ExpenseTypeId = postExpense.ExpenseTypeId;
+                Exp.Amount = postExpense.Amount;
+                Exp.Description = postExpense.Description;
+
+
+                _context.Update(Exp);
+                _context.SaveChanges();
+
+
+                return Json(new
+                {
+                    msg = "Success"
+                }
+             );
+            }
+            catch (Exception ee)
+            {
+
+            }
+
+            return Json(
+            new
+            {
+                msg = "Fail"
+            });
+        }
+
+        // Edit income Type Ended
+
+        // Delete for Income
+
+        private bool ExpenseExists(Guid id)
+        {
+            return _context.Expenses.Any(e => e.Id == id);
+        }
+
+
+        [HttpPost]
+        public IActionResult DeleteExpenseGen([FromBody]string expenseId)
+        {
+            if (expenseId == null)
+            {
+                return Json(new
+                {
+                    msg = "No Data"
+                }
+               );
+            }
+
+            try
+            {
+                var expenseGen = _context.Expenses.SingleOrDefault(m => m.Id == Guid.Parse(expenseId));
+                _context.Expenses.Remove(expenseGen);
+                _context.SaveChanges();
+
+                return Json(new
+                {
+                    msg = "Success"
+                });
+
+            }
+            catch
+            {
+
+            }
+
+            return Json(new
+            {
+                msg = "Fail"
+            });
+
+
+        }
+
+        // End of income delete
 
         public IActionResult AccountReport()
         {

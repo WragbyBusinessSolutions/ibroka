@@ -162,7 +162,7 @@ namespace ibroka.Controllers.AccountBroker
 
 
         [HttpPost]
-        public IActionResult DeleteIncome([FromBody]string incomeId)
+        public IActionResult DeleteIncomeGen([FromBody]string incomeId)
         {
             if (incomeId == null)
             {
@@ -175,8 +175,8 @@ namespace ibroka.Controllers.AccountBroker
 
             try
             {
-                var Incum = _context.Incomes.SingleOrDefault(m => m.Id == Guid.Parse(incomeId));
-                _context.Incomes.Remove(Incum);
+                var incomeGen = _context.Incomes.SingleOrDefault(m => m.Id == Guid.Parse(incomeId));
+                _context.Incomes.Remove(incomeGen);
                 _context.SaveChanges();
 
                 return Json(new
@@ -227,7 +227,7 @@ namespace ibroka.Controllers.AccountBroker
         public IActionResult Imprest()
         {
             var orgId = getOrg();
-            var Imprsts = _context.Imprests.Where(x => x.OrganisationId == orgId).ToList();
+            var Imprsts = _context.Imprests.Where(x => x.OrganisationId == orgId).OrderByDescending(a => a.DateCreated).ToList();
 
             return View(Imprsts);
         }
@@ -586,62 +586,59 @@ namespace ibroka.Controllers.AccountBroker
         // Delete for expense Type
 
         public IActionResult PaymentType()
-    {
-      var orgId = getOrg();
-
-      var paymentTypes = _context.PaymentTypes.Where(x => x.OrganisationId == orgId).ToList();
-
-      return View(paymentTypes);
-    }
-
-    [HttpPost]
-    public async Task<IActionResult> CreatePaymentType([FromBody]PaymentType paymentType)
-    {
-      if (paymentType == null)
-      {
-        return Json(new
         {
-          msg = "No Data"
+          var orgId = getOrg();
+
+          var paymentTypes = _context.PaymentTypes.Where(x => x.OrganisationId == orgId).ToList();
+
+          return View(paymentTypes);
         }
-       );
-      }
 
-      var orgId = getOrg();
-
-      try
-      {
-        PaymentType newPaymentType = new PaymentType()
+        [HttpPost]
+        public async Task<IActionResult> CreatePaymentType([FromBody]PaymentType paymentType)
         {
-          Id = Guid.NewGuid(),
-          PaymentTypeName = paymentType.PaymentTypeName,
-          Description = paymentType.Description,
-          OrganisationId = orgId
-        };
+            if (paymentType == null)
+            {
+                return Json(new
+                {
+                    msg = "No Data"
+                }
+                );
+            }
 
-        _context.Add(newPaymentType);
-        _context.SaveChanges();
+            var orgId = getOrg();
+
+            try
+            {
+            PaymentType newPaymentType = new PaymentType()
+            {
+                Id = Guid.NewGuid(),
+                PaymentTypeName = paymentType.PaymentTypeName,
+                Description = paymentType.Description,
+                OrganisationId = orgId
+            };
+
+                _context.Add(newPaymentType);
+                _context.SaveChanges();
 
 
-        return Json(new
-        {
-          msg = "Success"
+                return Json(new
+                {
+                    msg = "Success"
+                }
+                );
+            }
+            catch (Exception ee)
+            {
+
+            }
+
+            return Json(
+            new
+            {
+            msg = "Fail"
+            });
         }
-     );
-      }
-      catch (Exception ee)
-      {
 
-      }
-
-      return Json(
-      new
-      {
-        msg = "Fail"
-      });
-    }
-
-  }
-
-       
-    
+    }    
 }

@@ -247,7 +247,7 @@
                                                 </td>
                                                 <td>
                                                     <span data-toggle="modal" data-target="#exampleModalLong1"><a href="#" class="btn btn-round btn-warning btn-icon btn-sm" title="Click to Edit" id="Editbtn" data-toggle="tooltip" data-placement="top" EditAddId="@item.Id" Selected-IncomeType="@item.IncomeTypeId" Selected-Amount="@item.Amount" Selected-Description="@item.Description"><i class="far fa-edit"></i></a></span>
-                                                    <a href="#" class="btn btn-round btn-danger btn-icon btn-sm remove" title="Click to Delete" data-toggle="tooltip" data-placement="top" IncomeId="@item.Id" IncomeTitle="@item.IncomeType.IncomeName" IncomeTypeId="@item.IncomeTypeId"><i class="fas fa-times"></i></a>
+                                                    <a href="#" class="btn btn-round btn-danger btn-icon btn-sm remove" title="Click to Delete" data-toggle="tooltip" data-placement="top" IncomeId="@item.Id" IncomeName="@item.IncomeType.IncomeName"><i class="fas fa-times"></i></a>
 
                                                 </td>
                                             </tr>
@@ -315,13 +315,12 @@
                 $tr = $(this).closest('tr');
 
                 incomeId = $(this).attr('IncomeId');
-                incomeTypeId = $(this).attr('IncomeTypeId');
-                incomeTitle = $(this).attr('IncomeTitle');
+                incomeName = $(this).attr('IncomeName');
 
 
                 swal({
                     title: 'Are you sure?',
-                    text: "You are about to delete '" + incomeTitle + "'",
+                    text: "You are about to delete '" + incomeName + "'",
                     type: 'warning',
                     showCancelButton: true,
                     confirmButtonClass: 'btn btn-success',
@@ -332,7 +331,7 @@
 
                     $.ajax({
                         type: "POST",
-                        url: "/AccountBroker/DeleteIncome",
+                        url: "/AccountBroker/DeleteIncomeGen",
                         data: JSON.stringify(incomeId),
                         dataType: "json",
                         contentType: 'application/json; charset=utf-8',

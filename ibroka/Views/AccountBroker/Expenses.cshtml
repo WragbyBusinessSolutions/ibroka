@@ -1,7 +1,8 @@
-﻿
+﻿@model IEnumerable<ibroka.Models.AccountBroker.Expense>
+
 @{
     ViewData["Title"] = "Expenses";
-     Layout = "~/Views/Shared/_LayoutAccountBrokers.cshtml";
+    Layout = "~/Views/Shared/_LayoutAccountBrokers.cshtml";
 }
 
 <style>
@@ -129,70 +130,396 @@
                                         <div class="modal-body">
                                             <form>
                                                 <label class="pull-left">Expense Type</label>
-                                                <select type="text" class="form-control" placeholder="Expense Type" >
-                                                    <option></option>
+                                                <select class="selectpicker" data-style="btn btn-default btn-round" title="Select Expense Type" data-size="7" type="text" asp-items="ViewBag.ExpenseType" id="ExpenseTypeId" name="ExpenseTypeId" placeholder="Expense Type">
+                                                    <option> -- Select Income Type -- </option>
                                                 </select>
                                                 <br />
-
+                                                <br />
                                                 <label class="pull-left">Amount</label>
-                                                <input type="text" class="form-control" />
+                                                <input type="number" class="form-control" id="Amount" name="Amount" />
                                                 <br />
 
                                                 <label class="pull-left">Description</label>
-                                                <textarea type="text" class="form-control"></textarea>
+                                                <textarea type="text" name="Description" id="Description" class="form-control"></textarea>
                                                 <br />
                                             </form>
 
                                         </div>
                                         <div class="modal-footer">
                                             <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                                            <button type="button" class="btn btn-info">Add</button>
+                                            <button type="button" class="btn btn-info" id="SubmitNewExpense">Add</button>
                                         </div>
                                     </div>
                                 </div>
                             </div>
                             <!--End Modal -->
+                            <!--Start Edit Modal -->
+                            <div class="modal fade" id="exampleModalLong1" tabindex="-1" role="dialog" aria-labelledby="exampleModalLongTitle" aria-hidden="true">
+                                <div class="modal-dialog" role="document">
+                                    <div class="modal-content">
+                                        <div class="modal-header">
+                                            <h5 class="modal-title" id="exampleModalLongTitle">Edit Expenses</h5>
+                                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                <span aria-hidden="true">&times;</span>
+                                            </button>
+                                        </div>
+
+                                        <div class="modal-body">
+                                            <form>
+                                                <label class="pull-left">Expense Type</label>
+                                                <select class="selectpicker" data-style="btn btn-default btn-round" title="Select Expense Type" data-size="7" type="text" asp-items="ViewBag.ExpenseType" id="eExpenseTypeId" name="eExpenseTypeId" placeholder="Expense Type">
+                                                    <option> -- Select Income Type -- </option>
+                                                </select>
+                                                <br />
+                                                <br />
+                                                <label class="pull-left">Amount</label>
+                                                <input type="number" class="form-control" id="eAmount" name="eAmount" />
+                                                <input type="hidden" class="form-control" id="AddExpId" name="AddExpId" />
+                                                <br />
+
+                                                <label class="pull-left">Description</label>
+                                                <textarea type="text" name="eDescription" id="eDescription" class="form-control"></textarea>
+                                                <br />
+                                            </form>
+
+                                        </div>
+                                        <div class="modal-footer">
+                                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                                            <button type="button" class="btn btn-info" id="SubmitEditExpense">Add</button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <!--End Edit Modal -->
                         </div>
                     </div>
-
                 </div>
 
                 <div class="card-body body-card">
 
                     <div class="table-responsive-sm">
-                        <table id="datatable" class="table table-hover">
+                        <table id="datatable2" class="table table-hover">
                             <thead>
                                 <tr>
                                     <th><strong>S/N</strong></th>
                                     <th scope="col"><strong>Date</strong></th>
                                     <th scope="col"><strong>Description</strong></th>
-
                                     <th scope="col"><strong>Amount</strong></th>
                                     <th scope="col" class="disabled-sorting"><strong>Actions</strong></th>
                                 </tr>
                             </thead>
                             <tbody class="fontweight">
 
-                                <tr>
-                                    <td>1</td>
-                                    <td>Olivia Liang</td>
-                                    <td>Support Engineer</td>
+                                @{
+                                    int i = 1;
 
-                                    <td>64</td>
-                                    <td class="">
-                                        <a href="#" class="btn btn-warning btn-icon btn-sm edit"><i class="fas fa-edit"></i></a>
-                                        <a href="#" class="btn btn-danger btn-icon btn-sm remove"><i class="fas fa-times"></i></a>
-                                    </td>
-                                </tr>
-                            </tbody>
-                        </table>
+                                    @if (Model.Count() < 1)
+                                    {
+
+                                    <td></td>
+                                    <td></td>
+                                    <td>No Data to Display</td>
+                                    <td></td>
+                                    <td></td>
+
+
+                                }
+
+
+                                    foreach (var item in Model)
+                                    {
+
+                                        <tr>
+                                            <td class="text-center">
+                                                @i
+                                            </td>
+
+
+                                            <td>
+                                                @item.ExpenseType.ExpenseName
+                                            </td>
+
+                                            <td>
+                                                @item.Description
+                                            </td>
+                                            <td>
+                                                ₦@item.Amount
+                                            </td>
+                                            <td>
+                                                <span data-toggle="modal" data-target="#exampleModalLong1"><a href="#" class="btn btn-round btn-warning btn-icon btn-sm" title="Click to Edit" id="Editbtn" data-toggle="tooltip" data-placement="top" EditExpId="@item.Id" Selected-ExpenseType="@item.ExpenseTypeId" Selected-Amount="@item.Amount" Selected-Description="@item.Description"><i class="far fa-edit"></i></a></span>
+                                                <a href="#" class="btn btn-round btn-danger btn-icon btn-sm remove" title="Click to Delete" data-toggle="tooltip" data-placement="top" ExpenseId="@item.Id" ExpenseName="@item.ExpenseType.ExpenseName"><i class="fas fa-times"></i></a>
+
+                                            </td>
+                                        </tr>
+
+                                        { i = i + 1; }
+                                    }
+                                }
+
+                                </tbody>
+
+                            </table>
+                        </div>
                     </div>
-
-
                 </div>
-            </div>
 
+            </div>
         </div>
     </div>
-</div>
 
+
+
+
+    @section Scripts {
+
+        @*<link href="@Url.Content("~/css/ajaxoverlay.css")" rel="stylesheet" />*@
+
+        <link href="@Url.Content("~/css/ajaxoverlay.css")" rel="stylesheet" />
+
+        <script>
+            $(document).ready(function () {
+
+                $('#datatable2').DataTable({
+                    "pagingType": "full_numbers",
+                    dom: "Bfrtip",
+                    "lengthMenu": [
+                        [10, 25, 50, -1],
+                        [10, 25, 50, "All"]
+                    ],
+
+
+                    buttons: [
+                        'copy',
+                        'excel',
+                        'csv',
+                        'pdf',
+                        'print',
+                    ],
+
+
+                    responsive: true,
+                    language: {
+                        search: "_INPUT_",
+                        searchPlaceholder: "Search records",
+                    }
+
+                });
+
+                var table = $('#datatable2').DataTable();
+
+                // Delete a record
+                table.on('click', '.remove', function (e) {
+                    $tr = $(this).closest('tr');
+
+                    expenseId = $(this).attr('ExpenseId');
+                    expenseName = $(this).attr('ExpenseName');
+
+
+                    swal({
+                        title: 'Are you sure?',
+                        text: "You are about to delete '" + expenseName + "'",
+                        type: 'warning',
+                        showCancelButton: true,
+                        confirmButtonClass: 'btn btn-success',
+                        cancelButtonClass: 'btn btn-danger',
+                        confirmButtonText: 'Yes, delete it!',
+                        buttonsStyling: false
+                    }).then(function () {
+
+                        $.ajax({
+                            type: "POST",
+                            url: "/AccountBroker/DeleteExpenseGen",
+                            data: JSON.stringify(expenseId),
+                            dataType: "json",
+                            contentType: 'application/json; charset=utf-8',
+                            headers: {
+                                RequestVerificationToken:
+                                    $('input:hidden[name="__RequestVerificationToken"]').val()
+                            },
+                            success: function (r) {
+
+                                if (r.msg == "Success") {
+
+                                    swal({
+                                        title: 'Deleted!',
+                                        text: 'Your file has been deleted.',
+                                        type: 'success',
+                                        confirmButtonClass: "btn btn-success",
+                                        buttonsStyling: false
+                                    });
+
+
+                                } else if (r.msg == "Fail") {
+
+                                    alert(r.msg);
+
+                                } else if (r.msg == "No Data") {
+                                    alert(r.msg);
+
+                                } else {
+                                    alert(r.msg);
+                                }
+                                //alert(r.msg);
+                                // window.location.reload();
+
+                            },
+                            error: function () {
+                                alert(r.msg);
+                            }
+                        });
+
+
+                        table.row($tr).remove().draw();
+
+                    }).catch(swal.noop);
+
+
+                    e.preventDefault();
+                });
+
+                //Like record
+                table.on('click', '.like', function () {
+                    alert('You clicked on Like button');
+                });
+            });
+        </script>
+
+
+        <script type="text/javascript">
+
+            $(document).ready(function () {
+
+                $("#SubmitNewExpense").click(function (event) {
+
+                    event.preventDefault();
+
+                    var NewExpense = {
+                        ExpenseTypeId: $("#ExpenseTypeId").val(),
+                        Amount: $("#Amount").val(),
+                        Description: $("#Description").val(),
+                    };
+
+
+                    console.log(NewExpense);
+
+                    $.ajax({
+                        type: "POST",
+                        url: "/AccountBroker/PostExpense",
+                        data: JSON.stringify(NewExpense),
+                        dataType: "json",
+                        contentType: 'application/json; charset=utf-8',
+                        headers: {
+                            RequestVerificationToken:
+                                $('input:hidden[name="__RequestVerificationToken"]').val()
+                        },
+                        success: function (r) {
+
+                            if (r.msg == "Success") {
+
+                                demo.showSwal('success-message');
+
+                            } else if (r.msg == "Fail") {
+
+                                alert(r.msg);
+
+                            } else if (r.msg == "No Data") {
+                                alert(r.msg);
+
+                            } else {
+                                alert(r.msg);
+                            }
+                            //alert(r.msg);
+                            // window.location.reload();
+
+                        },
+                        error: function () {
+                            alert(r.msg);
+                        }
+                    });
+                });
+            });
+
+
+            //Code for pulling the Records on the Table
+            var aEditExpId;
+
+            $(document).delegate('#Editbtn',
+                'click',
+                function (e) {
+
+                    aEditExpId = $(this).attr('EditExpId');
+                    expenseTypeId = $(this).attr('Selected-ExpenseType');
+                    amount = $(this).attr('Selected-Amount');
+                    description = $(this).attr('Selected-Description');
+
+                    //  console.log(aEditAssetId);
+
+                    $('input[name=AddExpId]').val(aEditExpId);
+                    $('input[name=eExpenseTypeId]').val(expenseTypeId);
+                    $('input[name=eAmount]').val(amount);
+                    $('textarea[name=eDescription]').val(description);
+
+                });
+
+            //End of the code
+
+            $(document).ready(function () {
+
+                $("#SubmitEditExpense").click(function (event) {
+
+                    event.preventDefault();
+
+                    var PostExpense = {
+                        AId: $("#AddExpId").val(),
+                        ExpenseTypeId: $("#eExpenseTypeId").val(),
+                        Amount: $("#eAmount").val(),
+                        Description: $("#eDescription").val(),
+                    };
+
+
+                    // console.log(Items);
+                    console.log(PostExpense);
+
+                    $.ajax({
+                        type: "POST",
+                        url: "/AccountBroker/EditExpense",
+                        data: JSON.stringify(PostExpense),
+                        dataType: "json",
+                        contentType: 'application/json; charset=utf-8',
+                        headers: {
+                            RequestVerificationToken:
+                                $('input:hidden[name="__RequestVerificationToken"]').val()
+                        },
+                        success: function (r) {
+
+                            if (r.msg == "Success") {
+
+                                demo.showSwal('success-message');
+
+                            } else if (r.msg == "Fail") {
+
+                                alert(r.msg);
+
+                            } else if (r.msg == "No Data") {
+                                alert(r.msg);
+
+                            } else {
+                                alert(r.msg);
+                            }
+                            //alert(r.msg);
+                            // window.location.reload();
+
+                        },
+                        error: function () {
+                            alert(r.msg);
+                        }
+                    });
+                });
+
+
+
+            });
+
+        </script>
+
+    }

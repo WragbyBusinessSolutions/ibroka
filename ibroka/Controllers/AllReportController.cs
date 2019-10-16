@@ -37,7 +37,7 @@ namespace ibroka.Controllers.AccountInventory
         {
             return View();
         }
-        public IActionResult MonthlyPremium()
+        public IActionResult MonthlyPremium(string mpMonth, string mpYear)
         {
             return View();
         }

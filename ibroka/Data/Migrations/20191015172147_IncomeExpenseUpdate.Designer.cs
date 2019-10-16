@@ -11,9 +11,10 @@ using System;
 namespace ibroka.Data.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20191015172147_IncomeExpenseUpdate")]
+    partial class IncomeExpenseUpdate
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -42,8 +43,6 @@ namespace ibroka.Data.Migrations
                     b.Property<Guid>("OrganisationId");
 
                     b.HasKey("Id");
-
-                    b.HasIndex("ExpenseTypeId");
 
                     b.ToTable("Expenses");
                 });
@@ -118,8 +117,6 @@ namespace ibroka.Data.Migrations
                     b.Property<Guid>("OrganisationId");
 
                     b.HasKey("Id");
-
-                    b.HasIndex("IncomeTypeId");
 
                     b.ToTable("Incomes");
                 });
@@ -2433,22 +2430,6 @@ namespace ibroka.Data.Migrations
                     b.HasKey("UserId", "LoginProvider", "Name");
 
                     b.ToTable("AspNetUserTokens");
-                });
-
-            modelBuilder.Entity("ibroka.Models.AccountBroker.Expense", b =>
-                {
-                    b.HasOne("ibroka.Models.AccountBroker.ExpenseType", "ExpenseType")
-                        .WithMany()
-                        .HasForeignKey("ExpenseTypeId")
-                        .OnDelete(DeleteBehavior.Cascade);
-                });
-
-            modelBuilder.Entity("ibroka.Models.AccountBroker.Income", b =>
-                {
-                    b.HasOne("ibroka.Models.AccountBroker.IncomeType", "IncomeType")
-                        .WithMany()
-                        .HasForeignKey("IncomeTypeId")
-                        .OnDelete(DeleteBehavior.Cascade);
                 });
 
             modelBuilder.Entity("ibroka.Models.HumanResource.AppraisalAssignedTemplate", b =>

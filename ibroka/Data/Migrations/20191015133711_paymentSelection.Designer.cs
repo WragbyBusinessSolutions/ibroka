@@ -11,42 +11,15 @@ using System;
 namespace ibroka.Data.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20191015133711_paymentSelection")]
+    partial class paymentSelection
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
                 .HasAnnotation("ProductVersion", "2.0.3-rtm-10026")
                 .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-            modelBuilder.Entity("ibroka.Models.AccountBroker.Expense", b =>
-                {
-                    b.Property<Guid>("Id")
-                        .ValueGeneratedOnAdd();
-
-                    b.Property<float>("Amount");
-
-                    b.Property<DateTime>("DateCreated");
-
-                    b.Property<DateTime>("DateModified");
-
-                    b.Property<DateTime>("DateUpdated");
-
-                    b.Property<string>("Description");
-
-                    b.Property<Guid>("ExpenseTypeId");
-
-                    b.Property<bool>("IsDeleted");
-
-                    b.Property<Guid>("OrganisationId");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("ExpenseTypeId");
-
-                    b.ToTable("Expenses");
-                });
 
             modelBuilder.Entity("ibroka.Models.AccountBroker.ExpenseType", b =>
                 {
@@ -94,34 +67,6 @@ namespace ibroka.Data.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Imprests");
-                });
-
-            modelBuilder.Entity("ibroka.Models.AccountBroker.Income", b =>
-                {
-                    b.Property<Guid>("Id")
-                        .ValueGeneratedOnAdd();
-
-                    b.Property<float>("Amount");
-
-                    b.Property<DateTime>("DateCreated");
-
-                    b.Property<DateTime>("DateModified");
-
-                    b.Property<DateTime>("DateUpdated");
-
-                    b.Property<string>("Description");
-
-                    b.Property<Guid>("IncomeTypeId");
-
-                    b.Property<bool>("IsDeleted");
-
-                    b.Property<Guid>("OrganisationId");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("IncomeTypeId");
-
-                    b.ToTable("Incomes");
                 });
 
             modelBuilder.Entity("ibroka.Models.AccountBroker.IncomeType", b =>
@@ -2433,22 +2378,6 @@ namespace ibroka.Data.Migrations
                     b.HasKey("UserId", "LoginProvider", "Name");
 
                     b.ToTable("AspNetUserTokens");
-                });
-
-            modelBuilder.Entity("ibroka.Models.AccountBroker.Expense", b =>
-                {
-                    b.HasOne("ibroka.Models.AccountBroker.ExpenseType", "ExpenseType")
-                        .WithMany()
-                        .HasForeignKey("ExpenseTypeId")
-                        .OnDelete(DeleteBehavior.Cascade);
-                });
-
-            modelBuilder.Entity("ibroka.Models.AccountBroker.Income", b =>
-                {
-                    b.HasOne("ibroka.Models.AccountBroker.IncomeType", "IncomeType")
-                        .WithMany()
-                        .HasForeignKey("IncomeTypeId")
-                        .OnDelete(DeleteBehavior.Cascade);
                 });
 
             modelBuilder.Entity("ibroka.Models.HumanResource.AppraisalAssignedTemplate", b =>

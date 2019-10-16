@@ -102,6 +102,8 @@ namespace ibroka.Data
     public DbSet<IncomeType> IncomeTypes { get; set; }
     public DbSet<ExpenseType> ExpenseTypes { get; set; }
     public DbSet<PaymentType> PaymentTypes { get; set; }
+    public DbSet<Income> Incomes { get; set; }
+    public DbSet<Expense> Expenses { get; set; }
 
     }
 }
